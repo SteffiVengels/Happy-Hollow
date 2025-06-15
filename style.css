@@ -1,9 +1,80 @@
+@font-face {
+    font-family: "Jersey15";
+    src: url(./assets/fonts/Jersey_15,Pixelify_Sans/Jersey_15/Jersey15-Regular.ttf);
+}
+
+@font-face {
+    font-family: "PixelifySans";
+    src: url(./assets/fonts/Jersey_15,Pixelify_Sans/Pixelify_Sans/PixelifySans-VariableFont_wght.ttf);
+}
+
+@font-face {
+    font-family: "Planes";
+    src: url(./assets/img/platformer-pixel-art-tileset/Font/Planes_ValMore.ttf);
+}
+
 body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    font-family: 'Planes';
+    background-image: url('./assets/img/background/ai-generated-8227409_1920.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+header {
+    margin: 40px;
+    background-image: url('./assets/img/game-ui-pixel-art/5 Logo/Logo.png');
+    background-size: cover;
+    background-position: center;
+    width: 424px;
+    height: 192px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #de3440;
+    text-shadow:
+        -1px -1px 0 black,
+        1px -1px 0 black,
+        -1px 1px 0 black,
+        1px 1px 0 black;
+}
+
+h1 {
+    padding-top: 64px;
+}
+
+.canvas-frame {
+    margin-bottom: 40px;
+    display: inline-block;
+    padding: 32px;
+    background:
+        url('./assets/img/game-ui-pixel-art/1 Frames/Frame_tile_05.png') top left no-repeat,
+        url('./assets/img/game-ui-pixel-art/1 Frames/Frame_tile_06.png') top right no-repeat,
+        url('./assets/img/game-ui-pixel-art/1 Frames/Frame_tile_13.png') bottom left no-repeat,
+        url('./assets/img/game-ui-pixel-art/1 Frames/Frame_tile_14.png') bottom right no-repeat,
+        url('./assets/img/game-ui-pixel-art/1 Frames/Frame_tile_01.png') top repeat-x,
+        url('./assets/img/game-ui-pixel-art/1 Frames/Frame_tile_09.png') left repeat-y,
+        url('./assets/img/game-ui-pixel-art/1 Frames/Frame_tile_02.png') right repeat-y,
+        url('./assets/img/game-ui-pixel-art/1 Frames/Frame_tile_10.png') bottom repeat-x;
+
+    background-size:
+        32px 32px,
+        32px 32px,
+        32px 32px,
+        32px 32px,
+        calc(100% - 64px) 32px,
+        32px calc(100% - 64px),
+        32px calc(100% - 64px),
+        calc(100% - 64px) 32px;
 }
 
 canvas {
+    display: block;
     background-color: black;
 }

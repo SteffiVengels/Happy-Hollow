@@ -1,16 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Happy Hollow</title>
+    <link rel="icon" type="image/x-icon" href="./assets/img/Icons for AS & GP/1 64x64/1_1.png" />
 
     <link rel="stylesheet" href="./style.css">
 
+    <script src="./classes/movable-object.class.js"></script>
+    <script src="./classes/character.class.js"></script>
+    <script src="./classes/bear.class.js"></script>
+    <script src="./classes/ooze.class.js"></script>
+    <script src="./classes/mage.class.js"></script>
+    <script src="./classes/world.class.js"></script>
     <script src="./script.js"></script>
 </head>
-<body>
-    <canvas width="720" height="480"></canvas>
-    
+
+<body onload="init()">
+
+    <header>
+        <h1>Happy Hollow</h1>
+    </header>
+
+    <div class="canvas-frame">
+        <canvas id="canvas" width="720" height="480"></canvas>
+    </div>
+
 </body>
+
 </html>
