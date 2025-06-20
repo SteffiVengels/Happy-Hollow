@@ -41,14 +41,21 @@ class World {
         new BackgroundObjects('./assets/img/platformer-pixel-art-tileset/Tiles/Tileset/TileSet_02.png', 704, 448, 32, 32),
         new BackgroundObjects('./assets/img/platformer-pixel-art-tileset/Tiles/Tileset/TileSet_02.png', 736, 448, 32, 32),
     ]
+
     canvas;
     ctx;
+    keyboard;
 
-    constructor(canvas) {
+    constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
-        this.canvas = canvas
+        this.canvas = canvas;
+        this.keyboard = keyboard;
         this.draw();
+        this.setWorld();
+    }
 
+    setWorld() {
+        this.character.world = this;
     }
 
     draw() {
@@ -60,7 +67,7 @@ class World {
         this.addObjectsToMap(this.enemies);
 
         let self = this;
-        requestAnimationFrame(function() {
+        requestAnimationFrame(function () {
             self.draw();
         });
     }
@@ -72,6 +79,16 @@ class World {
     }
 
     addToMap(movabelObj) {
+        if (movabelObj.otherDirection) {
+            this.ctx.save();
+            this.ctx.translate(movabelObj.width, 0);
+            this.ctx.scale(-1, 1);
+            movabelObj.x = movabelObj.x * -1;
+        }
         this.ctx.drawImage(movabelObj.img, movabelObj.x, movabelObj.y, movabelObj.width, movabelObj.height);
+        if(movabelObj.otherDirection) {
+            movabelObj.x = movabelObj.x * -1;
+            this.ctx.restore();
+        }
     }
 }
