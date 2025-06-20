@@ -1,11 +1,30 @@
 class Ooze extends MovableObject {
-    height = 64;
-    width = 64;
-    y = 384;
+    height = 61;
+    width = 61;
+    y = 387;
+    IMAGES_WALKING = [
+        './assets/img/tiny-monsters-pixel-art-pack/3 Ooze/walk/tile000.png',
+        './assets/img/tiny-monsters-pixel-art-pack/3 Ooze/walk/tile001.png',
+        './assets/img/tiny-monsters-pixel-art-pack/3 Ooze/walk/tile002.png',
+        './assets/img/tiny-monsters-pixel-art-pack/3 Ooze/walk/tile003.png'
+    ];
 
     constructor() {
         super().loadImage('./assets/img/tiny-monsters-pixel-art-pack/3 Ooze/Ooze.png');
         this.x = 300 + Math.random() * 400;
+        this.speed = 0.15 + Math.random() * 0.25;
+        this.loadImages(this.IMAGES_WALKING);
+        this.animate();
+    }
+
+    animate() {
+        setInterval(() => {
+            let i = this.currentImage % this.IMAGES_WALKING.length;
+            let path = this.IMAGES_WALKING[i];
+            this.img = this.imageCache[path];
+            this.currentImage++;
+        }, 200);
+        this.moveLeft();
     }
 
 }

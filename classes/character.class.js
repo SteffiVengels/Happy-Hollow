@@ -1,10 +1,17 @@
 class Character extends MovableObject {
-    totalFrames = 6;
-    currentImage = 0;
+    IMAGES_WALKING =  [
+            './assets/img/pixel-art-tiny-hero-sprites/1 Pink_Monster/walk/tile000.png',
+            './assets/img/pixel-art-tiny-hero-sprites/1 Pink_Monster/walk/tile001.png',
+            './assets/img/pixel-art-tiny-hero-sprites/1 Pink_Monster/walk/tile002.png',
+            './assets/img/pixel-art-tiny-hero-sprites/1 Pink_Monster/walk/tile003.png',
+            './assets/img/pixel-art-tiny-hero-sprites/1 Pink_Monster/walk/tile004.png',
+            './assets/img/pixel-art-tiny-hero-sprites/1 Pink_Monster/walk/tile005.png'
+    ]
+    
 
     constructor() {
         super().loadImage('./assets/img/pixel-art-tiny-hero-sprites/1 Pink_Monster/Pink_Monster.png');
-        this.loadImages('./assets/img/tiny-monsters-pixel-art-pack/1 Bear/Walk.png');
+        this.loadImages(this.IMAGES_WALKING);
         this.animate();
     }
     
