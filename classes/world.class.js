@@ -1,50 +1,10 @@
 class World {
     character = new Character();
-    enemies = [
-        new Bear(),
-        new Mage(),
-        new Ooze(),
-    ];
-    background = [
-        new Background('./assets/img/platformer-pixel-art-tileset/Background/Layers/8.png'),
-        new Background('./assets/img/platformer-pixel-art-tileset/Background/Layers/7.png'),
-        new Background('./assets/img/platformer-pixel-art-tileset/Background/Layers/6.png'),
-        new Background('./assets/img/platformer-pixel-art-tileset/Background/Layers/5.png'),
-        new Background('./assets/img/platformer-pixel-art-tileset/Background/Layers/4.png'),
-        new Background('./assets/img/platformer-pixel-art-tileset/Background/Layers/3.png'),
-        new Background('./assets/img/platformer-pixel-art-tileset/Background/Layers/2.png'),
-        new Background('./assets/img/platformer-pixel-art-tileset/Background/Layers/1.png'),
-    ]
-    backgroundObjects = [
-        new BackgroundObjects('./assets/img/platformer-pixel-art-tileset/Tiles/Tileset/TileSet_02.png', 0, 448, 32, 32),
-        new BackgroundObjects('./assets/img/platformer-pixel-art-tileset/Tiles/Tileset/TileSet_02.png', 32, 448, 32, 32),
-        new BackgroundObjects('./assets/img/platformer-pixel-art-tileset/Tiles/Tileset/TileSet_02.png', 64, 448, 32, 32),
-        new BackgroundObjects('./assets/img/platformer-pixel-art-tileset/Tiles/Tileset/TileSet_02.png', 96, 448, 32, 32),
-        new BackgroundObjects('./assets/img/platformer-pixel-art-tileset/Tiles/Tileset/TileSet_02.png', 128, 448, 32, 32),
-        new BackgroundObjects('./assets/img/platformer-pixel-art-tileset/Tiles/Tileset/TileSet_02.png', 160, 448, 32, 32),
-        new BackgroundObjects('./assets/img/platformer-pixel-art-tileset/Tiles/Tileset/TileSet_02.png', 192, 448, 32, 32),
-        new BackgroundObjects('./assets/img/platformer-pixel-art-tileset/Tiles/Tileset/TileSet_02.png', 224, 448, 32, 32),
-        new BackgroundObjects('./assets/img/platformer-pixel-art-tileset/Tiles/Tileset/TileSet_02.png', 256, 448, 32, 32),
-        new BackgroundObjects('./assets/img/platformer-pixel-art-tileset/Tiles/Tileset/TileSet_02.png', 288, 448, 32, 32),
-        new BackgroundObjects('./assets/img/platformer-pixel-art-tileset/Tiles/Tileset/TileSet_02.png', 320, 448, 32, 32),
-        new BackgroundObjects('./assets/img/platformer-pixel-art-tileset/Tiles/Tileset/TileSet_02.png', 352, 448, 32, 32),
-        new BackgroundObjects('./assets/img/platformer-pixel-art-tileset/Tiles/Tileset/TileSet_02.png', 384, 448, 32, 32),
-        new BackgroundObjects('./assets/img/platformer-pixel-art-tileset/Tiles/Tileset/TileSet_02.png', 416, 448, 32, 32),
-        new BackgroundObjects('./assets/img/platformer-pixel-art-tileset/Tiles/Tileset/TileSet_02.png', 448, 448, 32, 32),
-        new BackgroundObjects('./assets/img/platformer-pixel-art-tileset/Tiles/Tileset/TileSet_02.png', 480, 448, 32, 32),
-        new BackgroundObjects('./assets/img/platformer-pixel-art-tileset/Tiles/Tileset/TileSet_02.png', 512, 448, 32, 32),
-        new BackgroundObjects('./assets/img/platformer-pixel-art-tileset/Tiles/Tileset/TileSet_02.png', 544, 448, 32, 32),
-        new BackgroundObjects('./assets/img/platformer-pixel-art-tileset/Tiles/Tileset/TileSet_02.png', 576, 448, 32, 32),
-        new BackgroundObjects('./assets/img/platformer-pixel-art-tileset/Tiles/Tileset/TileSet_02.png', 608, 448, 32, 32),
-        new BackgroundObjects('./assets/img/platformer-pixel-art-tileset/Tiles/Tileset/TileSet_02.png', 640, 448, 32, 32),
-        new BackgroundObjects('./assets/img/platformer-pixel-art-tileset/Tiles/Tileset/TileSet_02.png', 672, 448, 32, 32),
-        new BackgroundObjects('./assets/img/platformer-pixel-art-tileset/Tiles/Tileset/TileSet_02.png', 704, 448, 32, 32),
-        new BackgroundObjects('./assets/img/platformer-pixel-art-tileset/Tiles/Tileset/TileSet_02.png', 736, 448, 32, 32),
-    ]
-
+    level = level1;
     canvas;
     ctx;
     keyboard;
+    camera_x = 0;
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
@@ -61,10 +21,14 @@ class World {
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
-        this.addObjectsToMap(this.background);
-        this.addObjectsToMap(this.backgroundObjects);
+        this.ctx.translate(this.camera_x, 0);
+
+        this.addObjectsToMap(this.level.background);
+        this.addObjectsToMap(this.level.backgroundObjects);
         this.addToMap(this.character);
-        this.addObjectsToMap(this.enemies);
+        this.addObjectsToMap(this.level.enemies);
+
+        this.ctx.translate(-this.camera_x, 0);
 
         let self = this;
         requestAnimationFrame(function () {
@@ -86,9 +50,43 @@ class World {
             movabelObj.x = movabelObj.x * -1;
         }
         this.ctx.drawImage(movabelObj.img, movabelObj.x, movabelObj.y, movabelObj.width, movabelObj.height);
-        if(movabelObj.otherDirection) {
+        if (movabelObj.otherDirection) {
             movabelObj.x = movabelObj.x * -1;
             this.ctx.restore();
         }
+    }
+
+    generateBackgroundLayers() {
+        const background = [];
+        const layerCount = 8;
+        const tileWidth = 719;
+        const repeatFrom = -1;
+        const repeatTo = 3;
+
+        for (let repeat = repeatFrom; repeat <= repeatTo; repeat++) {
+            const x = repeat * tileWidth;
+            for (let i = layerCount; i >= 1; i--) {
+                background.push(
+                    new Background(`./assets/img/platformer-pixel-art-tileset/Background/Layers/${i}.png`, x)
+                );
+            }
+        }
+
+        return background;
+    }
+
+    generateBackgroundObjects() {
+        const tileWidth = 32;
+        const startX = -720;
+        const endX = 2876;
+        const y = 448;
+        const tilePath = './assets/img/platformer-pixel-art-tileset/Tiles/Tileset/TileSet_02.png';
+        const backgroundObjects = []; // <- Array anlegen
+
+        for (let x = startX; x <= endX; x += tileWidth) {
+            backgroundObjects.push(new BackgroundObjects(tilePath, x, y, tileWidth, tileWidth));
+        }
+
+        return backgroundObjects; // <- nicht vergessen zurückzugeben!
     }
 }
