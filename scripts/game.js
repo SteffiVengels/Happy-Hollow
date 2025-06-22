@@ -8,39 +8,36 @@ function init() {
 }
 
 window.addEventListener("keydown", (e) => {
-    if (e.keyCode == 39 || e.keyCode == 68) {
+    if (e.code == "ArrowRight" || e.code == "KeyD") {
         keyboard.RIGHT = true;
     }
-    if (e.keyCode == 37 || e.keyCode == 65) {
+    if (e.code == "ArrowLeft" || e.code == "KeyA") {
         keyboard.LEFT = true;
     }
-    if (e.keyCode == 38) {
+    if (e.code == "ArrowUp" || e.code == "Space") {
         keyboard.UP = true;
     }
-    if (e.keyCode == 40) {
+    if (e.code == "ArrowDown") {
         keyboard.DOWN = true;
     }
-    if (e.keyCode == 32) {
-        keyboard.SPACE = true;
-    }
-    console.log(event);
+
+    console.log(e);
 })
 
 window.addEventListener("keyup", (e) => {
-    if (e.keyCode == 39 || e.keyCode == 68) {
+    if (e.code == "ArrowRight" || e.code == "KeyD") {
         keyboard.RIGHT = false;
     }
-    if (e.keyCode == 37 || e.keyCode == 65) {
+    if (e.code == "ArrowLeft" || e.code == "KeyA") {
         keyboard.LEFT = false;
     }
-    if (e.keyCode == 38) {
+    if (e.code == "ArrowUp" || e.code == "Space") {
         keyboard.UP = false;
     }
-    if (e.keyCode == 40) {
+    if (e.code == "ArrowDown") {
         keyboard.DOWN = false;
     }
-    if (e.keyCode == 32) {
-        keyboard.SPACE = false;
-    }
-    console.log(event);
+
+
+    console.log(e);
 })
