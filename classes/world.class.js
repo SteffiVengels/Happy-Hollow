@@ -12,10 +12,22 @@ class World {
         this.keyboard = keyboard;
         this.draw();
         this.setWorld();
+        this.checkCollisions();
     }
 
     setWorld() {
         this.character.world = this;
+    }
+
+    checkCollisions() {
+        setInterval(() => {
+            this.level.enemies.forEach((enemy) => {
+                if (this.character.isColliding(enemy)) {
+                    this.character.hit();
+                    console.log(this.character.energy)
+                }
+            });
+        }, 200);
     }
 
     draw() {
@@ -44,49 +56,26 @@ class World {
 
     addToMap(movabelObj) {
         if (movabelObj.otherDirection) {
-            this.ctx.save();
-            this.ctx.translate(movabelObj.width, 0);
-            this.ctx.scale(-1, 1);
-            movabelObj.x = movabelObj.x * -1;
+            this.flipImage(movabelObj);
         }
-        this.ctx.drawImage(movabelObj.img, movabelObj.x, movabelObj.y, movabelObj.width, movabelObj.height);
+        movabelObj.draw(this.ctx);
+        movabelObj.drawFrame(this.ctx);
+
         if (movabelObj.otherDirection) {
-            movabelObj.x = movabelObj.x * -1;
-            this.ctx.restore();
+            this.flipImageBack(movabelObj);
         }
     }
 
-    generateBackgroundLayers() {
-        const background = [];
-        const layerCount = 8;
-        const tileWidth = 719;
-        const repeatFrom = -1;
-        const repeatTo = 3;
-
-        for (let repeat = repeatFrom; repeat <= repeatTo; repeat++) {
-            const x = repeat * tileWidth;
-            for (let i = layerCount; i >= 1; i--) {
-                background.push(
-                    new Background(`./assets/img/platformer-pixel-art-tileset/Background/Layers/${i}.png`, x)
-                );
-            }
-        }
-
-        return background;
+    flipImage(movabelObj) {
+        this.ctx.save();
+        this.ctx.translate(movabelObj.width, 0);
+        this.ctx.scale(-1, 1);
+        movabelObj.x = movabelObj.x * -1;
     }
 
-    generateBackgroundObjects() {
-        const tileWidth = 32;
-        const startX = -720;
-        const endX = 2876;
-        const y = 448;
-        const tilePath = './assets/img/platformer-pixel-art-tileset/Tiles/Tileset/TileSet_02.png';
-        const backgroundObjects = []; // <- Array anlegen
-
-        for (let x = startX; x <= endX; x += tileWidth) {
-            backgroundObjects.push(new BackgroundObjects(tilePath, x, y, tileWidth, tileWidth));
-        }
-
-        return backgroundObjects; // <- nicht vergessen zurückzugeben!
+    flipImageBack(movabelObj) {
+        movabelObj.x = movabelObj.x * -1;
+        this.ctx.restore();
     }
+
 }

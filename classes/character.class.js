@@ -23,8 +23,30 @@ class Character extends MovableObject {
         './assets/img/pixel-art-tiny-hero-sprites/1 Pink_Monster/idle/tile002.png',
         './assets/img/pixel-art-tiny-hero-sprites/1 Pink_Monster/idle/tile003.png'
     ]
+    IMAGES_DEAD = [
+        './assets/img/pixel-art-tiny-hero-sprites/1 Pink_Monster/death/tile000.png',
+        './assets/img/pixel-art-tiny-hero-sprites/1 Pink_Monster/death/tile001.png',
+        './assets/img/pixel-art-tiny-hero-sprites/1 Pink_Monster/death/tile002.png',
+        './assets/img/pixel-art-tiny-hero-sprites/1 Pink_Monster/death/tile003.png',
+        './assets/img/pixel-art-tiny-hero-sprites/1 Pink_Monster/death/tile004.png',
+        './assets/img/pixel-art-tiny-hero-sprites/1 Pink_Monster/death/tile005.png',
+        './assets/img/pixel-art-tiny-hero-sprites/1 Pink_Monster/death/tile006.png',
+        './assets/img/pixel-art-tiny-hero-sprites/1 Pink_Monster/death/tile007.png'
+    ]
+    IMAGES_HURT = [
+        './assets/img/pixel-art-tiny-hero-sprites/1 Pink_Monster/hurt/tile000.png',
+        './assets/img/pixel-art-tiny-hero-sprites/1 Pink_Monster/hurt/tile001.png',
+        './assets/img/pixel-art-tiny-hero-sprites/1 Pink_Monster/hurt/tile002.png',
+        './assets/img/pixel-art-tiny-hero-sprites/1 Pink_Monster/hurt/tile003.png'
+    ]
     world;
     speed = 5;
+    offset = {
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0
+    };
 
 
 
@@ -33,6 +55,8 @@ class Character extends MovableObject {
         this.loadImages(this.IMAGES_IDLE);
         this.loadImages(this.IMAGES_WALKING);
         this.loadImages(this.IMAGES_JUMPING);
+        this.loadImages(this.IMAGES_DEAD);
+        this.loadImages(this.IMAGES_HURT);
         this.animate();
         this.applyGravity();
     }
@@ -55,7 +79,11 @@ class Character extends MovableObject {
         }, 1000 / 60);
 
         setInterval(() => {
-            if (this.isAboveGround()) {
+            if (this.isDead()) {
+                this.playAnimation(this.IMAGES_DEAD);
+            } else if (this.isHurt()) {
+                this.playAnimation(this.IMAGES_HURT);
+            } else if (this.isAboveGround()) {
                 this.playAnimation(this.IMAGES_JUMPING);
             } else if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
                 this.playAnimation(this.IMAGES_WALKING);
@@ -64,4 +92,5 @@ class Character extends MovableObject {
             }
         }, 160);
     }
+
 }

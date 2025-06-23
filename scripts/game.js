@@ -20,8 +20,6 @@ window.addEventListener("keydown", (e) => {
     if (e.code == "ArrowDown") {
         keyboard.DOWN = true;
     }
-
-    console.log(e);
 })
 
 window.addEventListener("keyup", (e) => {
@@ -37,7 +35,4 @@ window.addEventListener("keyup", (e) => {
     if (e.code == "ArrowDown") {
         keyboard.DOWN = false;
     }
-
-
-    console.log(e);
 })
