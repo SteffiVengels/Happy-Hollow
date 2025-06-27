@@ -17,6 +17,9 @@ window.addEventListener("keydown", (e) => {
     if (e.code == "ArrowUp" || e.code == "Space") {
         keyboard.UP = true;
     }
+    if (e.code == "KeyF") {
+        keyboard.F = true;
+    }
     if (e.code == "ArrowDown") {
         keyboard.DOWN = true;
     }
@@ -31,6 +34,9 @@ window.addEventListener("keyup", (e) => {
     }
     if (e.code == "ArrowUp" || e.code == "Space") {
         keyboard.UP = false;
+    }
+    if (e.code == "KeyF") {
+        keyboard.F = false;
     }
     if (e.code == "ArrowDown") {
         keyboard.DOWN = false;

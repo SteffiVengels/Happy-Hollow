@@ -22,10 +22,12 @@ class MovableObject extends DrawableObject {
     }
 
     isAboveGround() {
-        return this.y < 398;
+        if (this instanceof ThrowableObject) {
+            return true
+        } else {
+            return this.y < 398;
+        }
     }
-
-
 
     isColliding(movabelObj) {
         return this.x + this.width - this.offset.right > movabelObj.x + movabelObj.offset.left &&
