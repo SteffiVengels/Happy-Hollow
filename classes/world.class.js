@@ -33,7 +33,6 @@ class World {
             let rock = new ThrowableObject(this.character.x, this.character.y);
             this.throwableObjects.push(rock);
         }
-
     }
 
     checkCollisions() {

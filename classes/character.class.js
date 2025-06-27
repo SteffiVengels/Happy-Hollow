@@ -39,6 +39,12 @@ class Character extends MovableObject {
         './assets/img/pixel-art-tiny-hero-sprites/1 Pink_Monster/hurt/tile002.png',
         './assets/img/pixel-art-tiny-hero-sprites/1 Pink_Monster/hurt/tile003.png'
     ]
+    IMAGES_THROW = [
+        './assets/img/pixel-art-tiny-hero-sprites/1 Pink_Monster/throw/tile000.png',
+        './assets/img/pixel-art-tiny-hero-sprites/1 Pink_Monster/throw/tile001.png',
+        './assets/img/pixel-art-tiny-hero-sprites/1 Pink_Monster/throw/tile002.png',
+        './assets/img/pixel-art-tiny-hero-sprites/1 Pink_Monster/throw/tile003.png'
+    ]
     world;
     speed = 5;
     offset = {
@@ -57,6 +63,7 @@ class Character extends MovableObject {
         this.loadImages(this.IMAGES_JUMPING);
         this.loadImages(this.IMAGES_DEAD);
         this.loadImages(this.IMAGES_HURT);
+        this.loadImages(this.IMAGES_THROW);
         this.animate();
         this.applyGravity();
     }
@@ -87,10 +94,17 @@ class Character extends MovableObject {
                 this.playAnimation(this.IMAGES_JUMPING);
             } else if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
                 this.playAnimation(this.IMAGES_WALKING);
+            } else if (this.world.keyboard.F) {
+                this.playAnimation(this.IMAGES_THROW);
             } else {
                 this.playAnimation(this.IMAGES_IDLE);
             }
         }, 160);
+
+        setInterval(() => {
+
+        }, 100);
     }
+
 
 }
