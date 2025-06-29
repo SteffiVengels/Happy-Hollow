@@ -24,15 +24,12 @@ class World {
     run() {
         setInterval(() => {
             this.checkCollisions();
-            this.checkThrowObjects();
-        }, 100);
+        }, 120);
     }
 
-    checkThrowObjects() {
-        if(this.keyboard.F) {
-            let rock = new ThrowableObject(this.character.x, this.character.y);
-            this.throwableObjects.push(rock);
-        }
+    throwRock(x, y) {
+        let rock = new ThrowableObject(x, y);
+        this.throwableObjects.push(rock);
     }
 
     checkCollisions() {

@@ -53,6 +53,8 @@ class Character extends MovableObject {
         right: 0,
         bottom: 0
     };
+    isThrowing = false;
+    isJumping = false;
 
 
 
@@ -69,23 +71,41 @@ class Character extends MovableObject {
     }
 
 
-    animate() {
-        setInterval(() => {
-            if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
-                this.moveRight();
-                this.otherDirection = false;
-            }
-            if (this.world.keyboard.LEFT && this.x > 0) {
-                this.moveLeft();
-                this.otherDirection = true;
-            }
-            if (this.world.keyboard.UP && !this.isAboveGround()) {
-                this.jump();
-            }
-            this.world.camera_x = -this.x + 50;
-        }, 1000 / 60);
+animate() {
+    // Bewegung: 60 FPS
+    setInterval(() => {
+        if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
+            this.moveRight();
+            this.otherDirection = false;
+        }
+        if (this.world.keyboard.LEFT && this.x > 0) {
+            this.moveLeft();
+            this.otherDirection = true;
+        }
+        if (this.world.keyboard.UP && !this.isAboveGround()) {
+            this.jump();
+        }
+        this.world.camera_x = -this.x + 50;
+    }, 1000 / 60);
 
-        setInterval(() => {
+    // Schnelle Animationen wie "throw"
+    setInterval(() => {
+        if (this.isThrowing) {
+            this.playAnimation(this.IMAGES_THROW);
+
+            if (this.currentImage === this.IMAGES_THROW.length - 1) {
+                this.isThrowing = false;
+                this.world.throwRock(this.x, this.y);
+            }
+        } else if (this.world.keyboard.F) {
+            this.isThrowing = true;
+            this.currentImage = 0;
+        }
+    }, 120); // <-- schnellere Animation für 'throw'
+
+    // Langsamere Idle-/Walk-/Jump-/Hurt-/Dead-Animation
+    setInterval(() => {
+        if (!this.isThrowing) {
             if (this.isDead()) {
                 this.playAnimation(this.IMAGES_DEAD);
             } else if (this.isHurt()) {
@@ -94,17 +114,12 @@ class Character extends MovableObject {
                 this.playAnimation(this.IMAGES_JUMPING);
             } else if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
                 this.playAnimation(this.IMAGES_WALKING);
-            } else if (this.world.keyboard.F) {
-                this.playAnimation(this.IMAGES_THROW);
             } else {
                 this.playAnimation(this.IMAGES_IDLE);
             }
-        }, 160);
-
-        setInterval(() => {
-
-        }, 100);
-    }
+        }
+    }, 240); // <-- idle z. B. langsamer
+}
 
 
 }

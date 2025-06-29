@@ -19,6 +19,7 @@ window.addEventListener("keydown", (e) => {
     }
     if (e.code == "KeyF") {
         keyboard.F = true;
+        isThrowing = true;
     }
     if (e.code == "ArrowDown") {
         keyboard.DOWN = true;
