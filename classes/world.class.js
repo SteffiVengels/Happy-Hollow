@@ -27,8 +27,8 @@ class World {
         }, 120);
     }
 
-    throwRock(x, y) {
-        let rock = new ThrowableObject(x, y);
+    throwRock(x, y, otherDirection) {
+        let rock = new ThrowableObject(x, y, otherDirection);
         this.throwableObjects.push(rock);
     }
 

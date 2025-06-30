@@ -95,7 +95,7 @@ animate() {
 
             if (this.currentImage === this.IMAGES_THROW.length - 1) {
                 this.isThrowing = false;
-                this.world.throwRock(this.x, this.y);
+                this.world.throwRock(this.x, this.y, this.otherDirection);
             }
         } else if (this.world.keyboard.F) {
             this.isThrowing = true;
