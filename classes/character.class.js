@@ -45,6 +45,11 @@ class Character extends MovableObject {
         './assets/img/pixel-art-tiny-hero-sprites/1 Pink_Monster/throw/tile002.png',
         './assets/img/pixel-art-tiny-hero-sprites/1 Pink_Monster/throw/tile003.png'
     ]
+    IMAGE_PORTRAIT = [
+        './assets/img/30-pixel-art-monster-portrait-icons/1 Main characters/Portraits_01.png',
+        './assets/img/game-ui-pixel-art/1 Frames/Portrait_frame.png'
+
+    ]
     world;
     speed = 5;
     offset = {
@@ -66,60 +71,61 @@ class Character extends MovableObject {
         this.loadImages(this.IMAGES_DEAD);
         this.loadImages(this.IMAGES_HURT);
         this.loadImages(this.IMAGES_THROW);
+        this.loadImages(this.IMAGE_PORTRAIT);
         this.animate();
         this.applyGravity();
     }
 
 
-animate() {
-    // Bewegung: 60 FPS
-    setInterval(() => {
-        if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
-            this.moveRight();
-            this.otherDirection = false;
-        }
-        if (this.world.keyboard.LEFT && this.x > 0) {
-            this.moveLeft();
-            this.otherDirection = true;
-        }
-        if (this.world.keyboard.UP && !this.isAboveGround()) {
-            this.jump();
-        }
-        this.world.camera_x = -this.x + 50;
-    }, 1000 / 60);
-
-    // Schnelle Animationen wie "throw"
-    setInterval(() => {
-        if (this.isThrowing) {
-            this.playAnimation(this.IMAGES_THROW);
-
-            if (this.currentImage === this.IMAGES_THROW.length - 1) {
-                this.isThrowing = false;
-                this.world.throwRock(this.x, this.y, this.otherDirection);
+    animate() {
+        // Bewegung: 60 FPS
+        setInterval(() => {
+            if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
+                this.moveRight();
+                this.otherDirection = false;
             }
-        } else if (this.world.keyboard.F) {
-            this.isThrowing = true;
-            this.currentImage = 0;
-        }
-    }, 120); // <-- schnellere Animation für 'throw'
-
-    // Langsamere Idle-/Walk-/Jump-/Hurt-/Dead-Animation
-    setInterval(() => {
-        if (!this.isThrowing) {
-            if (this.isDead()) {
-                this.playAnimation(this.IMAGES_DEAD);
-            } else if (this.isHurt()) {
-                this.playAnimation(this.IMAGES_HURT);
-            } else if (this.isAboveGround()) {
-                this.playAnimation(this.IMAGES_JUMPING);
-            } else if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
-                this.playAnimation(this.IMAGES_WALKING);
-            } else {
-                this.playAnimation(this.IMAGES_IDLE);
+            if (this.world.keyboard.LEFT && this.x > 0) {
+                this.moveLeft();
+                this.otherDirection = true;
             }
-        }
-    }, 240); // <-- idle z. B. langsamer
-}
+            if (this.world.keyboard.UP && !this.isAboveGround()) {
+                this.jump();
+            }
+            this.world.camera_x = -this.x + 50;
+        }, 1000 / 60);
+
+        // Schnelle Animationen wie "throw"
+        setInterval(() => {
+            if (this.isThrowing) {
+                this.playAnimation(this.IMAGES_THROW);
+
+                if (this.currentImage === this.IMAGES_THROW.length - 1) {
+                    this.isThrowing = false;
+                    this.world.throwRock(this.x, this.y, this.otherDirection);
+                }
+            } else if (this.world.keyboard.F) {
+                this.isThrowing = true;
+                this.currentImage = 0;
+            }
+        }, 120); // <-- schnellere Animation für 'throw'
+
+        // Langsamere Idle-/Walk-/Jump-/Hurt-/Dead-Animation
+        setInterval(() => {
+            if (!this.isThrowing) {
+                if (this.isDead()) {
+                    this.playAnimation(this.IMAGES_DEAD);
+                } else if (this.isHurt()) {
+                    this.playAnimation(this.IMAGES_HURT);
+                } else if (this.isAboveGround()) {
+                    this.playAnimation(this.IMAGES_JUMPING);
+                } else if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
+                    this.playAnimation(this.IMAGES_WALKING);
+                } else {
+                    this.playAnimation(this.IMAGES_IDLE);
+                }
+            }
+        }, 240); // <-- idle z. B. langsamer
+    }
 
 
 }

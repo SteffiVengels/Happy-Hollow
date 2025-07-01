@@ -6,12 +6,17 @@ class World {
     keyboard;
     camera_x = 0;
     statusBar = new StatusBar();
+    energyBar = new EnergyBar();
     throwableObjects = [];
+    portraitImg = new Image();
+    portraitFrameImg = new Image();
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
         this.canvas = canvas;
         this.keyboard = keyboard;
+        this.portraitImg.src = this.character.IMAGE_PORTRAIT[0];
+        this.portraitFrameImg.src = this.character.IMAGE_PORTRAIT[1];
         this.draw();
         this.setWorld();
         this.run();
@@ -51,7 +56,10 @@ class World {
 
         this.ctx.translate(-this.camera_x, 0);
         // Space for fixed objects
+        this.ctx.drawImage(this.portraitImg, 22, 22, 32, 32);
+        this.ctx.drawImage(this.portraitFrameImg, 10, 10, 56, 56);
         this.addToMap(this.statusBar);
+        this.addToMap(this.energyBar);
         this.ctx.translate(this.camera_x, 0);
 
         this.addToMap(this.character);

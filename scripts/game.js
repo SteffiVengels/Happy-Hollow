@@ -16,6 +16,7 @@ window.addEventListener("keydown", (e) => {
     }
     if (e.code == "ArrowUp" || e.code == "Space") {
         keyboard.UP = true;
+        isJumping = true;
     }
     if (e.code == "KeyF") {
         keyboard.F = true;
