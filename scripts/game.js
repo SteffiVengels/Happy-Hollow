@@ -16,11 +16,13 @@ window.addEventListener("keydown", (e) => {
     }
     if (e.code == "ArrowUp" || e.code == "Space") {
         keyboard.UP = true;
-        isJumping = true;
+        world.character.isJumping = true;
+
     }
     if (e.code == "KeyF") {
         keyboard.F = true;
-        isThrowing = true;
+        world.character.isThrowing = true;
+        world.character.currentImage = 0;
     }
     if (e.code == "ArrowDown") {
         keyboard.DOWN = true;

@@ -97,16 +97,13 @@ class Character extends MovableObject {
         // Schnelle Animationen wie "throw"
         setInterval(() => {
             if (this.isThrowing) {
+                console.log('Throw Animation frame:', this.currentImage);
                 this.playAnimation(this.IMAGES_THROW);
-
-                if (this.currentImage === this.IMAGES_THROW.length - 1) {
+                if (this.currentImage >= this.IMAGES_THROW.length) {
                     this.isThrowing = false;
                     this.world.throwRock(this.x, this.y, this.otherDirection);
                 }
-            } else if (this.world.keyboard.F) {
-                this.isThrowing = true;
-                this.currentImage = 0;
-            }
+            } 
         }, 120); // <-- schnellere Animation für 'throw'
 
         // Langsamere Idle-/Walk-/Jump-/Hurt-/Dead-Animation
