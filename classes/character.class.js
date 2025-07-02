@@ -61,8 +61,6 @@ class Character extends MovableObject {
     isThrowing = false;
     isJumping = false;
 
-
-
     constructor() {
         super().loadImage('./assets/img/pixel-art-tiny-hero-sprites/1 Pink_Monster/Pink_Monster.png');
         this.loadImages(this.IMAGES_IDLE);
@@ -75,7 +73,6 @@ class Character extends MovableObject {
         this.animate();
         this.applyGravity();
     }
-
 
     animate() {
         // Bewegung: 60 FPS
@@ -94,7 +91,22 @@ class Character extends MovableObject {
             this.world.camera_x = -this.x + 50;
         }, 1000 / 60);
 
-        // Schnelle Animationen wie "throw"
+        setInterval(() => {
+            if (this.isDead()) {
+                this.playAnimation(this.IMAGES_DEAD);
+            } else if (this.isHurt()) {
+                this.playAnimation(this.IMAGES_HURT);
+            } else if (this.isJumping) {
+                return
+            } else if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
+                this.playAnimation(this.IMAGES_WALKING);
+            } else if (this.isThrowing) {
+                return
+            } else {
+                this.playAnimation(this.IMAGES_IDLE);
+            }
+        }, 240);
+
         setInterval(() => {
             if (this.isThrowing) {
                 console.log('Throw Animation frame:', this.currentImage);
@@ -103,26 +115,18 @@ class Character extends MovableObject {
                     this.isThrowing = false;
                     this.world.throwRock(this.x, this.y, this.otherDirection);
                 }
-            } 
-        }, 120); // <-- schnellere Animation für 'throw'
+            }
+        }, 120);
 
-        // Langsamere Idle-/Walk-/Jump-/Hurt-/Dead-Animation
         setInterval(() => {
-            if (!this.isThrowing) {
-                if (this.isDead()) {
-                    this.playAnimation(this.IMAGES_DEAD);
-                } else if (this.isHurt()) {
-                    this.playAnimation(this.IMAGES_HURT);
-                } else if (this.isAboveGround()) {
-                    this.playAnimation(this.IMAGES_JUMPING);
-                } else if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
-                    this.playAnimation(this.IMAGES_WALKING);
-                } else {
-                    this.playAnimation(this.IMAGES_IDLE);
+            if (this.isJumping) {
+                this.playAnimation(this.IMAGES_JUMPING);
+                console.log(this.currentImage)
+                if (this.currentImage >= this.IMAGES_JUMPING.length) {
+                    this.isJumping = false;
                 }
             }
-        }, 240); // <-- idle z. B. langsamer
+        }, 240);
     }
-
 
 }

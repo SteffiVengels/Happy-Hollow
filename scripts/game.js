@@ -17,7 +17,7 @@ window.addEventListener("keydown", (e) => {
     if (e.code == "ArrowUp" || e.code == "Space") {
         keyboard.UP = true;
         world.character.isJumping = true;
-
+        world.character.currentImage = 0;
     }
     if (e.code == "KeyF") {
         keyboard.F = true;
