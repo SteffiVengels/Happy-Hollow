@@ -14,15 +14,10 @@ class MovableObject extends DrawableObject {
 
     applyGravity() {
         setInterval(() => {
-        const shouldFall = this.isAboveGround() || this.speedY > 0;
-        if (
-            (!this.isJumping && shouldFall) ||
-            (this.isJumping && this.currentImage === 3 && shouldFall)
-        ) {
-            this.y -= this.speedY;
-            this.speedY -= this.acceleration;
-            console.log(this.y, this.currentImage)
-        }
+            if (this.isAboveGround() || this.speedY > 0) {
+                this.y -= this.speedY;
+                this.speedY -= this.acceleration;
+            }
         }, 1000 / 25);
     }
 

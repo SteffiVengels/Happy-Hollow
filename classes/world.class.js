@@ -15,8 +15,8 @@ class World {
         this.ctx = canvas.getContext('2d');
         this.canvas = canvas;
         this.keyboard = keyboard;
-        this.portraitImg.src = this.character.IMAGE_PORTRAIT[0];
-        this.portraitFrameImg.src = this.character.IMAGE_PORTRAIT[1];
+        this.portraitFrameImg.src = this.character.IMAGE_PORTRAIT[0];
+        this.portraitImg.src = this.character.IMAGE_PORTRAIT[1];
         this.draw();
         this.setWorld();
         this.run();
