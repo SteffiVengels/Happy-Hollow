@@ -1,5 +1,5 @@
 class Character extends MovableObject {
-    Type = 'Pink-Monster';
+    Type = 'Dude-Monster';
     IMAGES_WALKING = [];
     IMAGES_JUMPING = [];
     IMAGES_IDLE = [];

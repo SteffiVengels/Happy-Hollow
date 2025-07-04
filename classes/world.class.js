@@ -10,6 +10,7 @@ class World {
     throwableObjects = [];
     portraitImg = new Image();
     portraitFrameImg = new Image();
+    food = new Food();
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
@@ -63,6 +64,7 @@ class World {
         this.ctx.translate(this.camera_x, 0);
 
         this.addToMap(this.character);
+        this.addToMap(this.food); 
         this.addObjectsToMap(this.level.enemies);
         this.addObjectsToMap(this.throwableObjects);
 

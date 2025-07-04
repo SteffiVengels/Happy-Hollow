@@ -17,7 +17,7 @@ class DrawableObject {
     }
 
     drawFrame(ctx) {
-        if (this instanceof Character || this instanceof Bear || this instanceof Mage || this instanceof Ooze) {
+        if (this instanceof Character || this instanceof Bear || this instanceof Mage || this instanceof Ooze || this instanceof RedMonster || this instanceof TinyMonster || this instanceof YellowMonster) {
             ctx.beginPath();
             ctx.lineWidth = '5';
             ctx.strokeStyle = 'blue';
