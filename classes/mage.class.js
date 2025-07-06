@@ -8,6 +8,12 @@ class Mage extends MovableObject {
         './assets/img/tiny-monsters-pixel-art-pack/2 Mage/walk/tile002.png',
         './assets/img/tiny-monsters-pixel-art-pack/2 Mage/walk/tile003.png'
     ];
+    offset = {
+        top: 0,
+        left: 5,
+        right: 0,
+        bottom: 0
+    };
 
     constructor() {
         super().loadImage('./assets/img/tiny-monsters-pixel-art-pack/2 Mage/Mage.png');

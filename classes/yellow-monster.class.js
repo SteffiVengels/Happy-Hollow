@@ -10,6 +10,12 @@ class YellowMonster extends MovableObject {
         './assets/img/tiny-monsters-pixel-art-pack/6 Yellow/walk/tile004.png',
         './assets/img/tiny-monsters-pixel-art-pack/6 Yellow/walk/tile005.png'
     ];
+    offset = {
+        top: 5,
+        left: 10,
+        right: 0,
+        bottom: 0
+    };
 
     constructor() {
         super().loadImage('./assets/img/tiny-monsters-pixel-art-pack/6 Yellow/Yellow.png');

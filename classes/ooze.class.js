@@ -8,6 +8,12 @@ class Ooze extends MovableObject {
         './assets/img/tiny-monsters-pixel-art-pack/3 Ooze/walk/tile002.png',
         './assets/img/tiny-monsters-pixel-art-pack/3 Ooze/walk/tile003.png'
     ];
+    offset = {
+        top: 20,
+        left: 5,
+        right: 0,
+        bottom: 0
+    };
 
     constructor() {
         super().loadImage('./assets/img/tiny-monsters-pixel-art-pack/3 Ooze/Ooze.png');

@@ -10,6 +10,12 @@ class TinyMonster extends MovableObject {
         './assets/img/tiny-monsters-pixel-art-pack/5 Tiny/walk/tile004.png',
         './assets/img/tiny-monsters-pixel-art-pack/5 Tiny/walk/tile005.png'
     ];
+    offset = {
+        top: 0,
+        left: 5,
+        right: 0,
+        bottom: 0
+    };
 
     constructor() {
         super().loadImage('./assets/img/tiny-monsters-pixel-art-pack/5 Tiny/Tiny.png');

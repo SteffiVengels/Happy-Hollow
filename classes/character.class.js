@@ -1,5 +1,5 @@
 class Character extends MovableObject {
-    Type = 'Dude-Monster';
+    Type = 'Owlet-Monster';
     IMAGES_WALKING = [];
     IMAGES_JUMPING = [];
     IMAGES_IDLE = [];
@@ -11,8 +11,8 @@ class Character extends MovableObject {
     speed = 5;
     offset = {
         top: 0,
-        left: 0,
-        right: 0,
+        left: 5,
+        right: 5,
         bottom: 0
     };
     isThrowing = false;
@@ -217,7 +217,7 @@ class Character extends MovableObject {
                 return
             } else if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
                 this.playAnimation(this.IMAGES_WALKING);
-            } else if (this.isThrowing) {
+            } else if (this.isThrowing && !this.noEnergy()) {
                 return
             } else {
                 this.playAnimation(this.IMAGES_IDLE);
@@ -225,7 +225,7 @@ class Character extends MovableObject {
         }, 240);
 
         setInterval(() => {
-            if (this.isThrowing) {
+            if (this.isThrowing && !this.noEnergy()) {
                 console.log('Throw Animation frame:', this.currentImage);
                 this.playAnimation(this.IMAGES_THROW);
                 if (this.currentImage >= this.IMAGES_THROW.length) {

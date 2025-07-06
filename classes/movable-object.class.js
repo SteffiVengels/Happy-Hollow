@@ -3,12 +3,8 @@ class MovableObject extends DrawableObject {
     otherDirection = false;
     speedY = 0;
     acceleration = 1;
-    offset = {
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0
-    };
+
+    health = 100;
     energy = 100;
     lastHit = 0;
 
@@ -37,12 +33,24 @@ class MovableObject extends DrawableObject {
     }
 
     hit() {
-        this.energy -= 5;
-        if (this.energy < 0) {
-            this.energy = 0;
+        this.health -= 5;
+        if (this.health < 0) {
+            this.health = 0;
         } else {
             this.lastHit = new Date().getTime();
         }
+    }
+
+    select(food) {
+        this.energy += 5;
+        console.log(this.energy)
+        const index = this.world.level.foodItems.indexOf(food);
+        if (index > -1) {
+            this.world.level.foodItems.splice(index, 1);
+        }
+        if (this.energy > 100) {
+            this.energy = 100;
+        } 
     }
 
     isHurt() {
@@ -51,6 +59,10 @@ class MovableObject extends DrawableObject {
     }
 
     isDead() {
+        return this.health == 0;
+    }
+
+    noEnergy() {
         return this.energy == 0;
     }
 

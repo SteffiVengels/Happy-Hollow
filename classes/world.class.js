@@ -10,7 +10,6 @@ class World {
     throwableObjects = [];
     portraitImg = new Image();
     portraitFrameImg = new Image();
-    food = new Food();
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
@@ -18,8 +17,8 @@ class World {
         this.keyboard = keyboard;
         this.portraitFrameImg.src = this.character.IMAGE_PORTRAIT[0];
         this.portraitImg.src = this.character.IMAGE_PORTRAIT[1];
-        this.draw();
         this.setWorld();
+        this.draw();
         this.run();
     }
 
@@ -30,11 +29,12 @@ class World {
     run() {
         setInterval(() => {
             this.checkCollisions();
+            this.checkCollisionsWithFood();
         }, 120);
     }
 
     throwRock(x, y, otherDirection) {
-        let rock = new ThrowableObject(x, y, otherDirection);
+        let rock = new ThrowableObject(x, y, otherDirection, this.character, this);
         this.throwableObjects.push(rock);
     }
 
@@ -42,7 +42,16 @@ class World {
         this.level.enemies.forEach((enemy) => {
             if (this.character.isColliding(enemy)) {
                 this.character.hit();
-                this.statusBar.setPercentage(this.character.energy);
+                this.statusBar.setPercentage(this.character.health);
+            }
+        });
+    }
+
+    checkCollisionsWithFood() {
+        this.level.foodItems.forEach((food) => {
+            if (this.character.isColliding(food)) {
+                this.character.select(food);
+                this.energyBar.setPercentage(this.character.energy);
             }
         });
     }
@@ -64,7 +73,7 @@ class World {
         this.ctx.translate(this.camera_x, 0);
 
         this.addToMap(this.character);
-        this.addToMap(this.food); 
+        this.addObjectsToMap(this.level.foodItems);
         this.addObjectsToMap(this.level.enemies);
         this.addObjectsToMap(this.throwableObjects);
 
@@ -88,6 +97,7 @@ class World {
         }
         movabelObj.draw(this.ctx);
         movabelObj.drawFrame(this.ctx);
+        movabelObj.drawFrameRed(this.ctx);
 
         if (movabelObj.otherDirection) {
             this.flipImageBack(movabelObj);

@@ -10,6 +10,12 @@ class Bear extends MovableObject {
         './assets/img/tiny-monsters-pixel-art-pack/1 Bear/walk/tile004.png',
         './assets/img/tiny-monsters-pixel-art-pack/1 Bear/walk/tile005.png'
     ];
+    offset = {
+        top: 10,
+        left: 20,
+        right: 0,
+        bottom: 0
+    };
 
 
 

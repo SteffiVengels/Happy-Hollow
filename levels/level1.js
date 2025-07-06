@@ -9,6 +9,10 @@ const level1 = new Level(
         new BossDemon()
     ],
     [
+        new Food(),
+        new Food(),
+    ],
+    [
         new Background('./assets/img/platformer-pixel-art-tileset/Background/Layers/8.png', -719),
         new Background('./assets/img/platformer-pixel-art-tileset/Background/Layers/7.png', -719),
         new Background('./assets/img/platformer-pixel-art-tileset/Background/Layers/6.png', -719),
