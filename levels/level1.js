@@ -6,6 +6,7 @@ const level1 = new Level(
         new RedMonster(),
         new TinyMonster(),
         new YellowMonster(),
+
         new BossDemon()
     ],
     [

@@ -30,6 +30,8 @@ class World {
         setInterval(() => {
             this.checkCollisions();
             this.checkCollisionsWithFood();
+            this.checkRockHitsEnemy();
+            this.cleanUpDeadEnemies();
         }, 120);
     }
 
@@ -54,6 +56,22 @@ class World {
                 this.energyBar.setPercentage(this.character.energy);
             }
         });
+    }
+
+    checkRockHitsEnemy() {
+        this.throwableObjects.forEach(rock => {
+            this.level.enemies.forEach(enemy => {
+                if (!enemy.isDead() && rock.isColliding(enemy)) {
+                    enemy.health = 0;
+                }
+            });
+        });
+    }
+
+    cleanUpDeadEnemies() {
+        this.level.enemies = this.level.enemies.filter(enemy =>
+            !enemy.markedForDeletion || enemy.currentImage < enemy.IMAGES_DEAD.length
+        );
     }
 
     draw() {

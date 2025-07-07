@@ -3,7 +3,12 @@ class MovableObject extends DrawableObject {
     otherDirection = false;
     speedY = 0;
     acceleration = 1;
-
+    offset = {
+        top: 0,
+        right: 0,
+        bottom: 0,
+        left: 0
+    };
     health = 100;
     energy = 100;
     lastHit = 0;
@@ -50,7 +55,7 @@ class MovableObject extends DrawableObject {
         }
         if (this.energy > 100) {
             this.energy = 100;
-        } 
+        }
     }
 
     isHurt() {
@@ -84,4 +89,24 @@ class MovableObject extends DrawableObject {
     jump() {
         this.speedY = 15;
     }
+
+    playDeathAnimation(images, intervalTime) {
+        this.currentImage = 0;
+        let interval = setInterval(() => {
+            if (this.currentImage < images.length) {
+                const path = images[this.currentImage];
+                if (this.imageCache[path]) {
+                    this.img = this.imageCache[path];
+                }
+                this.currentImage++;
+            } else {
+                clearInterval(interval);
+                this.dead = true;
+            }
+            console.log('DEAD Animation frame:', this.currentImage);
+        }, intervalTime);
+    }
+
+
+
 }

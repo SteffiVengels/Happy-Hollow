@@ -10,6 +10,12 @@ class BossDemon extends MovableObject {
         './assets/img/boss-monsters-pixel-art/2 Demon/sneer/tile004.png',
         './assets/img/boss-monsters-pixel-art/2 Demon/sneer/tile005.png',
     ];
+    IMAGES_DEAD = [
+        './assets/img/boss-monsters-pixel-art/2 Demon/death/tile000.png',
+        './assets/img/boss-monsters-pixel-art/2 Demon/death/tile001.png',
+        './assets/img/boss-monsters-pixel-art/2 Demon/death/tile002.png',
+        './assets/img/boss-monsters-pixel-art/2 Demon/death/tile003.png'
+    ];
     offset = {
         top: 60,
         left: 50,
