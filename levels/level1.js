@@ -1,24 +1,13 @@
 const level1 = new Level(
     [
 
-        new YellowMonster(),
-
-
-        new BossDemon()
+        new YellowMonster()
     ],
     [
         new Food(),
         new Food(),
     ],
     [
-        new Background('./assets/img/platformer-pixel-art-tileset/Background/Layers/8.png', -719),
-        new Background('./assets/img/platformer-pixel-art-tileset/Background/Layers/7.png', -719),
-        new Background('./assets/img/platformer-pixel-art-tileset/Background/Layers/6.png', -719),
-        new Background('./assets/img/platformer-pixel-art-tileset/Background/Layers/5.png', -719),
-        new Background('./assets/img/platformer-pixel-art-tileset/Background/Layers/4.png', -719),
-        new Background('./assets/img/platformer-pixel-art-tileset/Background/Layers/3.png', -719),
-        new Background('./assets/img/platformer-pixel-art-tileset/Background/Layers/2.png', -719),
-        new Background('./assets/img/platformer-pixel-art-tileset/Background/Layers/1.png', -719),
         new Background('./assets/img/platformer-pixel-art-tileset/Background/Layers/8.png', 0),
         new Background('./assets/img/platformer-pixel-art-tileset/Background/Layers/7.png', 0),
         new Background('./assets/img/platformer-pixel-art-tileset/Background/Layers/6.png', 0),
@@ -43,6 +32,22 @@ const level1 = new Level(
         new Background('./assets/img/platformer-pixel-art-tileset/Background/Layers/3.png', 1439),
         new Background('./assets/img/platformer-pixel-art-tileset/Background/Layers/2.png', 1439),
         new Background('./assets/img/platformer-pixel-art-tileset/Background/Layers/1.png', 1439),
+        new Background('./assets/img/platformer-pixel-art-tileset/Background/Layers/8.png', 2158),
+        new Background('./assets/img/platformer-pixel-art-tileset/Background/Layers/7.png', 2158),
+        new Background('./assets/img/platformer-pixel-art-tileset/Background/Layers/6.png', 2158),
+        new Background('./assets/img/platformer-pixel-art-tileset/Background/Layers/5.png', 2158),
+        new Background('./assets/img/platformer-pixel-art-tileset/Background/Layers/4.png', 2158),
+        new Background('./assets/img/platformer-pixel-art-tileset/Background/Layers/3.png', 2158),
+        new Background('./assets/img/platformer-pixel-art-tileset/Background/Layers/2.png', 2158),
+        new Background('./assets/img/platformer-pixel-art-tileset/Background/Layers/1.png', 2158),
+        new Background('./assets/img/platformer-pixel-art-tileset/Background/Layers/8.png', 2877),
+        new Background('./assets/img/platformer-pixel-art-tileset/Background/Layers/7.png', 2877),
+        new Background('./assets/img/platformer-pixel-art-tileset/Background/Layers/6.png', 2877),
+        new Background('./assets/img/platformer-pixel-art-tileset/Background/Layers/5.png', 2877),
+        new Background('./assets/img/platformer-pixel-art-tileset/Background/Layers/4.png', 2877),
+        new Background('./assets/img/platformer-pixel-art-tileset/Background/Layers/3.png', 2877),
+        new Background('./assets/img/platformer-pixel-art-tileset/Background/Layers/2.png', 2877),
+        new Background('./assets/img/platformer-pixel-art-tileset/Background/Layers/1.png', 2877),
     ],
     [
         new BackgroundObjects('./assets/img/platformer-pixel-art-tileset/Tiles/Tileset/TileSet_02.png', -96, 448, 32, 32),

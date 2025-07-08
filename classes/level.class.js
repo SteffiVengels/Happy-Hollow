@@ -3,7 +3,7 @@ class Level {
     foodItems;
     background;
     backgroundObjects;
-    level_end_x = 1400;
+    level_end_x = 3500;
 
     constructor(enemies, foodItems, background, backgroundObjects) {
         this.enemies = enemies;

@@ -1,5 +1,5 @@
 class Character extends MovableObject {
-    Type = 'Owlet-Monster';
+    Type = 'Pink-Monster';
     IMAGES_WALKING = [];
     IMAGES_JUMPING = [];
     IMAGES_IDLE = [];
@@ -29,6 +29,78 @@ class Character extends MovableObject {
         this.loadImages(this.IMAGE_PORTRAIT);
         this.animate();
         this.applyGravity();
+    }
+
+    animate() {
+        // Bewegung: 60 FPS
+        setInterval(() => {
+            if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
+                if (this.x < 310 || this.x > 3180) {
+                    this.moveRight(); // Character bewegt sich bis zur Mitte
+                } else {
+                    this.x += this.speed; // Character-Position erhöhen
+                    this.world.camera_x = -this.x + 310; // Hintergrund scrollt
+                }
+                this.otherDirection = false;
+            }
+
+            if (this.world.keyboard.LEFT && this.x > 0) {
+                if (this.x <= 310 || this.x > 3180) {
+                    this.moveLeft(); // Character bewegt sich selbst zurück
+                } else {
+                    this.x -= this.speed;
+                    this.world.camera_x = -this.x + 310;
+                }
+                this.otherDirection = true;
+            }
+
+            if (this.world.keyboard.UP && !this.isAboveGround()) {
+                this.jump();
+            }
+        }, 1000 / 60);
+
+        setInterval(() => {
+            if (this.isDead()) {
+                this.playAnimation(this.IMAGES_DEAD);
+            } else if (this.isHurt()) {
+                this.playAnimation(this.IMAGES_HURT);
+            } else if (this.isJumping) {
+                return
+            } else if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
+                return
+            } else if (this.isThrowing && !this.noEnergy()) {
+                return
+            } else {
+                this.playAnimation(this.IMAGES_IDLE);
+            }
+        }, 240);
+
+        setInterval(() => {
+            if (this.isThrowing && !this.noEnergy()) {
+                console.log('Throw Animation frame:', this.currentImage);
+                this.playAnimation(this.IMAGES_THROW);
+                if (this.currentImage >= this.IMAGES_THROW.length) {
+                    this.isThrowing = false;
+                    this.world.throwRock(this.x, this.y, this.otherDirection);
+                }
+            }
+        }, 120);
+
+        setInterval(() => {
+            if (this.isJumping) {
+                this.playAnimation(this.IMAGES_JUMPING);
+                console.log(this.currentImage)
+                if (this.currentImage >= this.IMAGES_JUMPING.length) {
+                    this.isJumping = false;
+                }
+            }
+        }, 240);
+
+        setInterval(() => {
+            if ((this.world.keyboard.RIGHT || this.world.keyboard.LEFT) && !this.isJumping) {
+                this.playAnimation(this.IMAGES_WALKING);
+            }
+        }, 120);
     }
 
     selectCharacterTyp() {
@@ -189,61 +261,6 @@ class Character extends MovableObject {
             './assets/img/game-ui-pixel-art/1 Frames/Portrait_frame.png',
             './assets/img/30-pixel-art-monster-portrait-icons/1 Main characters/Portraits_13.png'
         ];
-    }
-
-    animate() {
-        // Bewegung: 60 FPS
-        setInterval(() => {
-            if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
-                this.moveRight();
-                this.otherDirection = false;
-            }
-            if (this.world.keyboard.LEFT && this.x > 0) {
-                this.moveLeft();
-                this.otherDirection = true;
-            }
-            if (this.world.keyboard.UP && !this.isAboveGround()) {
-                this.jump();
-            }
-            this.world.camera_x = -this.x + 50;
-        }, 1000 / 60);
-
-        setInterval(() => {
-            if (this.isDead()) {
-                this.playAnimation(this.IMAGES_DEAD);
-            } else if (this.isHurt()) {
-                this.playAnimation(this.IMAGES_HURT);
-            } else if (this.isJumping) {
-                return
-            } else if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
-                this.playAnimation(this.IMAGES_WALKING);
-            } else if (this.isThrowing && !this.noEnergy()) {
-                return
-            } else {
-                this.playAnimation(this.IMAGES_IDLE);
-            }
-        }, 240);
-
-        setInterval(() => {
-            if (this.isThrowing && !this.noEnergy()) {
-                console.log('Throw Animation frame:', this.currentImage);
-                this.playAnimation(this.IMAGES_THROW);
-                if (this.currentImage >= this.IMAGES_THROW.length) {
-                    this.isThrowing = false;
-                    this.world.throwRock(this.x, this.y, this.otherDirection);
-                }
-            }
-        }, 120);
-
-        setInterval(() => {
-            if (this.isJumping) {
-                this.playAnimation(this.IMAGES_JUMPING);
-                console.log(this.currentImage)
-                if (this.currentImage >= this.IMAGES_JUMPING.length) {
-                    this.isJumping = false;
-                }
-            }
-        }, 240);
     }
 
 }
