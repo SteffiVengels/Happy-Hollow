@@ -43,8 +43,15 @@ class World {
     checkCollisions() {
         this.level.enemies.forEach((enemy) => {
             if (this.character.isColliding(enemy)) {
-                this.character.hit();
-                this.statusBar.setPercentage(this.character.health);
+                if (this.didJumpOnEnemy(enemy)) {
+                    enemy.health = 0;
+                    this.character.applyBounce();
+                } else if (!enemy.inDeadAnimation) {
+
+                    this.character.hit();
+                    this.statusBar.setPercentage(this.character.health);
+                }
+                console.log(this.character.health)
             }
         });
     }
@@ -72,6 +79,15 @@ class World {
         this.level.enemies = this.level.enemies.filter(enemy =>
             !enemy.markedForDeletion || enemy.currentImage < enemy.IMAGES_DEAD.length
         );
+    }
+
+    didJumpOnEnemy(enemy) {
+        const enemyHeight = enemy.y + ((enemy.height - enemy.offset.top) / 2);
+        const characterHeight = this.character.y + (this.character.height - this.character.offset.top);
+        const isAbove = characterHeight > enemyHeight;
+        const isFalling = this.character.speedY < 0;
+        const isColliding = this.character.isColliding(enemy);
+        return isAbove && isFalling && isColliding;
     }
 
     draw() {

@@ -47,14 +47,14 @@ class MovableObject extends DrawableObject {
     }
 
     select(food) {
-        this.energy += 5;
-        console.log(this.energy)
         const index = this.world.level.foodItems.indexOf(food);
         if (index > -1) {
             this.world.level.foodItems.splice(index, 1);
         }
         if (this.energy > 100) {
             this.energy = 100;
+        } else {
+            this.energy += 5;
         }
     }
 
@@ -105,6 +105,11 @@ class MovableObject extends DrawableObject {
             }
             console.log('DEAD Animation frame:', this.currentImage);
         }, intervalTime);
+    }
+
+    applyBounce() {
+        this.speedY = 10;
+        this.y = 398;
     }
 
 
