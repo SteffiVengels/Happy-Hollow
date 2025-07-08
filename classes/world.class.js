@@ -100,8 +100,8 @@ class World {
 
         this.ctx.translate(-this.camera_x, 0);
         // Space for fixed objects
-        this.ctx.drawImage(this.portraitImg, 22, 22, 32, 32);
-        this.ctx.drawImage(this.portraitFrameImg, 10, 10, 56, 56);
+        this.ctx.drawImage(this.portraitImg, 29, 29, 51, 51);
+        this.ctx.drawImage(this.portraitFrameImg, 10, 10, 90, 90);
         this.addToMap(this.statusBar);
         this.addToMap(this.energyBar);
         this.ctx.translate(this.camera_x, 0);

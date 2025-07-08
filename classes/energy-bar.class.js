@@ -14,7 +14,7 @@ class EnergyBar extends StatusBar {
     constructor() {
         super();
         this.loadImages(this.IMAGES);
-        this.x = 76;
+        this.x = 110;
         this.y = 40; // z.B. andere Position als Healthbar
         this.width = 154;
         this.height = 20;

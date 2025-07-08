@@ -27,7 +27,7 @@ class TinyMonster extends MovableObject {
 
     constructor() {
         super().loadImage('./assets/img/tiny-monsters-pixel-art-pack/5 Tiny/Tiny.png');
-        this.x = 300 + Math.random() * 400;
+        this.x = 719 + Math.random() * 2700;
         this.speed = 0.15 + Math.random() * 0.25;
         this.loadImages(this.IMAGES_WALKING);
         this.loadImages(this.IMAGES_DEAD);
