@@ -97,6 +97,7 @@ class World {
 
         this.addObjectsToMap(this.level.background);
         this.addObjectsToMap(this.level.backgroundObjects);
+        this.addObjectsToMap(this.level.groundObjects);
 
         this.ctx.translate(-this.camera_x, 0);
         // Space for fixed objects

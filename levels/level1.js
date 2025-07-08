@@ -30,6 +30,19 @@ const level1 = new Level(
         new Background('./assets/img/platformer-pixel-art-tileset/Background/Layers/1.png', 0)
     ],
     [
+        new AnimatedObjects('flag', 3500, 397),
+        new AnimatedObjects('coin'),
+        new AnimatedObjects('coin'),
+        new AnimatedObjects('coin'),
+        new AnimatedObjects('coin'),
+        new AnimatedObjects('coin'),
+        new AnimatedObjects('coin'),
+        new AnimatedObjects('coin'),
+        new AnimatedObjects('coin'),
+        new AnimatedObjects('coin'),
+        new AnimatedObjects('coin')
+    ],
+    [
         new BackgroundObjects('./assets/img/platformer-pixel-art-tileset/Tiles/Tileset/TileSet_02.png', 0, 448, 32, 32)
     ]
 
