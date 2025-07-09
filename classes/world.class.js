@@ -1,6 +1,5 @@
 class World {
     character = new Character();
-    level = level1;
     canvas;
     ctx;
     keyboard;
@@ -10,6 +9,8 @@ class World {
     throwableObjects = [];
     portraitImg = new Image();
     portraitFrameImg = new Image();
+    coinImg = new Image();
+    level = level1;
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
@@ -17,6 +18,11 @@ class World {
         this.keyboard = keyboard;
         this.portraitFrameImg.src = this.character.IMAGE_PORTRAIT[0];
         this.portraitImg.src = this.character.IMAGE_PORTRAIT[1];
+        this.coinImg.src = './assets/img/platformer-pixel-art-tileset/Objects_Animated/coin/tile000.png';
+        this.level.enemies.forEach(enemy => {
+            enemy.character = this.character; // oder direkt setzen
+            enemy.world = this;
+        });
         this.setWorld();
         this.draw();
         this.run();
@@ -30,6 +36,7 @@ class World {
         setInterval(() => {
             this.checkCollisions();
             this.checkCollisionsWithFood();
+            this.checkCollisionsWithCoins();
             this.checkRockHitsEnemy();
             this.cleanUpDeadEnemies();
         }, 120);
@@ -38,6 +45,12 @@ class World {
     throwRock(x, y, otherDirection) {
         let rock = new ThrowableObject(x, y, otherDirection, this.character, this);
         this.throwableObjects.push(rock);
+    }
+
+    throwFireBall(x, y, otherDirection) {
+        let fireBall = new AnimatedObjects('fireBall', x, y);
+        fireBall.otherDirection = !otherDirection;
+        this.throwableObjects.push(fireBall);
     }
 
     checkCollisions() {
@@ -51,6 +64,7 @@ class World {
                     this.character.hit();
                     this.statusBar.setPercentage(this.character.health);
                 }
+
                 console.log(this.character.health)
             }
         });
@@ -61,6 +75,16 @@ class World {
             if (this.character.isColliding(food)) {
                 this.character.select(food);
                 this.energyBar.setPercentage(this.character.energy);
+            }
+        });
+    }
+
+    checkCollisionsWithCoins() {
+        this.level.coins.forEach((coin, index) => {
+            if (this.character.isColliding(coin)) {
+                this.character.coinCount++;
+                this.level.coins.splice(index, 1); // Entfernt eingesammelte Münze
+                console.log(' coin count', this.character.coinCount)
             }
         });
     }
@@ -87,6 +111,7 @@ class World {
         const isAbove = characterHeight > enemyHeight;
         const isFalling = this.character.speedY < 0;
         const isColliding = this.character.isColliding(enemy);
+        console.log('speedY', this.character.speedY)
         return isAbove && isFalling && isColliding;
     }
 
@@ -96,6 +121,7 @@ class World {
         this.ctx.translate(this.camera_x, 0);
 
         this.addObjectsToMap(this.level.background);
+        this.addObjectsToMap(this.level.coins);
         this.addObjectsToMap(this.level.backgroundObjects);
         this.addObjectsToMap(this.level.groundObjects);
 
@@ -103,6 +129,10 @@ class World {
         // Space for fixed objects
         this.ctx.drawImage(this.portraitImg, 29, 29, 51, 51);
         this.ctx.drawImage(this.portraitFrameImg, 10, 10, 90, 90);
+        this.ctx.drawImage(this.coinImg, 610, 10, 51, 51);
+        this.ctx.font = '20px Pixel, Planes';
+        this.ctx.fillStyle = 'white';
+        this.ctx.fillText(`x ${this.character.coinCount}`, 660, 41);
         this.addToMap(this.statusBar);
         this.addToMap(this.energyBar);
         this.ctx.translate(this.camera_x, 0);

@@ -21,19 +21,34 @@ class AnimatedObjects extends BackgroundObjects {
             './assets/img/platformer-pixel-art-tileset/Objects_Animated/coin/tile005.png',
             './assets/img/platformer-pixel-art-tileset/Objects_Animated/coin/tile006.png',
             './assets/img/platformer-pixel-art-tileset/Objects_Animated/coin/tile007.png'
+        ],
+        fireBall: [
+            './assets/img/10-magic-sprite-sheet-effects-pixel-art/10 Fire ball/fire-ball/tile000.png',
+            './assets/img/10-magic-sprite-sheet-effects-pixel-art/10 Fire ball/fire-ball/tile001.png',
+            './assets/img/10-magic-sprite-sheet-effects-pixel-art/10 Fire ball/fire-ball/tile002.png',
+            './assets/img/10-magic-sprite-sheet-effects-pixel-art/10 Fire ball/fire-ball/tile003.png',
+            './assets/img/10-magic-sprite-sheet-effects-pixel-art/10 Fire ball/fire-ball/tile004.png',
+            './assets/img/10-magic-sprite-sheet-effects-pixel-art/10 Fire ball/fire-ball/tile005.png',
+            './assets/img/10-magic-sprite-sheet-effects-pixel-art/10 Fire ball/fire-ball/tile006.png',
+            './assets/img/10-magic-sprite-sheet-effects-pixel-art/10 Fire ball/fire-ball/tile007.png'
         ]
     };
 
     constructor(type, x, y) {
-        const firstImage = `./assets/img/platformer-pixel-art-tileset/Objects_Animated/${type}/tile000.png`;
-        if (type === 'coin') {
-            x = 719 + Math.random() * 2700;
-            y = 322 + Math.random() * 50;
+        let basePath;
+
+        if (type === 'fireBall') {
+            basePath = './assets/img/10-magic-sprite-sheet-effects-pixel-art/10 Fire ball/fire-ball';
+        } else {
+            basePath = `./assets/img/platformer-pixel-art-tileset/Objects_Animated/${type}`;
         }
+
+        const firstImage = `${basePath}/tile000.png`;
         super(firstImage, x, y);
         this.type = type;
         this.x = x;
         this.y = y;
+        this.speed = 5;
         this.animationImages = this.animations[type];
         this.loadImages(this.animationImages);
         this.animate();
@@ -43,5 +58,11 @@ class AnimatedObjects extends BackgroundObjects {
         setInterval(() => {
             this.playAnimation(this.animationImages)
         }, 120);
+
+        setInterval(() => {
+            if (this.type === "fireBall") {
+                this.x += this.otherDirection ? -this.speed : this.speed;
+            }
+        }, 1000 / 60);
     }
 }

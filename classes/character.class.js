@@ -17,6 +17,7 @@ class Character extends MovableObject {
     };
     isThrowing = false;
     isJumping = false;
+    coinCount = 0;
 
     constructor() {
         super().selectCharacterTyp();

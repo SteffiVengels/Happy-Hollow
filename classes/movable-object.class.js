@@ -52,10 +52,18 @@ class MovableObject extends DrawableObject {
             this.world.level.foodItems.splice(index, 1);
         }
         if (this.energy > 100) {
-            this.energy = 100;
+            this.fullEnergy();
         } else {
-            this.energy += 5;
+            this.giveEenergy();
         }
+    }
+
+    fullEnergy() {
+        return this.energy = 100;
+    }
+
+    giveEenergy() {
+        return this.energy += 5;
     }
 
     isHurt() {

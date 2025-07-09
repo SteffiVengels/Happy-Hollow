@@ -52,7 +52,15 @@ class Mage extends MovableObject {
             }
         }, 160);
         setInterval(() => {
-            this.moveLeft();
+            if (this.character && !this.isDead()) {
+                if (this.character.x - this.x > 102) {
+                    this.moveRight();
+                    this.otherDirection = true; // damit er richtig gespiegelt wird
+                } else {
+                    this.moveLeft();
+                    this.otherDirection = false;
+                }
+            }
         }, 1000 / 60);
     }
 

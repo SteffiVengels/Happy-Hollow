@@ -2,14 +2,16 @@ class Level {
     enemies;
     foodItems;
     background;
+    coins;
     backgroundObjects;
     groundObjects;
     level_end_x = 3500;
 
-    constructor(enemies, foodItems, background, backgroundObjects, groundObjects) {
+    constructor(enemies, foodItems, background, coins, backgroundObjects, groundObjects) {
         this.enemies = enemies;
         this.foodItems = foodItems;
         this.background = background;
+        this.coins = coins;
         this.backgroundObjects = backgroundObjects;
         this.groundObjects = groundObjects;
         this.repeatBackground();
