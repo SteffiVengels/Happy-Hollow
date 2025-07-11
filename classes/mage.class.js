@@ -98,7 +98,7 @@ class Mage extends MovableObject {
 
         setInterval(() => {
             if (this.character && !this.isDead() && !this.inAttack) {
-                if (this.character.x - this.x > 102) {
+                if (this.character.x - this.x > 51) {
                     this.moveRight();
                     this.otherDirection = true; // damit er richtig gespiegelt wird
                 } else {
