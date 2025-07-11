@@ -39,6 +39,7 @@ class World {
             this.checkCollisionsWithCoins();
             this.checkRockHitsEnemy();
             this.cleanUpDeadEnemies();
+            this.checkFireBallHitsCharacter();
         }, 120);
     }
 
@@ -89,15 +90,33 @@ class World {
         });
     }
 
-    checkRockHitsEnemy() {
-        this.throwableObjects.forEach(rock => {
+checkRockHitsEnemy() {
+    this.throwableObjects.forEach(obj => {
+        if (obj instanceof ThrowableObject) {
             this.level.enemies.forEach(enemy => {
-                if (!enemy.isDead() && rock.isColliding(enemy)) {
+                if (!enemy.isDead() && obj.isColliding(enemy)) {
                     enemy.health = 0;
                 }
             });
-        });
-    }
+        }
+    });
+}
+
+checkFireBallHitsCharacter() {
+    this.throwableObjects.forEach((obj, index) => {
+        // Nur prüfen, wenn es ein Fireball ist
+        if (obj instanceof AnimatedObjects && obj.type === 'fireBall') {
+            // Prüfen, ob der Fireball den Charakter trifft
+            if (this.character.isColliding(obj)) {
+                this.character.hit(); // Charakter bekommt Schaden
+                this.statusBar.setPercentage(this.character.health);
+                
+                // Fireball aus dem Spiel entfernen
+                this.throwableObjects.splice(index, 1);
+            }
+        }
+    });
+}
 
     cleanUpDeadEnemies() {
         this.level.enemies = this.level.enemies.filter(enemy =>

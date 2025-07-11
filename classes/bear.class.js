@@ -45,7 +45,6 @@ class Bear extends MovableObject {
         this.speed = 0.15 + Math.random() * 0.25;
         this.character = character;
         this.world = world;
-        console.log(this.x)
         this.loadImages(this.IMAGES_WALKING);
         this.loadImages(this.IMAGES_DEAD);
         this.loadImages(this.IMAGES_ATTACK);
@@ -69,33 +68,42 @@ class Bear extends MovableObject {
                 this.inDeadAnimation = false;
                 this.playAnimation(this.IMAGES_WALKING);
             }
-        }, 240);
+        }, 160);
 
         setInterval(() => {
-            if (this.character && Math.abs(this.character.x - this.x) <= 204) {
-                console.log('Attack Animation frame:', this.currentImage);
-                if (!this.inAttack) {
-                    this.currentImage = 0;
-                    this.inAttack = true;
-                    this.hasFired = false;
-                }
-                this.playAnimation(this.IMAGES_ATTACK);
-                if (this.currentImage >= this.IMAGES_ATTACK.length) {
-                    if (!this.hasFired) {
-                        this.world.throwFireBall(this.x, this.y + 5, this.otherDirection); // etwas nach unten versetzt
-
+            if (this.character && !this.isDead()) {
+                if (Math.abs(this.character.x - this.x) <= 204) {
+                    if (!this.inAttack) {
+                        this.currentImage = 0;
+                        this.inAttack = true;
+                        this.hasFired = false;
+                    } else if (this.inAttack) {
+                        this.playAnimation(this.IMAGES_ATTACK);
+                        console.log('Attack Animation frame:', this.currentImage, this.inAttack);
                     }
-                    this.inAttack = false; // zurück zum Lauf- oder Idle-Modus
+
+                    if (this.currentImage >= this.IMAGES_ATTACK.length) {
+                        if (!this.hasFired) {
+                            let fireBallX = this.otherDirection ? this.x + 20 : this.x - 20;
+                            this.world.throwFireBall(fireBallX, this.y + 5, this.otherDirection);
+                        }
+                        this.hasFired = true;
+                        this.inAttack = false;
+                        console.log(this.inAttack, this.isDead());
+                    }
+                } else {
+                    // Spieler zu weit weg, Abbruch des Angriffs
+                    this.inAttack = false;
                 }
             }
-        }, 240);
+        }, 160);
 
         setInterval(() => {
             if (this.character && !this.isDead() && !this.inAttack) {
                 if (this.character.x - this.x > 102) {
                     this.moveRight();
                     this.otherDirection = true; // damit er richtig gespiegelt wird
-                } else {
+                } else if (this.character.x - this.x < 106) {
                     this.moveLeft();
                     this.otherDirection = false;
                 }
