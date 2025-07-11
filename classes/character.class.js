@@ -78,7 +78,6 @@ class Character extends MovableObject {
 
         setInterval(() => {
             if (this.isThrowing && !this.noEnergy()) {
-                console.log('Throw Animation frame:', this.currentImage);
                 this.playAnimation(this.IMAGES_THROW);
                 if (this.currentImage >= this.IMAGES_THROW.length) {
                     this.isThrowing = false;
@@ -90,7 +89,6 @@ class Character extends MovableObject {
         setInterval(() => {
             if (this.isJumping) {
                 this.playAnimation(this.IMAGES_JUMPING);
-                console.log(this.currentImage)
                 if (this.currentImage >= this.IMAGES_JUMPING.length) {
                     this.isJumping = false;
                 }

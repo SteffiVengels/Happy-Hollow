@@ -56,7 +56,6 @@ class YellowMonster extends MovableObject {
                     this.currentImage = 0;       // Reset Animation auf Anfang
                     this.inDeadAnimation = true; // Flag setzen, dass Dead-Animation läuft
                 }
-                console.log('Dead Animation frame:', this.currentImage);
                 this.playAnimation(this.IMAGES_DEAD);
                 if (this.currentImage >= this.IMAGES_DEAD.length) {
                     this.markedForDeletion = true;
@@ -78,17 +77,15 @@ class YellowMonster extends MovableObject {
                         this.hasFired = false;
                     } else if (this.inAttack) {
                         this.playAnimation(this.IMAGES_ATTACK);
-                        console.log('Attack Animation frame:', this.currentImage, this.inAttack);
                     }
 
                     if (this.currentImage >= this.IMAGES_ATTACK.length) {
                         if (!this.hasFired) {
                             let fireBallX = this.otherDirection ? this.x + 20 : this.x - 20;
-                            this.world.throwFireBall(fireBallX, this.y + 5, this.otherDirection);
+                            this.world.throwFireBall(fireBallX, this.y + 5, this.otherDirection, this);
                         }
                         this.hasFired = true;
                         this.inAttack = false;
-                        console.log(this.inAttack, this.isDead());
                     }
                 } else {
                     // Spieler zu weit weg, Abbruch des Angriffs

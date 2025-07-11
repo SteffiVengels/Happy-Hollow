@@ -48,9 +48,10 @@ class World {
         this.throwableObjects.push(rock);
     }
 
-    throwFireBall(x, y, otherDirection) {
+    throwFireBall(x, y, otherDirection, enemy) {
         let fireBall = new AnimatedObjects('fireBall', x, y);
         fireBall.otherDirection = !otherDirection;
+        fireBall.owner = enemy;
         this.throwableObjects.push(fireBall);
     }
 
@@ -61,12 +62,9 @@ class World {
                     enemy.health = 0;
                     this.character.applyBounce();
                 } else if (!enemy.inDeadAnimation) {
-
                     this.character.hit();
                     this.statusBar.setPercentage(this.character.health);
                 }
-
-                console.log(this.character.health)
             }
         });
     }
@@ -85,7 +83,6 @@ class World {
             if (this.character.isColliding(coin)) {
                 this.character.coinCount++;
                 this.level.coins.splice(index, 1); // Entfernt eingesammelte Münze
-                console.log(' coin count', this.character.coinCount)
             }
         });
     }
@@ -106,8 +103,8 @@ class World {
         this.throwableObjects.forEach((obj, index) => {
             // Nur prüfen, wenn es ein Fireball ist
             if (obj instanceof AnimatedObjects && obj.type === 'fireBall') {
-                // Prüfen, ob der Fireball den Charakter trifft
-                if (this.character.isColliding(obj)) {
+
+                if (this.character.isColliding(obj) && !this.didJumpOnEnemy(obj.owner)) {
                     this.character.hit(); // Charakter bekommt Schaden
                     this.statusBar.setPercentage(this.character.health);
 
@@ -125,12 +122,11 @@ class World {
     }
 
     didJumpOnEnemy(enemy) {
-        const enemyHeight = enemy.y + ((enemy.height - enemy.offset.top) / 2);
+        const enemyHeight = enemy.y + ((enemy.height - enemy.offset.top));
         const characterHeight = this.character.y + (this.character.height - this.character.offset.top);
         const isAbove = characterHeight > enemyHeight;
         const isFalling = this.character.speedY < 0;
         const isColliding = this.character.isColliding(enemy);
-        console.log('speedY', this.character.speedY)
         return isAbove && isFalling && isColliding;
     }
 

@@ -28,7 +28,6 @@ class BossDemon extends MovableObject {
     constructor() {
         super().loadImage('./assets/img/boss-monsters-pixel-art/2 Demon/Demon_Boss.png');
         this.x = 700;
-        console.log(this.x)
         this.loadImages(this.IMAGES_WALKING);
         this.animate();
     }

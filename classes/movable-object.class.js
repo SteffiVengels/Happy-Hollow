@@ -18,6 +18,8 @@ class MovableObject extends DrawableObject {
             if (this.isAboveGround() || this.speedY > 0) {
                 this.y -= this.speedY;
                 this.speedY -= this.acceleration;
+            } else {
+                this.speedY = 0;
             }
         }, 1000 / 25);
     }
@@ -111,7 +113,6 @@ class MovableObject extends DrawableObject {
                 clearInterval(interval);
                 this.dead = true;
             }
-            console.log('DEAD Animation frame:', this.currentImage);
         }, intervalTime);
     }
 

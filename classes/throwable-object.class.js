@@ -16,7 +16,6 @@ class ThrowableObject extends MovableObject {
         this.speedY = 10;
         this.character.energy -= 10;
         this.world.energyBar.setPercentage(this.character.energy);
-        console.log(this.character.energy)
         this.applyGravity();
         setInterval(() => {
             if (this.otherDirection) {
