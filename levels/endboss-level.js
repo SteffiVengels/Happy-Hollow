@@ -1,4 +1,5 @@
-const endBossLevel = new Level(
+function createEndBossLevel() {
+return new Level(
     [
         new BossDemon()
     ],
@@ -23,3 +24,4 @@ const endBossLevel = new Level(
     false
 
 );
+}

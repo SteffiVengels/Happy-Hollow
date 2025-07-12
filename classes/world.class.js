@@ -61,6 +61,27 @@ class World {
         }
     }
 
+    fadeToNewWorld(canvas, createNewWorldFn) {
+    const ctx = canvas.getContext('2d');
+    let opacity = 0;
+
+    const fade = setInterval(() => {
+        opacity += 0.05;
+        ctx.fillStyle = `rgba(255, 255, 255, ${opacity})`;
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        if (opacity >= 1) {
+            clearInterval(fade);
+            setTimeout(() => {
+                if (world) {
+                    world.clearAllIntervals();
+                    world.stopDrawing();
+                }
+                createNewWorldFn(); // <-- hier wird die neue Welt gesetzt
+            }, 500);
+        }
+    }, 50);
+}
+
     triggerLevelEndTransition() {
         if (this.transitioning) return;
         this.transitioning = true;

@@ -48,7 +48,8 @@ window.addEventListener("keyup", (e) => {
 })
 
     function loadEndbossLevel() {
-        world = new World(canvas, keyboard, endBossLevel);
+        const level = createEndBossLevel();
+        world = new World(canvas, keyboard, level);
         world.character.x = 50;
         world.camera_x = 0;
         world.level.enemies.forEach(enemy => {
