@@ -77,18 +77,16 @@ class YellowMonster extends MovableObject {
                         this.hasFired = false;
                     } else if (this.inAttack) {
                         this.playAnimation(this.IMAGES_ATTACK);
-                    }
-
-                    if (this.currentImage >= this.IMAGES_ATTACK.length) {
-                        if (!this.hasFired) {
-                            let fireBallX = this.otherDirection ? this.x + 20 : this.x - 20;
-                            this.world.throwFireBall(fireBallX, this.y + 5, this.otherDirection, this);
+                        if (this.currentImage >= this.IMAGES_ATTACK.length) {
+                            if (!this.hasFired) {
+                                let fireBallX = this.otherDirection ? this.x + 20 : this.x - 20;
+                                this.world.throwFireBall(fireBallX, this.y + 5, this.otherDirection, this);
+                                this.hasFired = true;
+                                this.inAttack = false;
+                            } 
                         }
-                        this.hasFired = true;
-                        this.inAttack = false;
                     }
                 } else {
-                    // Spieler zu weit weg, Abbruch des Angriffs
                     this.inAttack = false;
                 }
             }

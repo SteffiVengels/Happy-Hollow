@@ -40,7 +40,16 @@ class World {
             this.checkRockHitsEnemy();
             this.cleanUpDeadEnemies();
             this.checkFireBallHitsCharacter();
+            this.checkLevelEnd();
         }, 120);
+    }
+
+    checkLevelEnd() {
+        const flag = this.level.backgroundObjects.find(obj => obj.type === 'flag');
+
+        if (flag && this.character.isColliding(flag)) {
+            this.triggerLevelEndTransition();
+        }
     }
 
     throwRock(x, y, otherDirection) {
@@ -124,7 +133,7 @@ class World {
     didJumpOnEnemy(enemy) {
         const enemyHeight = enemy.y + ((enemy.height - enemy.offset.top));
         const characterHeight = this.character.y + (this.character.height - this.character.offset.top);
-        const isAbove = characterHeight > enemyHeight;
+        const isAbove = characterHeight < enemyHeight;
         const isFalling = this.character.speedY < 0;
         const isColliding = this.character.isColliding(enemy);
         return isAbove && isFalling && isColliding;
