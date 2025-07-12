@@ -10,12 +10,13 @@ class World {
     portraitImg = new Image();
     portraitFrameImg = new Image();
     coinImg = new Image();
-    level = level1;
+    animationFrameId;
 
-    constructor(canvas, keyboard) {
+    constructor(canvas, keyboard, level) {
         this.ctx = canvas.getContext('2d');
         this.canvas = canvas;
         this.keyboard = keyboard;
+        this.level = level;
         this.portraitFrameImg.src = this.character.IMAGE_PORTRAIT[0];
         this.portraitImg.src = this.character.IMAGE_PORTRAIT[1];
         this.coinImg.src = './assets/img/platformer-pixel-art-tileset/Objects_Animated/coin/tile000.png';
@@ -26,6 +27,10 @@ class World {
         this.setWorld();
         this.draw();
         this.run();
+    }
+
+    clearAllIntervals() {
+        for (let i = 1; i < 9999; i++) window.clearInterval(i);
     }
 
     setWorld() {
@@ -44,6 +49,10 @@ class World {
         }, 120);
     }
 
+    stopDrawing() {
+        cancelAnimationFrame(this.animationFrameId);
+    }
+
     checkLevelEnd() {
         const flag = this.level.backgroundObjects.find(obj => obj.type === 'flag');
 
@@ -51,6 +60,31 @@ class World {
             this.triggerLevelEndTransition();
         }
     }
+
+    triggerLevelEndTransition() {
+        if (this.transitioning) return;
+        this.transitioning = true;
+
+        const ctx = this.ctx;
+        let opacity = 0;
+
+        const fade = setInterval(() => {
+            opacity += 0.05;
+            ctx.fillStyle = `rgba(255, 255, 255, ${opacity})`;
+            ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+            if (opacity >= 1) {
+                clearInterval(fade);
+                setTimeout(() => {
+                    this.clearAllIntervals();
+                    this.stopDrawing();
+                    loadEndbossLevel(); // <<< ersetzt dein Level
+                    this.transitioning = false;
+                }, 500); // Pause nach Weißblende
+            }
+        }, 50);
+    }
+
+
 
     throwRock(x, y, otherDirection) {
         let rock = new ThrowableObject(x, y, otherDirection, this.character, this);
@@ -140,38 +174,43 @@ class World {
     }
 
     draw() {
-        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        if (this.transitioning) {
 
-        this.ctx.translate(this.camera_x, 0);
+            return;
+        } else {
+            this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
-        this.addObjectsToMap(this.level.background);
-        this.addObjectsToMap(this.level.coins);
-        this.addObjectsToMap(this.level.backgroundObjects);
-        this.addObjectsToMap(this.level.groundObjects);
+            this.ctx.translate(this.camera_x, 0);
 
-        this.ctx.translate(-this.camera_x, 0);
-        // Space for fixed objects
-        this.ctx.drawImage(this.portraitImg, 29, 29, 51, 51);
-        this.ctx.drawImage(this.portraitFrameImg, 10, 10, 90, 90);
-        this.ctx.drawImage(this.coinImg, 610, 10, 51, 51);
-        this.ctx.font = '20px Pixel, Planes';
-        this.ctx.fillStyle = 'white';
-        this.ctx.fillText(`x ${this.character.coinCount}`, 660, 41);
-        this.addToMap(this.statusBar);
-        this.addToMap(this.energyBar);
-        this.ctx.translate(this.camera_x, 0);
+            this.addObjectsToMap(this.level.background);
+            this.addObjectsToMap(this.level.coins);
+            this.addObjectsToMap(this.level.backgroundObjects);
+            this.addObjectsToMap(this.level.groundObjects);
 
-        this.addToMap(this.character);
-        this.addObjectsToMap(this.level.foodItems);
-        this.addObjectsToMap(this.level.enemies);
-        this.addObjectsToMap(this.throwableObjects);
+            this.ctx.translate(-this.camera_x, 0);
+            // Space for fixed objects
+            this.ctx.drawImage(this.portraitImg, 29, 29, 51, 51);
+            this.ctx.drawImage(this.portraitFrameImg, 10, 10, 90, 90);
+            this.ctx.drawImage(this.coinImg, 610, 10, 51, 51);
+            this.ctx.font = '20px Pixel, Planes';
+            this.ctx.fillStyle = 'white';
+            this.ctx.fillText(`x ${this.character.coinCount}`, 660, 41);
+            this.addToMap(this.statusBar);
+            this.addToMap(this.energyBar);
+            this.ctx.translate(this.camera_x, 0);
 
-        this.ctx.translate(-this.camera_x, 0);
+            this.addToMap(this.character);
+            this.addObjectsToMap(this.level.foodItems);
+            this.addObjectsToMap(this.level.enemies);
+            this.addObjectsToMap(this.throwableObjects);
 
-        let self = this;
-        requestAnimationFrame(function () {
-            self.draw();
-        });
+            this.ctx.translate(-this.camera_x, 0);
+
+            let self = this;
+            this.animationFrameId = requestAnimationFrame(function () {
+                self.draw();
+            });
+        }
     }
 
     addObjectsToMap(objects) {

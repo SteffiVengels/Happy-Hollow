@@ -36,7 +36,7 @@ class Character extends MovableObject {
         // Bewegung: 60 FPS
         setInterval(() => {
             if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
-                if (this.x < 310 || this.x > 3180) {
+                if (this.x < 310 || this.x > (this.world.level.level_end_x - 320) || this.world.level.level_end_x == 670) {
                     this.moveRight(); // Character bewegt sich bis zur Mitte
                 } else {
                     this.x += this.speed; // Character-Position erhöhen
@@ -46,7 +46,7 @@ class Character extends MovableObject {
             }
 
             if (this.world.keyboard.LEFT && this.x > 0) {
-                if (this.x <= 310 || this.x > 3180) {
+                if (this.x <= 310 || this.x > (this.world.level.level_end_x - 320) || this.world.level.level_end_x == 670) {
                     this.moveLeft(); // Character bewegt sich selbst zurück
                 } else {
                     this.x -= this.speed;
