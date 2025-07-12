@@ -61,48 +61,22 @@ class World {
         }
     }
 
-    fadeToNewWorld(canvas, createNewWorldFn) {
-    const ctx = canvas.getContext('2d');
-    let opacity = 0;
 
-    const fade = setInterval(() => {
-        opacity += 0.05;
-        ctx.fillStyle = `rgba(255, 255, 255, ${opacity})`;
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-        if (opacity >= 1) {
-            clearInterval(fade);
-            setTimeout(() => {
-                if (world) {
-                    world.clearAllIntervals();
-                    world.stopDrawing();
-                }
-                createNewWorldFn(); // <-- hier wird die neue Welt gesetzt
-            }, 500);
-        }
-    }, 50);
-}
 
     triggerLevelEndTransition() {
         if (this.transitioning) return;
         this.transitioning = true;
 
-        const ctx = this.ctx;
-        let opacity = 0;
-
-        const fade = setInterval(() => {
-            opacity += 0.05;
-            ctx.fillStyle = `rgba(255, 255, 255, ${opacity})`;
-            ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
-            if (opacity >= 1) {
-                clearInterval(fade);
-                setTimeout(() => {
-                    this.clearAllIntervals();
-                    this.stopDrawing();
-                    loadEndbossLevel(); // <<< ersetzt dein Level
-                    this.transitioning = false;
-                }, 500); // Pause nach Weißblende
+        fadeOutToWhite(this.canvas, () => {
+            if (world) {
+                world.clearAllIntervals();
+                world.stopDrawing();
             }
-        }, 50);
+
+            world = loadEndbossLevel(this.canvas, this.keyboard);
+            fadeInFromWhite();
+            this.transitioning = false;
+        });
     }
 
 
@@ -227,6 +201,10 @@ class World {
 
             this.ctx.translate(-this.camera_x, 0);
 
+            if (fadeOverlayOpacity > 0) {
+                this.ctx.fillStyle = `rgba(255, 255, 255, ${fadeOverlayOpacity})`;
+                this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+            }
             let self = this;
             this.animationFrameId = requestAnimationFrame(function () {
                 self.draw();

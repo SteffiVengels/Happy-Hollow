@@ -1,6 +1,7 @@
 let canvas;
 let world;
 let keyboard = new Keyboard();
+let fadeOverlayOpacity = 0;
 
 function init() {
     canvas = document.getElementById('canvas');
@@ -47,16 +48,50 @@ window.addEventListener("keyup", (e) => {
     }
 })
 
-    function loadEndbossLevel() {
-        const level = createEndBossLevel();
-        world = new World(canvas, keyboard, level);
-        world.character.x = 50;
-        world.camera_x = 0;
-        world.level.enemies.forEach(enemy => {
-            enemy.character = world.character;
-            enemy.world = world;
-        });
-    }
+function loadEndbossLevel(canvas, keyboard) {
+    const level = createEndBossLevel(); // alternativ direkt: new Level(...)
+    const newWorld = new World(canvas, keyboard, level);
+
+    // Anfangsposition und Kamera zurücksetzen
+    newWorld.character.x = 50;
+    newWorld.camera_x = 0;
+
+    // Gegner mit der neuen Character-Referenz verbinden
+    newWorld.level.enemies.forEach(enemy => {
+        enemy.character = newWorld.character;
+        enemy.world = newWorld;
+    });
+
+    return newWorld;
+}
+
+function fadeOutToWhite(canvas, callback) {
+    const ctx = canvas.getContext('2d');
+    let opacity = 0;
+
+    const fade = setInterval(() => {
+        opacity += 0.05;
+        ctx.fillStyle = `rgba(255, 255, 255, ${opacity})`;
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        if (opacity >= 1) {
+            clearInterval(fade);
+            setTimeout(callback, 120); // danach z. B. Weltwechsel starten
+        }
+    }, 50);
+}
+
+function fadeInFromWhite() {
+    fadeOverlayOpacity = 1;
+
+    const fade = setInterval(() => {
+        fadeOverlayOpacity -= 0.05;
+        if (fadeOverlayOpacity <= 0) {
+            fadeOverlayOpacity = 0;
+            clearInterval(fade);
+        }
+    }, 50);
+}
 
 /* /* *
  * This function initializes the game by setting up the level and creating a new world instance.
