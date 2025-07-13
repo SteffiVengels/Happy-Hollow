@@ -49,7 +49,7 @@ window.addEventListener("keyup", (e) => {
 })
 
 function loadEndbossLevel(canvas, keyboard) {
-    const level = createEndBossLevel(); // alternativ direkt: new Level(...)
+    const level = createEndBossLevel1(); // alternativ direkt: new Level(...)
     const newWorld = new World(canvas, keyboard, level);
 
     // Anfangsposition und Kamera zurücksetzen

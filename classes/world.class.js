@@ -46,6 +46,7 @@ class World {
             this.cleanUpDeadEnemies();
             this.checkFireBallHitsCharacter();
             this.checkLevelEnd();
+            this.checkCollisionsWithEndboss();
         }, 120);
     }
 
@@ -55,31 +56,24 @@ class World {
 
     checkLevelEnd() {
         const flag = this.level.backgroundObjects.find(obj => obj.type === 'flag');
-
         if (flag && this.character.isColliding(flag)) {
             this.triggerLevelEndTransition();
         }
     }
 
-
-
     triggerLevelEndTransition() {
         if (this.transitioning) return;
         this.transitioning = true;
-
         fadeOutToWhite(this.canvas, () => {
             if (world) {
                 world.clearAllIntervals();
                 world.stopDrawing();
             }
-
             world = loadEndbossLevel(this.canvas, this.keyboard);
             fadeInFromWhite();
             this.transitioning = false;
         });
     }
-
-
 
     throwRock(x, y, otherDirection) {
         let rock = new ThrowableObject(x, y, otherDirection, this.character, this);
@@ -95,11 +89,25 @@ class World {
 
     checkCollisions() {
         this.level.enemies.forEach((enemy) => {
+            if (enemy instanceof EndbossLevel1) return;
+
             if (this.character.isColliding(enemy)) {
                 if (this.didJumpOnEnemy(enemy)) {
                     enemy.health = 0;
                     this.character.applyBounce();
                 } else if (!enemy.inDeadAnimation) {
+                    this.character.hit();
+                    this.statusBar.setPercentage(this.character.health);
+                }
+            }
+        });
+    }
+
+    checkCollisionsWithEndboss() {
+        this.level.enemies.forEach((enemy) => {
+            if (enemy instanceof EndbossLevel1 && !enemy.inDeadAnimation) {
+
+                if (this.character.isColliding(enemy)) {
                     this.character.hit();
                     this.statusBar.setPercentage(this.character.health);
                 }
@@ -125,17 +133,26 @@ class World {
         });
     }
 
-    checkRockHitsEnemy() {
-        this.throwableObjects.forEach(obj => {
-            if (obj instanceof ThrowableObject) {
-                this.level.enemies.forEach(enemy => {
-                    if (!enemy.isDead() && obj.isColliding(enemy)) {
-                        enemy.health = 0;
+checkRockHitsEnemy() {
+    this.throwableObjects.forEach(obj => {
+        if (obj instanceof ThrowableObject) {
+            this.level.enemies.forEach(enemy => {
+                if (!enemy.isDead() && obj.isColliding(enemy)) {
+                    const now = Date.now();
+                    if (now - enemy.lastHit > 400) { // 300ms Schutzzeit
+                        if (enemy instanceof EndbossLevel1) {
+                            enemy.health -= 10;
+                            console.log('enemy health', enemy.health);
+                        } else {
+                            enemy.health = 0;
+                        }
+                        enemy.lastHit = now;
                     }
-                });
-            }
-        });
-    }
+                }
+            });
+        }
+    });
+}
 
     checkFireBallHitsCharacter() {
         this.throwableObjects.forEach((obj, index) => {

@@ -1,7 +1,7 @@
-function createEndBossLevel() {
+function createEndBossLevel1() {
 return new Level(
     [
-        new BossDemon()
+        new EndbossLevel1()
     ],
     [],
     [

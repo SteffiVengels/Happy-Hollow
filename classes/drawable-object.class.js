@@ -17,7 +17,7 @@ class DrawableObject {
     }
 
     drawFrame(ctx) {
-        if (this instanceof Character || this instanceof Bear || this instanceof Mage || this instanceof Ooze || this instanceof RedMonster || this instanceof TinyMonster || this instanceof YellowMonster || this instanceof BossDemon) {
+        if (this instanceof Character || this instanceof Bear || this instanceof Mage || this instanceof Ooze || this instanceof RedMonster || this instanceof TinyMonster || this instanceof YellowMonster || this instanceof EndbossLevel1) {
             ctx.beginPath();
             ctx.lineWidth = '5';
             ctx.strokeStyle = 'blue';
@@ -27,7 +27,7 @@ class DrawableObject {
     }
 
     drawFrameRed(ctx) {
-        if (this instanceof Character || this instanceof Bear || this instanceof Mage || this instanceof Ooze || this instanceof RedMonster || this instanceof TinyMonster || this instanceof YellowMonster || this instanceof BossDemon) {
+        if (this instanceof Character || this instanceof Bear || this instanceof Mage || this instanceof Ooze || this instanceof RedMonster || this instanceof TinyMonster || this instanceof YellowMonster || this instanceof EndbossLevel1) {
             ctx.beginPath();
             ctx.lineWidth = '5';
             ctx.strokeStyle = 'red';
