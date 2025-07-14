@@ -90,22 +90,44 @@ class EndbossLevel1 extends MovableObject {
         }, 160);
 
         setInterval(() => {
-            if (this.character && Math.abs(this.character.x - this.x) <= 25) {
-                if (Math.abs(this.character.x - this.x) <= 25) {
+            if (this.character && Math.abs(this.character.x - this.x) <= 25 && !this.otherDirection) {
                     if (!this.inAttack) {
+
                         this.currentImage = 0;
                         this.inAttack = true;
                     } else if (this.inAttack) {
                         this.playAnimation(this.IMAGES_ATTACK);
-                        if (this.currentImage >= this.IMAGES_ATTACK.length) {
+                        if (this.currentImage == 6) {
+                            this.offset.left = 0;
+                            this.offset.top = 30;
+                        } else if (this.currentImage >= this.IMAGES_ATTACK.length) {
                             this.inAttack = false;
+                            this.offset.left = 50;
+                            this.offset.top = 60;
                         }
                     }
-                }
+            } else if (this.character && Math.abs(this.character.x - this.x) <= 129 && this.otherDirection) {
+                    if (!this.inAttack) {
+
+                        this.currentImage = 0;
+                        this.inAttack = true;
+                    } else if (this.inAttack) {
+                        this.playAnimation(this.IMAGES_ATTACK);
+                        if (this.currentImage == 6) {
+                            this.offset.left = 0;
+                            this.offset.top = 30;
+                        } else if (this.currentImage >= this.IMAGES_ATTACK.length) {
+                            this.inAttack = false;
+                            this.offset.left = 50;
+                            this.offset.top = 60;
+                        }
+                    }
             } else {
                 this.inAttack = false;
+                this.offset.left = 50;
+                this.offset.top = 60;
             }
-            console.log(this.inAttack)
+            console.log(Math.abs(this.character.x - this.x))
         }, 160);
 
         setInterval(() => {
@@ -125,4 +147,6 @@ class EndbossLevel1 extends MovableObject {
                 }, 160); */
 
     }
+
+    
 }
