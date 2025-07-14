@@ -44,9 +44,9 @@ class EndbossLevel1 extends MovableObject {
         './assets/img/boss-monsters-pixel-art/2 Demon/attack/tile007.png'
     ];
     offset = {
-        top: 60,
-        left: 50,
-        right: 0,
+        top: 30,
+        left: 25,
+        right: 25,
         bottom: 0
     };
     speed = 0.25;
@@ -90,44 +90,20 @@ class EndbossLevel1 extends MovableObject {
         }, 160);
 
         setInterval(() => {
-            if (this.character && Math.abs(this.character.x - this.x) <= 25 && !this.otherDirection) {
-                    if (!this.inAttack) {
-
-                        this.currentImage = 0;
-                        this.inAttack = true;
-                    } else if (this.inAttack) {
-                        this.playAnimation(this.IMAGES_ATTACK);
-                        if (this.currentImage == 6) {
-                            this.offset.left = 0;
-                            this.offset.top = 30;
-                        } else if (this.currentImage >= this.IMAGES_ATTACK.length) {
-                            this.inAttack = false;
-                            this.offset.left = 50;
-                            this.offset.top = 60;
-                        }
+            if (this.character && this.character.isColliding(this)) {
+                if (!this.inAttack) {
+                    this.currentImage = 0;
+                    this.inAttack = true;
+                } else if (this.inAttack) {
+                    this.playAnimation(this.IMAGES_ATTACK);
+                    console.log(this.currentImage)
+                    if (this.currentImage >= this.IMAGES_ATTACK.length) {
+                        this.inAttack = false;
                     }
-            } else if (this.character && Math.abs(this.character.x - this.x) <= 129 && this.otherDirection) {
-                    if (!this.inAttack) {
-
-                        this.currentImage = 0;
-                        this.inAttack = true;
-                    } else if (this.inAttack) {
-                        this.playAnimation(this.IMAGES_ATTACK);
-                        if (this.currentImage == 6) {
-                            this.offset.left = 0;
-                            this.offset.top = 30;
-                        } else if (this.currentImage >= this.IMAGES_ATTACK.length) {
-                            this.inAttack = false;
-                            this.offset.left = 50;
-                            this.offset.top = 60;
-                        }
-                    }
+                }
             } else {
                 this.inAttack = false;
-                this.offset.left = 50;
-                this.offset.top = 60;
             }
-            console.log(Math.abs(this.character.x - this.x))
         }, 160);
 
         setInterval(() => {
@@ -148,5 +124,5 @@ class EndbossLevel1 extends MovableObject {
 
     }
 
-    
+
 }

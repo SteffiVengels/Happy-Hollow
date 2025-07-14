@@ -107,8 +107,9 @@ class World {
         this.level.enemies.forEach((enemy) => {
             if (enemy instanceof EndbossLevel1 && !enemy.inDeadAnimation) {
 
-                if (this.character.isColliding(enemy)) {
+                if (this.character.isColliding(enemy) && !this.character.isHurt()) {
                     this.character.hit();
+                    console.log('health',this.character.health)
                     this.statusBar.setPercentage(this.character.health);
                 }
             }
