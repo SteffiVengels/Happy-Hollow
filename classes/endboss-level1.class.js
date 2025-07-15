@@ -1,48 +1,17 @@
 class EndbossLevel1 extends MovableObject {
+    Type = 'Mage-Monster';
     height = 154;
     width = 154;
     y = 294;
     markedForDeletion = false;
     inDeadAnimation = false;
     inAttack = false;
-    IMAGES_SNEER = [
-        './assets/img/boss-monsters-pixel-art/2 Demon/sneer/tile000.png',
-        './assets/img/boss-monsters-pixel-art/2 Demon/sneer/tile001.png',
-        './assets/img/boss-monsters-pixel-art/2 Demon/sneer/tile002.png',
-        './assets/img/boss-monsters-pixel-art/2 Demon/sneer/tile003.png',
-        './assets/img/boss-monsters-pixel-art/2 Demon/sneer/tile004.png',
-        './assets/img/boss-monsters-pixel-art/2 Demon/sneer/tile005.png'
-    ];
-    IMAGES_DEAD = [
-        './assets/img/boss-monsters-pixel-art/2 Demon/death/tile000.png',
-        './assets/img/boss-monsters-pixel-art/2 Demon/death/tile001.png',
-        './assets/img/boss-monsters-pixel-art/2 Demon/death/tile002.png',
-        './assets/img/boss-monsters-pixel-art/2 Demon/death/tile003.png'
-    ];
-    IMAGES_WALKING = [
-        './assets/img/boss-monsters-pixel-art/2 Demon/walk/tile000.png',
-        './assets/img/boss-monsters-pixel-art/2 Demon/walk/tile001.png',
-        './assets/img/boss-monsters-pixel-art/2 Demon/walk/tile002.png',
-        './assets/img/boss-monsters-pixel-art/2 Demon/walk/tile003.png',
-        './assets/img/boss-monsters-pixel-art/2 Demon/walk/tile004.png',
-        './assets/img/boss-monsters-pixel-art/2 Demon/walk/tile005.png'
-    ];
-    IMAGES_HURT = [
-        './assets/img/boss-monsters-pixel-art/2 Demon/hurt/tile000.png',
-        './assets/img/boss-monsters-pixel-art/2 Demon/hurt/tile001.png',
-        './assets/img/boss-monsters-pixel-art/2 Demon/hurt/tile002.png',
-        './assets/img/boss-monsters-pixel-art/2 Demon/hurt/tile003.png'
-    ];
-    IMAGES_ATTACK = [
-        './assets/img/boss-monsters-pixel-art/2 Demon/attack/tile000.png',
-        './assets/img/boss-monsters-pixel-art/2 Demon/attack/tile001.png',
-        './assets/img/boss-monsters-pixel-art/2 Demon/attack/tile002.png',
-        './assets/img/boss-monsters-pixel-art/2 Demon/attack/tile003.png',
-        './assets/img/boss-monsters-pixel-art/2 Demon/attack/tile004.png',
-        './assets/img/boss-monsters-pixel-art/2 Demon/attack/tile005.png',
-        './assets/img/boss-monsters-pixel-art/2 Demon/attack/tile006.png',
-        './assets/img/boss-monsters-pixel-art/2 Demon/attack/tile007.png'
-    ];
+    hasFired = false;
+    IMAGES_SNEER = [];
+    IMAGES_DEAD = [];
+    IMAGES_WALKING = [];
+    IMAGES_HURT = [];
+    IMAGES_ATTACK = [];
     offset = {
         top: 30,
         left: 25,
@@ -55,7 +24,8 @@ class EndbossLevel1 extends MovableObject {
 
     constructor(character, world) {
         super();
-        this.loadImage('./assets/img/boss-monsters-pixel-art/2 Demon/Demon_Boss.png');
+        this.selectMonsterTyp();
+        this.changeDimensionForSelectedMonster();
         this.x = 520;
         this.character = character;
         this.world = world;
@@ -64,7 +34,19 @@ class EndbossLevel1 extends MovableObject {
         this.loadImages(this.IMAGES_WALKING);
         this.loadImages(this.IMAGES_HURT);
         this.loadImages(this.IMAGES_ATTACK);
-        this.animate();
+        this.startIntroAnimation();
+    }
+
+    startIntroAnimation() {
+        let sneerInterval = setInterval(() => {
+            this.playAnimation(this.IMAGES_SNEER);
+        }, 160);
+
+        // Nach ca. 1 Sekunde Sneer-Animation -> Sneer hat 6 Bilder -> 6*160ms = 960ms
+        setTimeout(() => {
+            clearInterval(sneerInterval);
+            this.animate();  // Startet den normalen Ablauf
+        }, 2000);
     }
 
     animate() {
@@ -72,8 +54,8 @@ class EndbossLevel1 extends MovableObject {
         setInterval(() => {
             if (this.isDead() && !this.markedForDeletion) {
                 if (!this.inDeadAnimation) {
-                    this.currentImage = 0;       // Reset Animation auf Anfang
-                    this.inDeadAnimation = true; // Flag setzen, dass Dead-Animation läuft
+                    this.currentImage = 0;
+                    this.inDeadAnimation = true;
                 }
                 this.playAnimation(this.IMAGES_DEAD);
                 if (this.currentImage >= this.IMAGES_DEAD.length) {
@@ -81,28 +63,52 @@ class EndbossLevel1 extends MovableObject {
                 }
             } else if (this.isHurt()) {
                 this.playAnimation(this.IMAGES_HURT);
-            } else if (this.character && Math.abs(this.character.x - this.x) <= 25) {
+            } else if ((this.character && this.character.isColliding(this) && this.Type !== 'Mage-Monster') || (this.character && Math.abs(this.character.x - this.x) <= 156 && this.Type === 'Mage-Monster')) {
                 return
+            } else if (this.character && !this.isDead() && !this.inAttack) {
+                this.playAnimation(this.IMAGES_WALKING);
             } else {
                 this.inDeadAnimation = false;
-                this.playAnimation(this.IMAGES_WALKING);
             }
         }, 160);
 
         setInterval(() => {
-            if (this.character && this.character.isColliding(this)) {
+            if (this.character && this.character.isColliding(this) && this.Type !== 'Mage-Monster') {
                 if (!this.inAttack) {
                     this.currentImage = 0;
                     this.inAttack = true;
                 } else if (this.inAttack) {
                     this.playAnimation(this.IMAGES_ATTACK);
-                    console.log(this.currentImage)
                     if (this.currentImage >= this.IMAGES_ATTACK.length) {
                         this.inAttack = false;
                     }
                 }
-            } else {
+            } else if (this.Type !== 'Mage-Monster') {
                 this.inAttack = false;
+            }
+        }, 160);
+
+        setInterval(() => {
+            if (this.character && this.Type == 'Mage-Monster' && !this.isDead()) {
+                if (Math.abs(this.character.x - this.x) <= 204) {
+                    if (!this.inAttack) {
+                        this.currentImage = 0;
+                        this.inAttack = true;
+                        this.hasFired = false;
+                    } else if (this.inAttack) {
+                        this.playAnimation(this.IMAGES_ATTACK);
+                        if (this.currentImage >= this.IMAGES_ATTACK.length) {
+                            if (!this.hasFired) {
+                                let fireBallX = this.otherDirection ? this.x + 102 : this.x;
+                                this.world.throwFireBallFromEndboss(fireBallX, this.y, this.otherDirection, this);
+                                this.hasFired = true;
+                                this.inAttack = false;
+                            }
+                        }
+                    }
+                } else if (this.Type == 'Mage-Monster') {
+                this.inAttack = false;
+            }
             }
         }, 160);
 
@@ -110,7 +116,7 @@ class EndbossLevel1 extends MovableObject {
             if (this.character && !this.isDead() && !this.inAttack) {
                 if (this.character.x - this.x > 51) {
                     this.moveRight();
-                    this.otherDirection = true; // damit er richtig gespiegelt wird
+                    this.otherDirection = true;
                 } else {
                     this.moveLeft();
                     this.otherDirection = false;
@@ -118,10 +124,147 @@ class EndbossLevel1 extends MovableObject {
             }
         }, 1000 / 60);
 
-        /*         setInterval(() => {
-                    this.playAnimation(this.IMAGES_SNEER);
-                }, 160); */
+    }
 
+    selectMonsterTyp() {
+        if (this.Type === 'Mage-Monster') {
+            this.loadImage('./assets/img/boss-monsters-pixel-art/1 Mage/Mage_boss.png');
+            this.showMageMonsterAnimation();
+        } else if (this.Type === 'Demon-Monster') {
+            this.loadImage('./assets/img/boss-monsters-pixel-art/2 Demon/Demon_Boss.png');
+            this.showDemonMonsterAnimation();
+        } else if (this.Type === 'Ooze-Monster') {
+            this.loadImage('./assets/img/boss-monsters-pixel-art/3 Ooze/Ooze_boss.png');
+            this.showOozeMonsterAnimation();
+        }
+    }
+
+    changeDimensionForSelectedMonster() {
+        if (this.Type === 'Mage-Monster') {
+            this.height = 102,
+                this.width = 102,
+                this.offset.left = 0,
+                this.offset.right = 0,
+                this.offset.top = 0,
+                this.y = 346
+        }
+    }
+
+    showMageMonsterAnimation() {
+        this.IMAGES_WALKING = [
+            './assets/img/boss-monsters-pixel-art/1 Mage/walk/tile000.png',
+            './assets/img/boss-monsters-pixel-art/1 Mage/walk/tile001.png',
+            './assets/img/boss-monsters-pixel-art/1 Mage/walk/tile002.png',
+            './assets/img/boss-monsters-pixel-art/1 Mage/walk/tile003.png',
+            './assets/img/boss-monsters-pixel-art/1 Mage/walk/tile004.png',
+            './assets/img/boss-monsters-pixel-art/1 Mage/walk/tile005.png'
+        ];
+        this.IMAGES_SNEER = [
+            './assets/img/boss-monsters-pixel-art/1 Mage/sneer/tile000.png',
+            './assets/img/boss-monsters-pixel-art/1 Mage/sneer/tile001.png',
+            './assets/img/boss-monsters-pixel-art/1 Mage/sneer/tile002.png',
+            './assets/img/boss-monsters-pixel-art/1 Mage/sneer/tile003.png',
+            './assets/img/boss-monsters-pixel-art/1 Mage/sneer/tile004.png',
+            './assets/img/boss-monsters-pixel-art/1 Mage/sneer/tile005.png'
+        ];
+        this.IMAGES_DEAD = [
+            './assets/img/boss-monsters-pixel-art/1 Mage/death/tile000.png',
+            './assets/img/boss-monsters-pixel-art/1 Mage/death/tile001.png',
+            './assets/img/boss-monsters-pixel-art/1 Mage/death/tile002.png',
+            './assets/img/boss-monsters-pixel-art/1 Mage/death/tile003.png',
+            './assets/img/boss-monsters-pixel-art/1 Mage/death/tile004.png',
+            './assets/img/boss-monsters-pixel-art/1 Mage/death/tile005.png'
+        ];
+        this.IMAGES_HURT = [
+            './assets/img/boss-monsters-pixel-art/1 Mage/hurt/tile000.png',
+            './assets/img/boss-monsters-pixel-art/1 Mage/hurt/tile001.png',
+            './assets/img/boss-monsters-pixel-art/1 Mage/hurt/tile002.png',
+            './assets/img/boss-monsters-pixel-art/1 Mage/hurt/tile003.png'
+        ];
+        this.IMAGES_ATTACK = [
+            './assets/img/boss-monsters-pixel-art/1 Mage/attack/tile000.png',
+            './assets/img/boss-monsters-pixel-art/1 Mage/attack/tile001.png',
+            './assets/img/boss-monsters-pixel-art/1 Mage/attack/tile002.png',
+            './assets/img/boss-monsters-pixel-art/1 Mage/attack/tile003.png',
+            './assets/img/boss-monsters-pixel-art/1 Mage/attack/tile004.png',
+            './assets/img/boss-monsters-pixel-art/1 Mage/attack/tile005.png'
+        ];
+    }
+
+    showDemonMonsterAnimation() {
+        this.IMAGES_WALKING = [
+            './assets/img/boss-monsters-pixel-art/2 Demon/walk/tile000.png',
+            './assets/img/boss-monsters-pixel-art/2 Demon/walk/tile001.png',
+            './assets/img/boss-monsters-pixel-art/2 Demon/walk/tile002.png',
+            './assets/img/boss-monsters-pixel-art/2 Demon/walk/tile003.png',
+            './assets/img/boss-monsters-pixel-art/2 Demon/walk/tile004.png',
+            './assets/img/boss-monsters-pixel-art/2 Demon/walk/tile005.png'
+        ];
+        this.IMAGES_SNEER = [
+            './assets/img/boss-monsters-pixel-art/2 Demon/sneer/tile000.png',
+            './assets/img/boss-monsters-pixel-art/2 Demon/sneer/tile001.png',
+            './assets/img/boss-monsters-pixel-art/2 Demon/sneer/tile002.png',
+            './assets/img/boss-monsters-pixel-art/2 Demon/sneer/tile003.png',
+            './assets/img/boss-monsters-pixel-art/2 Demon/sneer/tile004.png',
+            './assets/img/boss-monsters-pixel-art/2 Demon/sneer/tile005.png'
+        ];
+        this.IMAGES_DEAD = [
+            './assets/img/boss-monsters-pixel-art/2 Demon/death/tile000.png',
+            './assets/img/boss-monsters-pixel-art/2 Demon/death/tile001.png',
+            './assets/img/boss-monsters-pixel-art/2 Demon/death/tile002.png',
+            './assets/img/boss-monsters-pixel-art/2 Demon/death/tile003.png'
+        ];
+        this.IMAGES_HURT = [
+            './assets/img/boss-monsters-pixel-art/2 Demon/hurt/tile000.png',
+            './assets/img/boss-monsters-pixel-art/2 Demon/hurt/tile001.png',
+            './assets/img/boss-monsters-pixel-art/2 Demon/hurt/tile002.png',
+            './assets/img/boss-monsters-pixel-art/2 Demon/hurt/tile003.png'
+        ];
+        this.IMAGES_ATTACK = [
+            './assets/img/boss-monsters-pixel-art/2 Demon/attack/tile000.png',
+            './assets/img/boss-monsters-pixel-art/2 Demon/attack/tile001.png',
+            './assets/img/boss-monsters-pixel-art/2 Demon/attack/tile002.png',
+            './assets/img/boss-monsters-pixel-art/2 Demon/attack/tile003.png',
+            './assets/img/boss-monsters-pixel-art/2 Demon/attack/tile004.png',
+            './assets/img/boss-monsters-pixel-art/2 Demon/attack/tile005.png',
+            './assets/img/boss-monsters-pixel-art/2 Demon/attack/tile006.png',
+            './assets/img/boss-monsters-pixel-art/2 Demon/attack/tile007.png'
+        ];
+    }
+
+    showOozeMonsterAnimation() {
+        this.IMAGES_WALKING = [
+            './assets/img/boss-monsters-pixel-art/3 Ooze/walk/tile000.png',
+            './assets/img/boss-monsters-pixel-art/3 Ooze/walk/tile001.png',
+            './assets/img/boss-monsters-pixel-art/3 Ooze/walk/tile002.png',
+            './assets/img/boss-monsters-pixel-art/3 Ooze/walk/tile003.png'
+        ];
+        this.IMAGES_SNEER = [
+            './assets/img/boss-monsters-pixel-art/3 Ooze/sneer/tile000.png',
+            './assets/img/boss-monsters-pixel-art/3 Ooze/sneer/tile001.png',
+            './assets/img/boss-monsters-pixel-art/3 Ooze/sneer/tile002.png',
+            './assets/img/boss-monsters-pixel-art/3 Ooze/sneer/tile003.png'
+        ];
+        this.IMAGES_DEAD = [
+            './assets/img/boss-monsters-pixel-art/3 Ooze/death/tile000.png',
+            './assets/img/boss-monsters-pixel-art/3 Ooze/death/tile001.png',
+            './assets/img/boss-monsters-pixel-art/3 Ooze/death/tile002.png',
+            './assets/img/boss-monsters-pixel-art/3 Ooze/death/tile003.png',
+            './assets/img/boss-monsters-pixel-art/3 Ooze/death/tile004.png',
+            './assets/img/boss-monsters-pixel-art/3 Ooze/death/tile005.png'
+        ];
+        this.IMAGES_HURT = [
+            './assets/img/boss-monsters-pixel-art/3 Ooze/hurt/tile000.png',
+            './assets/img/boss-monsters-pixel-art/3 Ooze/hurt/tile001.png',
+            './assets/img/boss-monsters-pixel-art/3 Ooze/hurt/tile002.png',
+            './assets/img/boss-monsters-pixel-art/3 Ooze/hurt/tile003.png'
+        ];
+        this.IMAGES_ATTACK = [
+            './assets/img/boss-monsters-pixel-art/3 Ooze/attack/tile000.png',
+            './assets/img/boss-monsters-pixel-art/3 Ooze/attack/tile001.png',
+            './assets/img/boss-monsters-pixel-art/3 Ooze/attack/tile002.png',
+            './assets/img/boss-monsters-pixel-art/3 Ooze/attack/tile003.png'
+        ];
     }
 
 

@@ -87,6 +87,12 @@ class World {
         this.throwableObjects.push(fireBall);
     }
 
+    throwFireBallFromEndboss(x, y, otherDirection, enemy) {
+        let fireBallEndboss = new FireBallEndboss(x, y, otherDirection, enemy, this);
+        fireBallEndboss.owner = enemy;
+        this.throwableObjects.push(fireBallEndboss);
+    }
+
     checkCollisions() {
         this.level.enemies.forEach((enemy) => {
             if (enemy instanceof EndbossLevel1) return;
@@ -106,10 +112,9 @@ class World {
     checkCollisionsWithEndboss() {
         this.level.enemies.forEach((enemy) => {
             if (enemy instanceof EndbossLevel1 && !enemy.inDeadAnimation) {
-
                 if (this.character.isColliding(enemy) && !this.character.isHurt()) {
                     this.character.hit();
-                    console.log('health',this.character.health)
+                    console.log('health', this.character.health)
                     this.statusBar.setPercentage(this.character.health);
                 }
             }
@@ -134,31 +139,31 @@ class World {
         });
     }
 
-checkRockHitsEnemy() {
-    this.throwableObjects.forEach(obj => {
-        if (obj instanceof ThrowableObject) {
-            this.level.enemies.forEach(enemy => {
-                if (!enemy.isDead() && obj.isColliding(enemy)) {
-                    const now = Date.now();
-                    if (now - enemy.lastHit > 400) { // 300ms Schutzzeit
-                        if (enemy instanceof EndbossLevel1) {
-                            enemy.health -= 10;
-                            console.log('enemy health', enemy.health);
-                        } else {
-                            enemy.health = 0;
+    checkRockHitsEnemy() {
+        this.throwableObjects.forEach(obj => {
+            if (obj instanceof ThrowableObject) {
+                this.level.enemies.forEach(enemy => {
+                    if (!enemy.isDead() && obj.isColliding(enemy)) {
+                        const now = Date.now();
+                        if (now - enemy.lastHit > 400) { // 300ms Schutzzeit
+                            if (enemy instanceof EndbossLevel1) {
+                                enemy.health -= 10;
+                                console.log('enemy health', enemy.health);
+                            } else {
+                                enemy.health = 0;
+                            }
+                            enemy.lastHit = now;
                         }
-                        enemy.lastHit = now;
                     }
-                }
-            });
-        }
-    });
-}
+                });
+            }
+        });
+    }
 
     checkFireBallHitsCharacter() {
         this.throwableObjects.forEach((obj, index) => {
             // Nur prüfen, wenn es ein Fireball ist
-            if (obj instanceof AnimatedObjects && obj.type === 'fireBall') {
+            if ((obj instanceof AnimatedObjects && obj.type === 'fireBall') || (obj instanceof FireBallEndboss)) {
 
                 if (this.character.isColliding(obj) && !this.didJumpOnEnemy(obj.owner)) {
                     this.character.hit(); // Charakter bekommt Schaden

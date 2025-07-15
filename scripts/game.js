@@ -50,7 +50,13 @@ window.addEventListener("keyup", (e) => {
 
 function loadEndbossLevel(canvas, keyboard) {
     const level = createEndBossLevel1(); // alternativ direkt: new Level(...)
+    const existingCharacter = world.character;
     const newWorld = new World(canvas, keyboard, level);
+    newWorld.character.health = existingCharacter.health;
+    newWorld.statusBar.setPercentage(newWorld.character.health);
+    newWorld.character.energy = existingCharacter.energy;
+    newWorld.energyBar.setPercentage(newWorld.character.energy);
+    newWorld.character.coinCount = existingCharacter.coinCount;
 
     // Anfangsposition und Kamera zurücksetzen
     newWorld.character.x = 50;
