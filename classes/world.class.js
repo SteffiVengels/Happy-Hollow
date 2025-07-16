@@ -12,6 +12,7 @@ class World {
     coinImg = new Image();
     animationFrameId;
 
+
     constructor(canvas, keyboard, level) {
         this.ctx = canvas.getContext('2d');
         this.canvas = canvas;
@@ -21,7 +22,7 @@ class World {
         this.portraitImg.src = this.character.IMAGE_PORTRAIT[1];
         this.coinImg.src = './assets/img/platformer-pixel-art-tileset/Objects_Animated/coin/tile000.png';
         this.level.enemies.forEach(enemy => {
-            enemy.character = this.character; 
+            enemy.character = this.character;
             enemy.world = this;
         });
         this.setWorld();
@@ -29,13 +30,16 @@ class World {
         this.run();
     }
 
+
     clearAllIntervals() {
         for (let i = 1; i < 9999; i++) window.clearInterval(i);
     }
 
+
     setWorld() {
         this.character.world = this;
     }
+
 
     run() {
         setInterval(() => {
@@ -51,9 +55,11 @@ class World {
         }, 120);
     }
 
+
     stopDrawing() {
         cancelAnimationFrame(this.animationFrameId);
     }
+
 
     checkLevelEnd() {
         const flag = this.level.backgroundObjects.find(obj => obj.type === 'flag');
@@ -61,6 +67,7 @@ class World {
             this.triggerLevelEndTransition();
         }
     }
+
 
     triggerLevelEndTransition() {
         if (this.transitioning) return;
@@ -76,10 +83,12 @@ class World {
         });
     }
 
+
     throwRock(x, y, otherDirection) {
         let rock = new ThrowableObject(x, y, otherDirection, this.character, this);
         this.throwableObjects.push(rock);
     }
+
 
     throwFireBall(x, y, otherDirection, enemy) {
         let fireBall = new AnimatedObjects('fireBall', x, y);
@@ -88,16 +97,17 @@ class World {
         this.throwableObjects.push(fireBall);
     }
 
+
     throwFireBallFromEndboss(x, y, otherDirection, enemy) {
         let fireBallEndboss = new FireBallEndboss(x, y, otherDirection, enemy, this);
         fireBallEndboss.owner = enemy;
         this.throwableObjects.push(fireBallEndboss);
     }
 
+
     checkCollisions() {
         this.level.enemies.forEach((enemy) => {
             if (enemy instanceof EndbossLevel1) return;
-
             if (this.character.isColliding(enemy)) {
                 if (this.didJumpOnEnemy(enemy)) {
                     enemy.health = 0;
@@ -109,7 +119,6 @@ class World {
             }
         });
     }
-
 
 
     checkCollisionsWithEndboss() {
@@ -124,6 +133,7 @@ class World {
         });
     }
 
+
     checkCollisionsWithFood() {
         this.level.foodItems.forEach((food) => {
             if (this.character.isColliding(food)) {
@@ -133,68 +143,80 @@ class World {
         });
     }
 
-        checkCollisionWithSpikes() {
-    this.level.spikes.forEach((obj) => {
-        if (this.character.isColliding(obj)) {
-            if (!this.character.isHurt()) {
-                this.character.hit();
-                this.statusBar.setPercentage(this.character.health);
+
+    checkCollisionWithSpikes() {
+        this.level.spikes.forEach((obj) => {
+            if (this.character.isColliding(obj)) {
+                if (!this.character.isHurt()) {
+                    this.character.hit();
+                    this.statusBar.setPercentage(this.character.health);
+                }
             }
-        }
-    });
-}
+        });
+    }
+
 
     checkCollisionsWithCoins() {
         this.level.coins.forEach((coin, index) => {
             if (this.character.isColliding(coin)) {
                 this.character.coinCount++;
-                this.level.coins.splice(index, 1); // Entfernt eingesammelte Münze
+                this.level.coins.splice(index, 1);
             }
         });
     }
+
 
     checkRockHitsEnemy() {
         this.throwableObjects.forEach(obj => {
             if (obj instanceof ThrowableObject) {
-                this.level.enemies.forEach(enemy => {
-                    if (!enemy.isDead() && obj.isColliding(enemy)) {
-                        const now = Date.now();
-                        if (now - enemy.lastHit > 400) { // 300ms Schutzzeit
-                            if (enemy instanceof EndbossLevel1) {
-                                enemy.health -= 10;
-                                console.log('enemy health', enemy.health);
-                            } else {
-                                enemy.health = 0;
-                            }
-                            enemy.lastHit = now;
-                        }
-                    }
-                });
+                this.checkCollisionWithEnemies(obj);
             }
         });
     }
 
+
+    checkCollisionWithEnemies(obj) {
+        this.level.enemies.forEach(enemy => {
+            if (!enemy.isDead() && obj.isColliding(enemy)) {
+                this.handleEnemyHit(enemy);
+            }
+        });
+    }
+
+
+    handleEnemyHit(enemy) {
+        const now = Date.now();
+        if (now - enemy.lastHit > 400) {
+            if (enemy instanceof EndbossLevel1) {
+                enemy.health -= 10;
+                console.log('enemy health', enemy.health);
+            } else {
+                enemy.health = 0;
+            }
+            enemy.lastHit = now;
+        }
+    }
+
+
     checkFireBallHitsCharacter() {
         this.throwableObjects.forEach((obj, index) => {
-            // Nur prüfen, wenn es ein Fireball ist
             if ((obj instanceof AnimatedObjects && obj.type === 'fireBall') || (obj instanceof FireBallEndboss)) {
-
                 if (this.character.isColliding(obj) && !this.didJumpOnEnemy(obj.owner)) {
-                    this.character.hit(); // Charakter bekommt Schaden
+                    this.character.hit();
                     this.statusBar.setPercentage(this.character.health);
-
-                    // Fireball aus dem Spiel entfernen
                     this.throwableObjects.splice(index, 1);
                 }
             }
         });
     }
 
+
     cleanUpDeadEnemies() {
         this.level.enemies = this.level.enemies.filter(enemy =>
             !enemy.markedForDeletion || enemy.currentImage < enemy.IMAGES_DEAD.length
         );
     }
+
 
     didJumpOnEnemy(enemy) {
         const enemyHeight = enemy.y + ((enemy.height - enemy.offset.top));
@@ -205,21 +227,18 @@ class World {
         return isAbove && isFalling && isColliding;
     }
 
+
     draw() {
         if (this.transitioning) {
-
             return;
         } else {
             this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-
             this.ctx.translate(this.camera_x, 0);
-
             this.addObjectsToMap(this.level.background);
             this.addObjectsToMap(this.level.coins);
             this.addObjectsToMap(this.level.backgroundObjects);
             this.addObjectsToMap(this.level.spikes);
             this.addObjectsToMap(this.level.groundObjects);
-
             this.ctx.translate(-this.camera_x, 0);
             // Space for fixed objects
             this.ctx.drawImage(this.portraitImg, 29, 29, 51, 51);
@@ -231,14 +250,11 @@ class World {
             this.addToMap(this.statusBar);
             this.addToMap(this.energyBar);
             this.ctx.translate(this.camera_x, 0);
-
             this.addToMap(this.character);
             this.addObjectsToMap(this.level.foodItems);
             this.addObjectsToMap(this.level.enemies);
             this.addObjectsToMap(this.throwableObjects);
-
             this.ctx.translate(-this.camera_x, 0);
-
             if (fadeOverlayOpacity > 0) {
                 this.ctx.fillStyle = `rgba(255, 255, 255, ${fadeOverlayOpacity})`;
                 this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
@@ -250,24 +266,26 @@ class World {
         }
     }
 
+
     addObjectsToMap(objects) {
         objects.forEach(o => {
             this.addToMap(o);
         })
     }
 
+
     addToMap(movabelObj) {
         if (movabelObj.otherDirection) {
             this.flipImage(movabelObj);
         }
         movabelObj.draw(this.ctx);
-/*         movabelObj.drawFrame(this.ctx);
-        movabelObj.drawFrameRed(this.ctx); */
-
+        /*         movabelObj.drawFrame(this.ctx);
+                movabelObj.drawFrameRed(this.ctx); */
         if (movabelObj.otherDirection) {
             this.flipImageBack(movabelObj);
         }
     }
+
 
     flipImage(movabelObj) {
         this.ctx.save();
@@ -275,6 +293,7 @@ class World {
         this.ctx.scale(-1, 1);
         movabelObj.x = movabelObj.x * -1;
     }
+
 
     flipImageBack(movabelObj) {
         movabelObj.x = movabelObj.x * -1;

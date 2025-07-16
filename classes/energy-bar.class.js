@@ -11,11 +11,12 @@ class EnergyBar extends StatusBar {
         './assets/img/game-ui-pixel-art/2 Bars/Energybar_full.png'
     ];
 
+    
     constructor() {
         super();
         this.loadImages(this.IMAGES);
         this.x = 110;
-        this.y = 40; // z.B. andere Position als Healthbar
+        this.y = 40;
         this.width = 154;
         this.height = 20;
         this.setPercentage(100);

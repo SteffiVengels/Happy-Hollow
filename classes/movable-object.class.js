@@ -13,6 +13,7 @@ class MovableObject extends DrawableObject {
     energy = 100;
     lastHit = 0;
 
+
     applyGravity() {
         setInterval(() => {
             if (this.isAboveGround() || this.speedY > 0) {
@@ -24,6 +25,7 @@ class MovableObject extends DrawableObject {
         }, 1000 / 25);
     }
 
+
     isAboveGround() {
         if (this instanceof ThrowableObject) {
             return true
@@ -32,12 +34,14 @@ class MovableObject extends DrawableObject {
         }
     }
 
+
     isColliding(movabelObj) {
         return this.x + this.width - this.offset.right > movabelObj.x + movabelObj.offset.left &&
             this.y + this.height - this.offset.bottom > movabelObj.y + movabelObj.offset.top &&
             this.x + this.offset.left < movabelObj.x + movabelObj.width - movabelObj.offset.right &&
             this.y + this.offset.top < movabelObj.y + movabelObj.height - movabelObj.offset.bottom;
     }
+
 
     hit() {
         this.health -= 5;
@@ -47,6 +51,7 @@ class MovableObject extends DrawableObject {
             this.lastHit = new Date().getTime();
         }
     }
+
 
     select(food) {
         const index = this.world.level.foodItems.indexOf(food);
@@ -60,26 +65,32 @@ class MovableObject extends DrawableObject {
         }
     }
 
+
     fullEnergy() {
         return this.energy = 100;
     }
 
+
     giveEenergy() {
         return this.energy += 5;
     }
+
 
     isHurt() {
         let timepassed = new Date().getTime() - this.lastHit;
         return timepassed < 1000;
     }
 
+
     isDead() {
         return this.health == 0;
     }
 
+
     noEnergy() {
         return this.energy == 0;
     }
+
 
     playAnimation(images) {
         let i = this.currentImage % images.length;
@@ -88,17 +99,21 @@ class MovableObject extends DrawableObject {
         this.currentImage++;
     }
 
+
     moveRight() {
         this.x += this.speed;
     }
+
 
     moveLeft() {
         this.x -= this.speed;
     }
 
+
     jump() {
         this.speedY = 15;
     }
+
 
     playDeathAnimation(images, intervalTime) {
         this.currentImage = 0;
@@ -116,11 +131,10 @@ class MovableObject extends DrawableObject {
         }, intervalTime);
     }
 
+
     applyBounce() {
         this.speedY = 10;
         this.y = 398;
     }
-
-
 
 }

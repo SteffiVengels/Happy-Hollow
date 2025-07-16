@@ -1,5 +1,6 @@
 class ThrowableObject extends MovableObject {
 
+
     constructor(x, y, otherDirection, character, world) {
         super().loadImage('./assets/img/pixel-art-tiny-hero-sprites/1 Pink_Monster/Rock2.png');
         this.x = x + 20;
@@ -11,6 +12,7 @@ class ThrowableObject extends MovableObject {
         this.world = world;
         this.throw();
     }
+
 
     throw() {
         this.speedY = 10;

@@ -38,7 +38,6 @@ class Bear extends MovableObject {
     };
 
 
-
     constructor(character, world) {
         super().loadImage('./assets/img/tiny-monsters-pixel-art-pack/1 Bear/Bear.png');
         this.x = 1400 + Math.random() * 6000;
@@ -51,17 +50,11 @@ class Bear extends MovableObject {
         this.animate();
     }
 
+
     animate() {
         setInterval(() => {
             if (this.isDead() && !this.markedForDeletion) {
-                if (!this.inDeadAnimation) {
-                    this.currentImage = 0;
-                    this.inDeadAnimation = true;
-                }
-                this.playAnimation(this.IMAGES_DEAD);
-                if (this.currentImage >= this.IMAGES_DEAD.length) {
-                    this.markedForDeletion = true;
-                }
+                this.handleDeathAnimation();
             } else if (this.character && Math.abs(this.character.x - this.x) <= 204) {
                 return
             } else {
@@ -74,18 +67,11 @@ class Bear extends MovableObject {
             if (this.character && !this.isDead()) {
                 if (Math.abs(this.character.x - this.x) <= 204) {
                     if (!this.inAttack) {
-                        this.currentImage = 0;
-                        this.inAttack = true;
-                        this.hasFired = false;
+                        this.startFireBallAttack();
                     } else if (this.inAttack) {
                         this.playAnimation(this.IMAGES_ATTACK);
-                        if (this.currentImage >= this.IMAGES_ATTACK.length) {
-                            if (!this.hasFired) {
-                                let fireBallX = this.otherDirection ? this.x + 20 : this.x - 20;
-                                this.world.throwFireBall(fireBallX, this.y + 5, this.otherDirection, this);
-                                this.hasFired = true;
-                                this.inAttack = false;
-                            } 
+                        if (this.currentImage >= this.IMAGES_ATTACK.length && !this.hasFired) {
+                            this.playFireBallAttack();
                         }
                     }
                 } else {
@@ -98,13 +84,40 @@ class Bear extends MovableObject {
             if (this.character && !this.isDead() && !this.inAttack) {
                 if (this.character.x - this.x > 51) {
                     this.moveRight();
-                    this.otherDirection = true; // damit er richtig gespiegelt wird
+                    this.otherDirection = true;
                 } else {
                     this.moveLeft();
                     this.otherDirection = false;
                 }
             }
         }, 1000 / 60);
+    }
+
+
+    handleDeathAnimation() {
+        if (!this.inDeadAnimation) {
+            this.currentImage = 0;
+            this.inDeadAnimation = true;
+        }
+        this.playAnimation(this.IMAGES_DEAD);
+        if (this.currentImage >= this.IMAGES_DEAD.length) {
+            this.markedForDeletion = true;
+        }
+    }
+
+
+    playFireBallAttack() {
+        let fireBallX = this.otherDirection ? this.x + 20 : this.x - 20;
+        this.world.throwFireBall(fireBallX, this.y + 5, this.otherDirection, this);
+        this.hasFired = true;
+        this.inAttack = false;
+    }
+
+
+    startFireBallAttack() {
+        this.currentImage = 0;
+        this.inAttack = true;
+        this.hasFired = false;
     }
 
 }

@@ -116,5 +116,4 @@ const level1 = new Level(
     [
         new BackgroundObjects('./assets/img/platformer-pixel-art-tileset/Tiles/Tileset/TileSet_02.png', 0, 448, 32, 32)
     ]
-
 );

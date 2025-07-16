@@ -34,6 +34,7 @@ class AnimatedObjects extends BackgroundObjects {
         ]
     };
 
+    
     constructor(type, x, y) {
         let basePath;
 
@@ -53,6 +54,7 @@ class AnimatedObjects extends BackgroundObjects {
         this.loadImages(this.animationImages);
         this.animate();
     }
+
 
     animate() {
         setInterval(() => {

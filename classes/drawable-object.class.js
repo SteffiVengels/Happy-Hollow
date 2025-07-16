@@ -7,14 +7,17 @@ class DrawableObject {
     imageCache = {};
     currentImage = 0;
 
+
     loadImage(path) {
         this.img = new Image();
         this.img.src = path;
     }
 
+
     draw(ctx) {
         ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
     }
+
 
     drawFrame(ctx) {
         if (this instanceof Character || this instanceof Bear || this instanceof Mage || this instanceof Ooze || this instanceof RedMonster || this instanceof TinyMonster || this instanceof YellowMonster || this instanceof EndbossLevel1) {
@@ -26,6 +29,7 @@ class DrawableObject {
         }
     }
 
+
     drawFrameRed(ctx) {
         if (this instanceof Character || this instanceof Bear || this instanceof Mage || this instanceof Ooze || this instanceof RedMonster || this instanceof TinyMonster || this instanceof YellowMonster || this instanceof EndbossLevel1) {
             ctx.beginPath();
@@ -35,6 +39,7 @@ class DrawableObject {
             ctx.stroke();
         }
     }
+
 
     loadImages(arr) {
         arr.forEach((path) => {

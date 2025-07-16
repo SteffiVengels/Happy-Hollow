@@ -14,8 +14,8 @@ class FireBallEndboss extends MovableObject {
         this.throw();
     }
 
+
     throw() {
-        // Keine Gravitation!
         setInterval(() => {
             this.x += this.otherDirection ? this.speed : -this.speed;
         }, 1000 / 60);

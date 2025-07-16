@@ -5,6 +5,8 @@ class Food extends DrawableObject {
         right: 5,
         bottom: 0
     };
+
+
     constructor() {
         super();
         this.loadImage('./assets/img/platformer-pixel-art-tileset/Objects/Food/Strawberry.png');

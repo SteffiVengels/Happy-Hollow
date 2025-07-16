@@ -19,6 +19,7 @@ class Character extends MovableObject {
     isJumping = false;
     coinCount = 0;
 
+
     constructor() {
         super().selectCharacterTyp();
         this.loadImages(this.IMAGES_IDLE);
@@ -32,29 +33,16 @@ class Character extends MovableObject {
         this.applyGravity();
     }
 
+
     animate() {
-        // Bewegung: 60 FPS
+
         setInterval(() => {
             if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
-                if (this.x < 310 || this.x > (this.world.level.level_end_x - 330) || this.world.level.level_end_x == 670) {
-                    this.moveRight(); // Character bewegt sich bis zur Mitte
-                } else {
-                    this.x += this.speed; // Character-Position erhöhen
-                    this.world.camera_x = -this.x + 310; // Hintergrund scrollt
-                }
-                this.otherDirection = false;
+                this.handleMoveRight();
             }
-
             if (this.world.keyboard.LEFT && this.x > 0) {
-                if (this.x <= 310 || this.x > (this.world.level.level_end_x - 330) || this.world.level.level_end_x == 670) {
-                    this.moveLeft(); // Character bewegt sich selbst zurück
-                } else {
-                    this.x -= this.speed;
-                    this.world.camera_x = -this.x + 310;
-                }
-                this.otherDirection = true;
+                this.handleMoveLeft();
             }
-
             if (this.world.keyboard.UP && !this.isAboveGround()) {
                 this.jump();
             }
@@ -102,6 +90,29 @@ class Character extends MovableObject {
         }, 120);
     }
 
+
+    handleMoveRight() {
+        if (this.x < 310 || this.x > (this.world.level.level_end_x - 330) || this.world.level.level_end_x == 670) {
+            this.moveRight();
+        } else {
+            this.x += this.speed;
+            this.world.camera_x = -this.x + 310;
+        }
+        this.otherDirection = false;
+    }
+
+
+    handleMoveLeft() {
+        if (this.x <= 310 || this.x > (this.world.level.level_end_x - 330) || this.world.level.level_end_x == 670) {
+            this.moveLeft();
+        } else {
+            this.x -= this.speed;
+            this.world.camera_x = -this.x + 310;
+        }
+        this.otherDirection = true;
+    }
+
+
     selectCharacterTyp() {
         if (this.Type === 'Pink-Monster') {
             this.loadImage('./assets/img/pixel-art-tiny-hero-sprites/1 Pink_Monster/Pink_Monster.png');
@@ -114,6 +125,7 @@ class Character extends MovableObject {
             this.showDudeMonsterAnimation();
         }
     }
+
 
     showPinkMonsterAnimation() {
         this.IMAGES_WALKING = [
@@ -164,6 +176,7 @@ class Character extends MovableObject {
         ];
     }
 
+
     showOwletMonsterAnimation() {
         this.IMAGES_WALKING = [
             './assets/img/pixel-art-tiny-hero-sprites/2 Owlet_Monster/walk/tile000.png',
@@ -212,6 +225,7 @@ class Character extends MovableObject {
             './assets/img/30-pixel-art-monster-portrait-icons/1 Main characters/Portraits_07.png'
         ];
     }
+
 
     showDudeMonsterAnimation() {
         this.IMAGES_WALKING = [

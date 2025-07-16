@@ -21,7 +21,6 @@ class EndbossLevel1 extends MovableObject {
     speed = 0.5;
 
 
-
     constructor(character, world) {
         super();
         this.selectMonsterTyp();
@@ -37,30 +36,22 @@ class EndbossLevel1 extends MovableObject {
         this.startIntroAnimation();
     }
 
+
     startIntroAnimation() {
         let sneerInterval = setInterval(() => {
             this.playAnimation(this.IMAGES_SNEER);
         }, 160);
-
-        // Nach ca. 1 Sekunde Sneer-Animation -> Sneer hat 6 Bilder -> 6*160ms = 960ms
         setTimeout(() => {
             clearInterval(sneerInterval);
-            this.animate();  // Startet den normalen Ablauf
+            this.animate();
         }, 2000);
     }
 
-    animate() {
 
+    animate() {
         setInterval(() => {
             if (this.isDead() && !this.markedForDeletion) {
-                if (!this.inDeadAnimation) {
-                    this.currentImage = 0;
-                    this.inDeadAnimation = true;
-                }
-                this.playAnimation(this.IMAGES_DEAD);
-                if (this.currentImage >= this.IMAGES_DEAD.length) {
-                    this.markedForDeletion = true;
-                }
+                this.handleDeathAnimation();
             } else if (this.isHurt()) {
                 this.playAnimation(this.IMAGES_HURT);
             } else if ((this.character && this.character.isColliding(this) && this.Type !== 'Mage-Monster') || (this.character && Math.abs(this.character.x - this.x) <= 156 && this.Type === 'Mage-Monster')) {
@@ -92,23 +83,16 @@ class EndbossLevel1 extends MovableObject {
             if (this.character && this.Type == 'Mage-Monster' && !this.isDead()) {
                 if (Math.abs(this.character.x - this.x) <= 204) {
                     if (!this.inAttack) {
-                        this.currentImage = 0;
-                        this.inAttack = true;
-                        this.hasFired = false;
+                        this.startFireBallAttack();
                     } else if (this.inAttack) {
                         this.playAnimation(this.IMAGES_ATTACK);
-                        if (this.currentImage >= this.IMAGES_ATTACK.length) {
-                            if (!this.hasFired) {
-                                let fireBallX = this.otherDirection ? this.x + 102 : this.x;
-                                this.world.throwFireBallFromEndboss(fireBallX, this.y, this.otherDirection, this);
-                                this.hasFired = true;
-                                this.inAttack = false;
-                            }
+                        if (this.currentImage >= this.IMAGES_ATTACK.length && !this.hasFired) {
+                            this.playFireBallAttackEndboss();
                         }
                     }
                 } else if (this.Type == 'Mage-Monster') {
-                this.inAttack = false;
-            }
+                    this.inAttack = false;
+                }
             }
         }, 160);
 
@@ -126,6 +110,34 @@ class EndbossLevel1 extends MovableObject {
 
     }
 
+
+    startFireBallAttack() {
+        this.currentImage = 0;
+        this.inAttack = true;
+        this.hasFired = false;
+    }
+
+
+    playFireBallAttackEndboss() {
+        let fireBallX = this.otherDirection ? this.x + 102 : this.x;
+        this.world.throwFireBallFromEndboss(fireBallX, this.y, this.otherDirection, this);
+        this.hasFired = true;
+        this.inAttack = false;
+    }
+
+
+    handleDeathAnimation() {
+        if (!this.inDeadAnimation) {
+            this.currentImage = 0;
+            this.inDeadAnimation = true;
+        }
+        this.playAnimation(this.IMAGES_DEAD);
+        if (this.currentImage >= this.IMAGES_DEAD.length) {
+            this.markedForDeletion = true;
+        }
+    }
+
+
     selectMonsterTyp() {
         if (this.Type === 'Mage-Monster') {
             this.loadImage('./assets/img/boss-monsters-pixel-art/1 Mage/Mage_boss.png');
@@ -139,6 +151,7 @@ class EndbossLevel1 extends MovableObject {
         }
     }
 
+
     changeDimensionForSelectedMonster() {
         if (this.Type === 'Mage-Monster') {
             this.height = 102,
@@ -149,6 +162,7 @@ class EndbossLevel1 extends MovableObject {
                 this.y = 346
         }
     }
+
 
     showMageMonsterAnimation() {
         this.IMAGES_WALKING = [
@@ -191,6 +205,7 @@ class EndbossLevel1 extends MovableObject {
         ];
     }
 
+
     showDemonMonsterAnimation() {
         this.IMAGES_WALKING = [
             './assets/img/boss-monsters-pixel-art/2 Demon/walk/tile000.png',
@@ -231,6 +246,7 @@ class EndbossLevel1 extends MovableObject {
             './assets/img/boss-monsters-pixel-art/2 Demon/attack/tile007.png'
         ];
     }
+
 
     showOozeMonsterAnimation() {
         this.IMAGES_WALKING = [

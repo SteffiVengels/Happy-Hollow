@@ -3,10 +3,12 @@ let world;
 let keyboard = new Keyboard();
 let fadeOverlayOpacity = 0;
 
+
 function init() {
     canvas = document.getElementById('canvas');
     world = new World(canvas, keyboard, level = level1);
 }
+
 
 window.addEventListener("keydown", (e) => {
     if (e.code == "ArrowRight" || e.code == "KeyD") {
@@ -30,6 +32,7 @@ window.addEventListener("keydown", (e) => {
     }
 })
 
+
 window.addEventListener("keyup", (e) => {
     if (e.code == "ArrowRight" || e.code == "KeyD") {
         keyboard.RIGHT = false;
@@ -48,48 +51,58 @@ window.addEventListener("keyup", (e) => {
     }
 })
 
+
 function loadEndbossLevel(canvas, keyboard) {
-    const level = createEndBossLevel1(); // alternativ direkt: new Level(...)
+    const level = createEndBossLevel1();
     const existingCharacter = world.character;
     const newWorld = new World(canvas, keyboard, level);
+    copyCharacterStats(existingCharacter, newWorld);
+    initializeWorldPosition(newWorld);
+    connectEnemiesToWorld(newWorld);
+    return newWorld;
+}
+
+
+function copyCharacterStats(existingCharacter, newWorld) {
     newWorld.character.health = existingCharacter.health;
     newWorld.statusBar.setPercentage(newWorld.character.health);
     newWorld.character.energy = existingCharacter.energy;
     newWorld.energyBar.setPercentage(newWorld.character.energy);
     newWorld.character.coinCount = existingCharacter.coinCount;
+}
 
-    // Anfangsposition und Kamera zurücksetzen
+
+function initializeWorldPosition(newWorld) {
     newWorld.character.x = 50;
     newWorld.camera_x = 0;
+}
 
-    // Gegner mit der neuen Character-Referenz verbinden
+
+function connectEnemiesToWorld(newWorld) {
     newWorld.level.enemies.forEach(enemy => {
         enemy.character = newWorld.character;
         enemy.world = newWorld;
     });
-
-    return newWorld;
 }
+
 
 function fadeOutToWhite(canvas, callback) {
     const ctx = canvas.getContext('2d');
     let opacity = 0;
-
     const fade = setInterval(() => {
         opacity += 0.05;
         ctx.fillStyle = `rgba(255, 255, 255, ${opacity})`;
         ctx.fillRect(0, 0, canvas.width, canvas.height);
-
         if (opacity >= 1) {
             clearInterval(fade);
-            setTimeout(callback, 120); // danach z. B. Weltwechsel starten
+            setTimeout(callback, 120);
         }
     }, 50);
 }
 
+
 function fadeInFromWhite() {
     fadeOverlayOpacity = 1;
-
     const fade = setInterval(() => {
         fadeOverlayOpacity -= 0.05;
         if (fadeOverlayOpacity <= 0) {
