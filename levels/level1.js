@@ -1,6 +1,17 @@
 const level1 = new Level(
     [
-        new TinyMonster()
+        new Bear(),
+        new Mage(),
+        new Ooze(),
+        new RedMonster(),
+        new TinyMonster(),
+        new YellowMonster(),
+        new Bear(),
+        new Mage(),
+        new Ooze(),
+        new RedMonster(),
+        new TinyMonster(),
+        new YellowMonster()
     ],
     [
         new Food(),
@@ -24,7 +35,7 @@ const level1 = new Level(
         new Background('./assets/img/platformer-pixel-art-tileset/Background/Layers/2.png', 0),
         new Background('./assets/img/platformer-pixel-art-tileset/Background/Layers/1.png', 0)
     ],
-        [
+    [
         new AnimatedObjects('coin', 510, 397),
         new AnimatedObjects('coin', 561, 397),
         new AnimatedObjects('coin', 612, 397),
@@ -41,12 +52,29 @@ const level1 = new Level(
         new AnimatedObjects('coin', 2193, 346),
         new AnimatedObjects('coin', 2244, 346),
         new AnimatedObjects('coin', 2295, 346),
-        new AnimatedObjects('coin', 3162, 397),
-        new AnimatedObjects('coin', 3162, 346),
-        new AnimatedObjects('coin', 3162, 295)
+        new AnimatedObjects('coin', 3380, 270),
+        new AnimatedObjects('coin', 3432, 270),
+        new AnimatedObjects('coin', 3484, 270),
+        new AnimatedObjects('coin', 3536, 270),
+        new AnimatedObjects('coin', 3588, 270),
+        new AnimatedObjects('coin', 3640, 270),
+        new AnimatedObjects('coin', 5096, 397),
+        new AnimatedObjects('coin', 5148, 397),
+        new AnimatedObjects('coin', 5200, 397),
+        new AnimatedObjects('coin', 5252, 397),
+        new AnimatedObjects('coin', 5304, 397),
+        new AnimatedObjects('coin', 5356, 397),
+        new AnimatedObjects('coin', 5408, 397),
+        new AnimatedObjects('coin', 5460, 397),
+        new AnimatedObjects('coin', 5512, 397),
+        new AnimatedObjects('coin', 5564, 397),
+        new AnimatedObjects('coin', 6762, 397),
+        new AnimatedObjects('coin', 6762, 346),
+        new AnimatedObjects('coin', 6762, 295)
     ],
     [
-        new AnimatedObjects('flag', 3500, 397)
+        new BackgroundObjects('./assets/img/platformer-pixel-art-tileset/Objects/Trees/Tree2.png', 250, 300, 154, 102),
+        new AnimatedObjects('flag', 7100, 397)
     ],
     [
         new BackgroundObjects('./assets/img/platformer-pixel-art-tileset/Tiles/Tileset/TileSet_02.png', 0, 448, 32, 32)

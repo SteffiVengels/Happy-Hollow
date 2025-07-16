@@ -1,5 +1,5 @@
 class Character extends MovableObject {
-    Type = 'Dude-Monster';
+    Type = 'Owlet-Monster';
     IMAGES_WALKING = [];
     IMAGES_JUMPING = [];
     IMAGES_IDLE = [];
@@ -36,7 +36,7 @@ class Character extends MovableObject {
         // Bewegung: 60 FPS
         setInterval(() => {
             if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
-                if (this.x < 310 || this.x > (this.world.level.level_end_x - 320) || this.world.level.level_end_x == 670) {
+                if (this.x < 310 || this.x > (this.world.level.level_end_x - 330) || this.world.level.level_end_x == 670) {
                     this.moveRight(); // Character bewegt sich bis zur Mitte
                 } else {
                     this.x += this.speed; // Character-Position erhöhen
@@ -46,7 +46,7 @@ class Character extends MovableObject {
             }
 
             if (this.world.keyboard.LEFT && this.x > 0) {
-                if (this.x <= 310 || this.x > (this.world.level.level_end_x - 320) || this.world.level.level_end_x == 670) {
+                if (this.x <= 310 || this.x > (this.world.level.level_end_x - 330) || this.world.level.level_end_x == 670) {
                     this.moveLeft(); // Character bewegt sich selbst zurück
                 } else {
                     this.x -= this.speed;
@@ -65,11 +65,11 @@ class Character extends MovableObject {
                 this.playAnimation(this.IMAGES_DEAD);
             } else if (this.isHurt()) {
                 this.playAnimation(this.IMAGES_HURT);
-            } else if (this.isJumping) {
+            } else if (this.isJumping && !this.isHurt()) {
                 return
-            } else if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
+            } else if ((this.world.keyboard.RIGHT || this.world.keyboard.LEFT) && !this.isHurt()) {
                 return
-            } else if (this.isThrowing && !this.noEnergy()) {
+            } else if (this.isThrowing && !this.noEnergy() && !this.isHurt()) {
                 return
             } else {
                 this.playAnimation(this.IMAGES_IDLE);
@@ -77,7 +77,7 @@ class Character extends MovableObject {
         }, 240);
 
         setInterval(() => {
-            if (this.isThrowing && !this.noEnergy()) {
+            if (this.isThrowing && !this.noEnergy() && !this.isHurt()) {
                 this.playAnimation(this.IMAGES_THROW);
                 if (this.currentImage >= this.IMAGES_THROW.length) {
                     this.isThrowing = false;
@@ -87,7 +87,7 @@ class Character extends MovableObject {
         }, 120);
 
         setInterval(() => {
-            if (this.isJumping) {
+            if (this.isJumping && !this.isHurt()) {
                 this.playAnimation(this.IMAGES_JUMPING);
                 if (this.currentImage >= this.IMAGES_JUMPING.length) {
                     this.isJumping = false;
@@ -96,7 +96,7 @@ class Character extends MovableObject {
         }, 240);
 
         setInterval(() => {
-            if ((this.world.keyboard.RIGHT || this.world.keyboard.LEFT) && !this.isJumping) {
+            if ((this.world.keyboard.RIGHT || this.world.keyboard.LEFT) && !this.isJumping && !this.isHurt()) {
                 this.playAnimation(this.IMAGES_WALKING);
             }
         }, 120);

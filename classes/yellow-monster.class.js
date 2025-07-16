@@ -39,8 +39,8 @@ class YellowMonster extends MovableObject {
 
     constructor(character, world) {
         super().loadImage('./assets/img/tiny-monsters-pixel-art-pack/6 Yellow/Yellow.png');
-        this.x = 719 + Math.random() * 2700;
-        this.speed = 0.15 + Math.random() * 0.25;
+        this.x = 1400 + Math.random() * 6000;
+        this.speed = 1 + Math.random() * 0.75;
         this.character = character;
         this.world = world;
         this.loadImages(this.IMAGES_WALKING);

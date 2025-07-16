@@ -15,7 +15,7 @@ class Level {
         this.backgroundObjects = backgroundObjects;
         this.groundObjects = groundObjects;
         if (repeatBackground) {
-            this.level_end_x = 3500;
+            this.level_end_x = 7100;
 
         }
         this.repeatBackground();

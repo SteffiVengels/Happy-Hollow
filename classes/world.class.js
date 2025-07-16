@@ -246,8 +246,8 @@ class World {
             this.flipImage(movabelObj);
         }
         movabelObj.draw(this.ctx);
-        movabelObj.drawFrame(this.ctx);
-        movabelObj.drawFrameRed(this.ctx);
+/*         movabelObj.drawFrame(this.ctx);
+        movabelObj.drawFrameRed(this.ctx); */
 
         if (movabelObj.otherDirection) {
             this.flipImageBack(movabelObj);

@@ -18,7 +18,7 @@ class EndbossLevel1 extends MovableObject {
         right: 25,
         bottom: 0
     };
-    speed = 0.25;
+    speed = 0.5;
 
 
 

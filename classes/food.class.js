@@ -10,7 +10,7 @@ class Food extends DrawableObject {
         this.loadImage('./assets/img/platformer-pixel-art-tileset/Objects/Food/Strawberry.png');
         this.height = 26;
         this.width = 26;
-        this.y = 372 + Math.random() * 50;
-        this.x = 719 + Math.random() * 2700;
+        this.y = 322 + Math.random() * 100;
+        this.x = 1400 + Math.random() * 5500;
     }
 }
