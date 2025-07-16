@@ -21,7 +21,7 @@ class World {
         this.portraitImg.src = this.character.IMAGE_PORTRAIT[1];
         this.coinImg.src = './assets/img/platformer-pixel-art-tileset/Objects_Animated/coin/tile000.png';
         this.level.enemies.forEach(enemy => {
-            enemy.character = this.character; // oder direkt setzen
+            enemy.character = this.character; 
             enemy.world = this;
         });
         this.setWorld();
@@ -40,6 +40,7 @@ class World {
     run() {
         setInterval(() => {
             this.checkCollisions();
+            this.checkCollisionWithSpikes();
             this.checkCollisionsWithFood();
             this.checkCollisionsWithCoins();
             this.checkRockHitsEnemy();
@@ -109,6 +110,8 @@ class World {
         });
     }
 
+
+
     checkCollisionsWithEndboss() {
         this.level.enemies.forEach((enemy) => {
             if (enemy instanceof EndbossLevel1 && !enemy.inDeadAnimation) {
@@ -129,6 +132,17 @@ class World {
             }
         });
     }
+
+        checkCollisionWithSpikes() {
+    this.level.spikes.forEach((obj) => {
+        if (this.character.isColliding(obj)) {
+            if (!this.character.isHurt()) {
+                this.character.hit();
+                this.statusBar.setPercentage(this.character.health);
+            }
+        }
+    });
+}
 
     checkCollisionsWithCoins() {
         this.level.coins.forEach((coin, index) => {
@@ -203,6 +217,7 @@ class World {
             this.addObjectsToMap(this.level.background);
             this.addObjectsToMap(this.level.coins);
             this.addObjectsToMap(this.level.backgroundObjects);
+            this.addObjectsToMap(this.level.spikes);
             this.addObjectsToMap(this.level.groundObjects);
 
             this.ctx.translate(-this.camera_x, 0);
