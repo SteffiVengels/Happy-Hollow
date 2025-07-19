@@ -47,12 +47,47 @@ header {
         1px 1px 0 black;
 }
 
+.start-screen header {
+    padding-left: 8px;
+    background-image: url('./assets/img/game-ui-pixel-art/5 Logo/Logo.png');
+    background-size: cover;
+    background-position: center;
+    width: 424px;
+    height: 192px;
+    position: absolute;
+    top: 40px;
+        transform: translateX(0);
+    transition: all 1s ease;
+    z-index: 10;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #de3440;
+    text-shadow:
+        -1px -1px 0 black,
+        1px -1px 0 black,
+        -1px 1px 0 black,
+        1px 1px 0 black;
+}
+
+.start-screen header.animate {
+    transform: translateY(-320px) scale(1);
+    opacity: 1;
+}
+
 h1 {
     padding-top: 64px;
+    font-size: 24px;
+}
+
+main {
+    margin-top: 192px;
+    display: flex;
+    justify-content: center;
 }
 
 .d_none {
-    display: none;
+    display: none !important;
 }
 
 .canvas-frame {
@@ -85,6 +120,19 @@ canvas {
 }
 
 .start-screen {
+    position: relative;
+    height: 480px;
+    width: 720px;
+    background-image: url('./assets/img/platformer-pixel-art-tileset/Background/Background.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-direction: column;
+}
+
+.menu-screen  {
     position: relative;
     height: 480px;
     width: 720px;
@@ -160,4 +208,8 @@ canvas {
     background-image: url('./assets/img/platformer-pixel-art-tileset/Tiles/Tileset/TileSet_02.png');
     background-repeat: repeat-x;
     background-size: 32px 32px;
+}
+
+.menu-screen h1 {
+    color: white;
 }

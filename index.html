@@ -33,30 +33,37 @@
     <script src="./levels/level1.js"></script>
     <script src="./levels/endboss-level1.js"></script>
 
-
     <script src="./scripts/game.js"></script>
     <script src="./script.js"></script>
 </head>
 
 <body onload="init()">
 
-
-
     <main>
-
+        <header id="header" class="d_none">
+            <h1>Happy Hollow</h1>
+        </header>
         <section class="canvas-frame">
-            <section class="start-screen">
+            <section id="start_screen" class="start-screen">
                 <header>
                     <h1>Happy Hollow</h1>
                 </header>
-
-                <button >New Game</button>
+                <button onclick="openMenuScreen()" id="new_game_button">New Game</button>
                 <div class="character-animation"></div>
                 <div class="ground"></div>
-
-
-
-
+            </section>
+            <section id="menu_screen" class="menu-screen d_none">
+                <h1>Select your Tiny Hero</h1>
+                <div>
+                    <button id="Pink-Monster">Pink Monster</button>
+                    <button id="Owlet-Monster">Owlet Monster</button>
+                    <button id="Dude-Monster">Dude Monster</button>
+                </div>
+                <button>Settings</button>
+                <button>About the World</button>
+                <button>Controls</button>
+                <button onclick="loadLevel1()">Play</button>
+                <div class="ground"></div>
             </section>
             <canvas id="canvas" width="720" height="480" class="d_none"></canvas>
         </section>

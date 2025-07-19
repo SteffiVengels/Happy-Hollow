@@ -5,7 +5,7 @@ let fadeOverlayOpacity = 0;
 
 
 function init() {
-    canvas = document.getElementById('canvas');
+    
     animateCharacter();
 /*     loadLevel1(); */
 }
@@ -53,6 +53,9 @@ window.addEventListener("keyup", (e) => {
 })
 
 function loadLevel1() {
+    document.getElementById("menu_screen").classList.add('d_none');
+    canvas = document.getElementById('canvas');
+    canvas.classList.remove("d_none");
     const level1 = createLevel1();
     world = new World(canvas, keyboard, level1);
     fadeInFromWhite();
