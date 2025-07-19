@@ -6,7 +6,8 @@ let fadeOverlayOpacity = 0;
 
 function init() {
     canvas = document.getElementById('canvas');
-    world = new World(canvas, keyboard, level = level1);
+    animateCharacter();
+/*     loadLevel1(); */
 }
 
 
@@ -51,6 +52,11 @@ window.addEventListener("keyup", (e) => {
     }
 })
 
+function loadLevel1() {
+    const level1 = createLevel1();
+    world = new World(canvas, keyboard, level1);
+    fadeInFromWhite();
+}
 
 function loadEndbossLevel(canvas, keyboard) {
     const level = createEndBossLevel1();
@@ -111,6 +117,8 @@ function fadeInFromWhite() {
         }
     }, 50);
 }
+
+
 
 /* /* *
  * This function initializes the game by setting up the level and creating a new world instance.

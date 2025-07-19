@@ -1,4 +1,5 @@
-const level1 = new Level(
+function createLevel1() {
+    return new Level(
     [
         new Bear(),
         new Mage(),
@@ -116,4 +117,6 @@ const level1 = new Level(
     [
         new BackgroundObjects('./assets/img/platformer-pixel-art-tileset/Tiles/Tileset/TileSet_02.png', 0, 448, 32, 32)
     ]
+
 );
+}

@@ -16,6 +16,7 @@
 body {
     display: flex;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
     min-height: 100vh;
     margin: 0;
@@ -27,13 +28,14 @@ body {
 }
 
 header {
-    margin: 40px;
+    padding-left: 8px;
     background-image: url('./assets/img/game-ui-pixel-art/5 Logo/Logo.png');
     background-size: cover;
     background-position: center;
     width: 424px;
     height: 192px;
-    position: relative;
+    position: absolute;
+    top: 40px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -49,8 +51,11 @@ h1 {
     padding-top: 64px;
 }
 
+.d_none {
+    display: none;
+}
+
 .canvas-frame {
-    margin-bottom: 40px;
     display: inline-block;
     padding: 32px;
     background:
@@ -77,4 +82,82 @@ h1 {
 canvas {
     display: block;
     background-color: black;
+}
+
+.start-screen {
+    position: relative;
+    height: 480px;
+    width: 720px;
+    background-image: url('./assets/img/platformer-pixel-art-tileset/Background/Background.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-direction: column;
+}
+
+.start-screen button {
+    margin-left: 8px;
+    position: absolute;
+    bottom: 140px;
+    cursor: pointer;
+    width: 128px;
+    height: 64px;
+    font-family: 'Planes';
+    border: none;
+    color: white;
+    font-size: 16px;
+    padding: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+    background:
+        url('./assets/img/game-ui-pixel-art/1 Frames/Frame_tile_49.png') top left no-repeat,
+        url('./assets/img/game-ui-pixel-art/1 Frames/Frame_tile_51.png') top right no-repeat,
+        url('./assets/img/game-ui-pixel-art/1 Frames/Frame_tile_52.png') bottom left no-repeat,
+        url('./assets/img/game-ui-pixel-art/1 Frames/Frame_tile_54.png') bottom right no-repeat,
+        url('./assets/img/game-ui-pixel-art/1 Frames/Frame_tile_50.png') top no-repeat,
+        url('./assets/img/game-ui-pixel-art/1 Frames/Frame_tile_55.png') left no-repeat,
+        url('./assets/img/game-ui-pixel-art/1 Frames/Frame_tile_56.png') right no-repeat,
+        url('./assets/img/game-ui-pixel-art/1 Frames/Frame_tile_53.png') bottom no-repeat;
+
+    background-size:
+        32px 32px,
+        32px 32px,
+        32px 32px,
+        32px 32px,
+        calc(100% - 64px) 32px,
+        32px calc(100% - 64px),
+        32px calc(100% - 64px),
+        calc(100% - 64px) 32px;
+}
+
+
+.start-screen button:hover {
+    transform: translateY(-2px);
+    -webkit-box-shadow: 4px 8px 19px -3px rgba(0, 0, 0, 0.27);
+    box-shadow: 4px 8px 19px -3px rgba(0, 0, 0, 0.27);
+}
+
+.character-animation {
+    width: 50px;
+    height: 50px;
+    background-image: url('./assets/img/pixel-art-tiny-hero-sprites/1 Pink_Monster/Pink_Monster_Walk_6.png'); /* dein Lauf-Sprite */
+    background-size: 300px; /* (6 Frames * 50px Breite) */
+    position: absolute;
+    bottom: 32px;
+    left: 0;
+}
+
+.ground {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 32px;
+    background-image: url('./assets/img/platformer-pixel-art-tileset/Tiles/Tileset/TileSet_02.png');
+    background-repeat: repeat-x;
+    background-size: 32px 32px;
 }
