@@ -8,6 +8,7 @@
     <link rel="icon" type="image/x-icon" href="./assets/img/Icons for AS & GP/1 64x64/1_1.png" />
 
     <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="./styles/standard.css">
 
     <script src="./classes/drawable-object.class.js"></script>
     <script src="./classes/movable-object.class.js"></script>
@@ -53,19 +54,75 @@
                 <div class="ground"></div>
             </section>
             <section id="menu_screen" class="menu-screen d_none">
-                <h1>Select your Tiny Hero</h1>
-                <div>
-                    <button id="Pink-Monster">Pink Monster</button>
-                    <button id="Owlet-Monster">Owlet Monster</button>
-                    <button id="Dude-Monster">Dude Monster</button>
+
+                <div class="select-your-tiny-hero">
+                    <h1>Select your Tiny Hero</h1>
+                    <div>
+                        <button class="character-preview-pink" id="Pink-Monster"
+                            onclick="selectYourCharacter(id)"></button>
+                        <button class="character-preview-owlet" id="Owlet-Monster"
+                            onclick="selectYourCharacter(id)"></button>
+                        <button class="character-preview-dude" id="Dude-Monster"
+                            onclick="selectYourCharacter(id)"></button>
+                    </div>
                 </div>
-                <button>Settings</button>
-                <button>About the World</button>
-                <button>Controls</button>
-                <button onclick="loadLevel1()">Play</button>
+                <div class="menu-div">
+                    <button class="menu-btn" onclick="openSettings()">Settings</button>
+                    <button class="menu-btn" onclick="openWorld()">World</button>
+                    <button class="menu-btn" onclick="openControls()">Controls</button>
+                    <button class="menu-btn" onclick="loadLevel1()" disabled id="play_button">Play</button>
+                </div>
                 <div class="ground"></div>
             </section>
             <canvas id="canvas" width="720" height="480" class="d_none"></canvas>
+        </section>
+        <section class="overlay d_none" id="settings-dialog" onclick="closeSettings(event)" >
+            <div class="dialog" onclick="event.stopPropagation()">
+                <div class="dialog-close-wrapper">
+                    <img src="./assets/img/game-ui-pixel-art/1 Frames/Frame_tile_31.png" alt="">
+                    <button class="close-img" onclick="closeSettings(event)">
+                        <img src="./assets/img/game-ui-pixel-art/3 Icons/Icons_37.png" alt="">
+                    </button>
+                </div>
+                <div class="dialog-title">
+                    <title>Settings</title>
+                </div>
+                <div class="dialog-body">
+                    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptatem nam porro facilis ullam consequatur iusto? Consectetur deserunt iste odit fugit sunt nostrum, labore vitae? Eveniet maiores autem distinctio ex illum.</p>
+                </div>
+            </div>
+        </section>
+                <section class="overlay d_none" id="world-dialog" onclick="closeWorld(event)" >
+            <div class="dialog" onclick="event.stopPropagation()">
+                <div class="dialog-close-wrapper">
+                    <img src="./assets/img/game-ui-pixel-art/1 Frames/Frame_tile_31.png" alt="">
+                    <button class="close-img" onclick="closeWorld(event)">
+                        <img src="./assets/img/game-ui-pixel-art/3 Icons/Icons_37.png" alt="">
+                    </button>
+                </div>
+                <div class="dialog-title">
+                    <title>World</title>
+                </div>
+                <div class="dialog-body">
+                    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptatem nam porro facilis ullam consequatur iusto? Consectetur deserunt iste odit fugit sunt nostrum, labore vitae? Eveniet maiores autem distinctio ex illum.</p>
+                </div>
+            </div>
+        </section>
+                <section class="overlay d_none" id="controls-dialog" onclick="closeControls(event)" >
+            <div class="dialog" onclick="event.stopPropagation()">
+                <div class="dialog-close-wrapper">
+                    <img src="./assets/img/game-ui-pixel-art/1 Frames/Frame_tile_31.png" alt="">
+                    <button class="close-img" onclick="closeControls(event)">
+                        <img src="./assets/img/game-ui-pixel-art/3 Icons/Icons_37.png" alt="">
+                    </button>
+                </div>
+                <div class="dialog-title">
+                    <title>Controls</title>
+                </div>
+                <div class="dialog-body">
+                    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptatem nam porro facilis ullam consequatur iusto? Consectetur deserunt iste odit fugit sunt nostrum, labore vitae? Eveniet maiores autem distinctio ex illum.</p>
+                </div>
+            </div>
         </section>
     </main>
 

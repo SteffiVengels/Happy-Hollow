@@ -20,8 +20,10 @@ class Character extends MovableObject {
     coinCount = 0;
 
 
-    constructor() {
-        super().selectCharacterTyp();
+    constructor(type) {
+        super();
+        this.Type = type
+        this.selectCharacterTyp();
         this.loadImages(this.IMAGES_IDLE);
         this.loadImages(this.IMAGES_WALKING);
         this.loadImages(this.IMAGES_JUMPING);

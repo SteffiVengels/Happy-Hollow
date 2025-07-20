@@ -2,6 +2,7 @@
 const frameWidth = 50;
 const walkFrames = 6;
 const idleFrames = 4;
+let selectedCharacterType;
 
 /**
  * Init wird beim Seitenladen aufgerufen
@@ -115,6 +116,49 @@ function openMenuScreen() {
         document.getElementById("header").classList.remove('d_none');
         showMenuCharacter();
     }, 800);
+}
+
+
+function selectYourCharacter(id) {
+    document.getElementById("Pink-Monster").classList.remove('active');
+    document.getElementById("Owlet-Monster").classList.remove('active');
+    document.getElementById("Dude-Monster").classList.remove('active');
+    document.getElementById(id).classList.add('active');
+    document.getElementById("play_button").disabled = false;
+    document.getElementById("play_button").classList.add("play-buttn-enabled");
+    selectedCharacterType = id;
+}
+
+function closeSettings(event) {
+    if (event) {
+        event.stopPropagation();
+    }
+    document.getElementById("settings-dialog").classList.add("d_none");
+}
+
+function openSettings() {
+    document.getElementById("settings-dialog").classList.remove("d_none");
+}
+
+function closeWorld(event) {
+    if (event) {
+        event.stopPropagation();
+    }
+    document.getElementById("world-dialog").classList.add("d_none");
+}
+
+function openWorld() {
+    document.getElementById("world-dialog").classList.remove("d_none");
+}
+function closeControls(event) {
+    if (event) {
+        event.stopPropagation();
+    }
+    document.getElementById("controls-dialog").classList.add("d_none");
+}
+
+function openControls() {
+    document.getElementById("controls-dialog").classList.remove("d_none");
 }
 
 

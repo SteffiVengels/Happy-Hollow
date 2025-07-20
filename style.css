@@ -1,52 +1,3 @@
-@font-face {
-    font-family: "Jersey15";
-    src: url(./assets/fonts/Jersey_15,Pixelify_Sans/Jersey_15/Jersey15-Regular.ttf);
-}
-
-@font-face {
-    font-family: "PixelifySans";
-    src: url(./assets/fonts/Jersey_15,Pixelify_Sans/Pixelify_Sans/PixelifySans-VariableFont_wght.ttf);
-}
-
-@font-face {
-    font-family: "Planes";
-    src: url(./assets/img/platformer-pixel-art-tileset/Font/Planes_ValMore.ttf);
-}
-
-body {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    margin: 0;
-    font-family: 'Planes';
-    background-image: url('./assets/img/background/ai-generated-8227409_1920.jpg');
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
-}
-
-header {
-    padding-left: 8px;
-    background-image: url('./assets/img/game-ui-pixel-art/5 Logo/Logo.png');
-    background-size: cover;
-    background-position: center;
-    width: 424px;
-    height: 192px;
-    position: absolute;
-    top: 40px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: #de3440;
-    text-shadow:
-        -1px -1px 0 black,
-        1px -1px 0 black,
-        -1px 1px 0 black,
-        1px 1px 0 black;
-}
-
 .start-screen header {
     padding-left: 8px;
     background-image: url('./assets/img/game-ui-pixel-art/5 Logo/Logo.png');
@@ -56,9 +7,9 @@ header {
     height: 192px;
     position: absolute;
     top: 40px;
-        transform: translateX(0);
+    transform: translateX(0);
     transition: all 1s ease;
-    z-index: 10;
+    /*     z-index: 10; */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -70,25 +21,17 @@ header {
         1px 1px 0 black;
 }
 
+
 .start-screen header.animate {
     transform: translateY(-320px) scale(1);
     opacity: 1;
 }
 
-h1 {
-    padding-top: 64px;
-    font-size: 24px;
-}
-
-main {
-    margin-top: 192px;
-    display: flex;
-    justify-content: center;
-}
 
 .d_none {
     display: none !important;
 }
+
 
 .canvas-frame {
     display: inline-block;
@@ -114,10 +57,6 @@ main {
         calc(100% - 64px) 32px;
 }
 
-canvas {
-    display: block;
-    background-color: black;
-}
 
 .start-screen {
     position: relative;
@@ -132,7 +71,8 @@ canvas {
     flex-direction: column;
 }
 
-.menu-screen  {
+
+.menu-screen {
     position: relative;
     height: 480px;
     width: 720px;
@@ -145,7 +85,9 @@ canvas {
     flex-direction: column;
 }
 
+
 .start-screen button {
+    transition: transform 0.2s ease;
     margin-left: 8px;
     position: absolute;
     bottom: 140px;
@@ -161,43 +103,58 @@ canvas {
     align-items: center;
     justify-content: center;
     white-space: nowrap;
-    background:
-        url('./assets/img/game-ui-pixel-art/1 Frames/Frame_tile_49.png') top left no-repeat,
-        url('./assets/img/game-ui-pixel-art/1 Frames/Frame_tile_51.png') top right no-repeat,
-        url('./assets/img/game-ui-pixel-art/1 Frames/Frame_tile_52.png') bottom left no-repeat,
-        url('./assets/img/game-ui-pixel-art/1 Frames/Frame_tile_54.png') bottom right no-repeat,
-        url('./assets/img/game-ui-pixel-art/1 Frames/Frame_tile_50.png') top no-repeat,
-        url('./assets/img/game-ui-pixel-art/1 Frames/Frame_tile_55.png') left no-repeat,
-        url('./assets/img/game-ui-pixel-art/1 Frames/Frame_tile_56.png') right no-repeat,
-        url('./assets/img/game-ui-pixel-art/1 Frames/Frame_tile_53.png') bottom no-repeat;
+    background-color: #667291;
+    background-image:
+        url('./assets/img/game-ui-pixel-art/1 Frames/Frame_tile_49.png'),
+        url('./assets/img/game-ui-pixel-art/1 Frames/Frame_tile_51.png'),
+        url('./assets/img/game-ui-pixel-art/1 Frames/Frame_tile_52.png'),
+        url('./assets/img/game-ui-pixel-art/1 Frames/Frame_tile_54.png'),
+        url('./assets/img/game-ui-pixel-art/1 Frames/Frame_tile_50.png'),
+        url('./assets/img/game-ui-pixel-art/1 Frames/Frame_tile_55.png'),
+        url('./assets/img/game-ui-pixel-art/1 Frames/Frame_tile_56.png'),
+        url('./assets/img/game-ui-pixel-art/1 Frames/Frame_tile_53.png');
 
-    background-size:
-        32px 32px,
-        32px 32px,
-        32px 32px,
-        32px 32px,
-        calc(100% - 64px) 32px,
-        32px calc(100% - 64px),
-        32px calc(100% - 64px),
-        calc(100% - 64px) 32px;
+    background-position:
+        top left,
+        top right,
+        bottom left,
+        bottom right,
+        top center,
+        center left,
+        center right,
+        bottom center;
+
+    background-repeat:
+        no-repeat,
+        no-repeat,
+        no-repeat,
+        no-repeat,
+        repeat-x,
+        repeat-y,
+        repeat-y,
+        repeat-x;
 }
 
 
 .start-screen button:hover {
-    transform: translateY(-2px);
+    transform: scale(1.05);
     -webkit-box-shadow: 4px 8px 19px -3px rgba(0, 0, 0, 0.27);
     box-shadow: 4px 8px 19px -3px rgba(0, 0, 0, 0.27);
 }
 
+
 .character-animation {
     width: 50px;
     height: 50px;
-    background-image: url('./assets/img/pixel-art-tiny-hero-sprites/1 Pink_Monster/Pink_Monster_Walk_6.png'); /* dein Lauf-Sprite */
-    background-size: 300px; /* (6 Frames * 50px Breite) */
+    background-image: url('./assets/img/pixel-art-tiny-hero-sprites/1 Pink_Monster/Pink_Monster_Walk_6.png');
+    /* dein Lauf-Sprite */
+    background-size: 300px;
+    /* (6 Frames * 50px Breite) */
     position: absolute;
     bottom: 32px;
     left: 0;
 }
+
 
 .ground {
     position: absolute;
@@ -210,6 +167,243 @@ canvas {
     background-size: 32px 32px;
 }
 
+
 .menu-screen h1 {
     color: white;
+}
+
+.menu-btn {
+    transition: transform 0.2s ease;
+    margin-left: 8px;
+    cursor: pointer;
+    width: 96px;
+    height: 64px;
+    font-family: 'Planes';
+    border: none;
+    color: white;
+    font-size: 16px;
+    padding: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+    background-color: #667291;
+    background-image:
+        url('./assets/img/game-ui-pixel-art/1 Frames/Frame_tile_49.png'),
+        url('./assets/img/game-ui-pixel-art/1 Frames/Frame_tile_51.png'),
+        url('./assets/img/game-ui-pixel-art/1 Frames/Frame_tile_52.png'),
+        url('./assets/img/game-ui-pixel-art/1 Frames/Frame_tile_54.png'),
+        url('./assets/img/game-ui-pixel-art/1 Frames/Frame_tile_50.png'),
+        url('./assets/img/game-ui-pixel-art/1 Frames/Frame_tile_55.png'),
+        url('./assets/img/game-ui-pixel-art/1 Frames/Frame_tile_56.png'),
+        url('./assets/img/game-ui-pixel-art/1 Frames/Frame_tile_53.png');
+
+    background-position:
+        top left,
+        top right,
+        bottom left,
+        bottom right,
+        top center,
+        center left,
+        center right,
+        bottom center;
+
+    background-repeat:
+        no-repeat,
+        no-repeat,
+        no-repeat,
+        no-repeat,
+        repeat-x,
+        repeat-y,
+        repeat-y,
+        repeat-x;
+}
+
+.select-your-tiny-hero {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.select-your-tiny-hero div {
+    display: flex;
+    flex-direction: row;
+    gap: 56px;
+}
+
+.menu-screen h1 {
+    padding-top: 0;
+}
+
+.character-preview-pink {
+    background-image: url('./assets/img/game-ui-pixel-art/1 Frames/Portrait_frame.png'), url('./assets/img/30-pixel-art-monster-portrait-icons/1 Main characters/Portraits_01.png');
+    background-position: center, center;
+    background-size: cover, 58%;
+    background-repeat: no-repeat, no-repeat;
+    width: 90px;
+    height: 90px;
+    border: none;
+    background-color: transparent;
+    transition: transform 0.2s ease;
+}
+
+.character-preview-owlet {
+    background-image: url('./assets/img/game-ui-pixel-art/1 Frames/Portrait_frame.png'), url('./assets/img/30-pixel-art-monster-portrait-icons/1 Main characters/Portraits_07.png');
+    background-position: center, center;
+    background-size: cover, 58%;
+    background-repeat: no-repeat, no-repeat;
+    width: 90px;
+    height: 90px;
+    border: none;
+    background-color: transparent;
+    transition: transform 0.2s ease;
+}
+
+.character-preview-dude {
+    background-image: url('./assets/img/game-ui-pixel-art/1 Frames/Portrait_frame.png'), url('./assets/img/30-pixel-art-monster-portrait-icons/1 Main characters/Portraits_13.png');
+    background-position: center, center;
+    background-size: cover, 58%;
+    background-repeat: no-repeat, no-repeat;
+    width: 90px;
+    height: 90px;
+    border: none;
+    background-color: transparent;
+    transition: transform 0.2s ease;
+}
+
+.menu-div {
+    display: flex;
+    flex-direction: row;
+    margin: 56px 0;
+    gap: 40px;
+}
+
+.select-your-tiny-hero button:hover {
+    cursor: pointer;
+    transform: scale(1.1);
+    -webkit-box-shadow: 4px 8px 19px -3px rgba(0, 0, 0, 0.27);
+    box-shadow: 4px 8px 19px -3px rgba(0, 0, 0, 0.27);
+}
+
+.active {
+    transform: scale(1.1);
+}
+
+.menu-btn:hover {
+    transform: scale(1.05);
+    -webkit-box-shadow: 4px 8px 19px -3px rgba(0, 0, 0, 0.27);
+    box-shadow: 4px 8px 19px -3px rgba(0, 0, 0, 0.27);
+}
+
+#play_button {
+    cursor: not-allowed;
+}
+
+.play-buttn-enabled {
+    cursor: pointer !important;
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.375);
+    z-index: 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.dialog {
+    position: relative;
+    width: 400px;
+    background-color: #2a304e;
+    background-image:
+        url('./assets/img/game-ui-pixel-art/1 Frames/Frame_tile_05.png'),
+        url('./assets/img/game-ui-pixel-art/1 Frames/Frame_tile_06.png'),
+        url('./assets/img/game-ui-pixel-art/1 Frames/Frame_tile_13.png'),
+        url('./assets/img/game-ui-pixel-art/1 Frames/Frame_tile_14.png'),
+        url('./assets/img/game-ui-pixel-art/1 Frames/Frame_tile_01.png'),
+        url('./assets/img/game-ui-pixel-art/1 Frames/Frame_tile_09.png'),
+        url('./assets/img/game-ui-pixel-art/1 Frames/Frame_tile_02.png'),
+        url('./assets/img/game-ui-pixel-art/1 Frames/Frame_tile_10.png');
+
+    background-position:
+        top left,
+        top right,
+        bottom left,
+        bottom right,
+        top center,
+        center left,
+        center right,
+        bottom center;
+
+    background-repeat:
+        no-repeat,
+        no-repeat,
+        no-repeat,
+        no-repeat,
+        repeat-x,
+        repeat-y,
+        repeat-y,
+        repeat-x;
+}
+
+.dialog-close-wrapper {
+    position: absolute;
+    right: -30px;
+    width: 32px;
+    height: 32px;
+}
+
+.dialog-close-wrapper img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.close-img:hover {
+    cursor: pointer;
+}
+
+.dialog-title {
+    position: absolute;
+    right: 136px;
+    top: -32px;
+    width: 128px;
+    height: 64px;
+    background:
+        url('./assets/img/game-ui-pixel-art/1 Frames/Frame_tile_33.png') top left no-repeat,
+        url('./assets/img/game-ui-pixel-art/1 Frames/Frame_tile_35.png') top right no-repeat,
+        url('./assets/img/game-ui-pixel-art/1 Frames/Frame_tile_41.png') bottom left no-repeat,
+        url('./assets/img/game-ui-pixel-art/1 Frames/Frame_tile_43.png') bottom right no-repeat,
+        url('./assets/img/game-ui-pixel-art/1 Frames/Frame_tile_34.png') top no-repeat,
+        url('./assets/img/game-ui-pixel-art/1 Frames/Frame_tile_42.png') bottom no-repeat;
+
+    background-size:
+        32px 32px,
+        32px 32px,
+        32px 32px,
+        32px 32px,
+        calc(100% - 64px) 32px,
+        calc(100% - 64px) 32px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Planes';
+    font-size: 20px;
+    color: white;
+}
+
+.dialog-title title {
+    display: flex;
+}
+
+.dialog-body {
+    color: white;
+    margin: 32px;
 }

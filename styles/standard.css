@@ -1,0 +1,71 @@
+@font-face {
+    font-family: "Jersey15";
+    src: url(../assets/fonts/Jersey_15,Pixelify_Sans/Jersey_15/Jersey15-Regular.ttf);
+}
+
+
+@font-face {
+    font-family: "PixelifySans";
+    src: url(../assets/fonts/Jersey_15,Pixelify_Sans/Pixelify_Sans/PixelifySans-VariableFont_wght.ttf);
+}
+
+
+@font-face {
+    font-family: "Planes";
+    src: url(../assets/img/platformer-pixel-art-tileset/Font/Planes_ValMore.ttf);
+}
+
+
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    font-family: 'Planes';
+    background-image: url('../assets/img/background/ai-generated-8227409_1920.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+
+header {
+    padding-left: 8px;
+    background-image: url('../assets/img/game-ui-pixel-art/5 Logo/Logo.png');
+    background-size: cover;
+    background-position: center;
+    width: 424px;
+    height: 192px;
+    position: absolute;
+    top: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #de3440;
+    text-shadow:
+        -1px -1px 0 black,
+        1px -1px 0 black,
+        -1px 1px 0 black,
+        1px 1px 0 black;
+}
+
+
+h1 {
+    padding-top: 64px;
+    font-size: 32px;
+}
+
+
+main {
+    margin-top: 192px;
+    display: flex;
+    justify-content: center;
+}
+
+
+canvas {
+    display: block;
+    background-color: black;
+}
