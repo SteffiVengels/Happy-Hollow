@@ -406,4 +406,105 @@
 .dialog-body {
     color: white;
     margin: 32px;
+
+}
+
+.setting-body {
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    gap: 32px;
+}
+
+.controls-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 8px 0;
+    height: 27px;
+}
+
+.controls-list img {
+    width: 24px;
+    height: 24px;
+}
+
+.controls-list span {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.controls-list {
+    padding-left: 0;
+}
+
+.settings-menu {
+    width: 200px;
+    background: #3c3c3c;
+    border: 4px solid #7d5a3a;
+    padding: 12px;
+    font-family: monospace;
+    color: white;
+}
+
+.setting-item {
+    margin: 16px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+}
+
+.toggle-btn {
+    width: 40px;
+    height: 20px;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.toggle-switch {
+
+    display: flex;
+    align-items: center;
+    width: 32px;  /* Passe auf dein Toggle-Bild an */
+    height: 12px;
+    background: url('./assets/img/game-ui-pixel-art/2 Bars/Band2_off.png') no-repeat;
+    background-size: cover;
+    cursor: pointer;
+}
+
+.toggle-switch.on {
+    background-image: url('./assets/img/game-ui-pixel-art/2 Bars/Band2_on.png');
+}
+
+.toggle-thumb {
+    width: 16px;
+    height: 16px;
+    background: url('./assets/img/game-ui-pixel-art/2 Bars/Slider.png') no-repeat center/cover;
+    position: relative;
+    top: 0px;
+    left: -8px;
+    transition: left 0.2s;
+}
+
+.toggle-switch.on .toggle-thumb {
+    left: 24px; /* 48px Breite - 20px Thumb - 2px Rand */
+}
+
+
+.imprint-button {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    cursor: pointer;
+    background: url('./assets/img/game-ui-pixel-art/3 Icons/Icons_04.png') no-repeat center/cover;
+    border: none;
+    width: 24px;
+    height: 24px;
+    transition: transform 0.2s ease;
+}
+
+.imprint-button:hover {
+    transform: scale(1.1);
 }

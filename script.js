@@ -161,4 +161,9 @@ function openControls() {
     document.getElementById("controls-dialog").classList.remove("d_none");
 }
 
+function setupToggleSwitch(id) {
+    const element = document.getElementById(id);
+    element.classList.toggle('on');
+
+}
 
