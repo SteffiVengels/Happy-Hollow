@@ -129,36 +129,15 @@ function selectYourCharacter(id) {
     selectedCharacterType = id;
 }
 
-function closeSettings(event) {
+function closeOverlay(event, id) {
     if (event) {
         event.stopPropagation();
     }
-    document.getElementById("settings-dialog").classList.add("d_none");
+    document.getElementById(id).classList.add("d_none");
 }
 
-function openSettings() {
-    document.getElementById("settings-dialog").classList.remove("d_none");
-}
-
-function closeWorld(event) {
-    if (event) {
-        event.stopPropagation();
-    }
-    document.getElementById("world-dialog").classList.add("d_none");
-}
-
-function openWorld() {
-    document.getElementById("world-dialog").classList.remove("d_none");
-}
-function closeControls(event) {
-    if (event) {
-        event.stopPropagation();
-    }
-    document.getElementById("controls-dialog").classList.add("d_none");
-}
-
-function openControls() {
-    document.getElementById("controls-dialog").classList.remove("d_none");
+function openOverlay(id) {
+    document.getElementById(id).classList.remove("d_none");
 }
 
 function setupToggleSwitch(id) {
@@ -166,4 +145,6 @@ function setupToggleSwitch(id) {
     element.classList.toggle('on');
 
 }
+
+
 

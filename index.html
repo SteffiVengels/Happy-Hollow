@@ -9,6 +9,10 @@
 
     <link rel="stylesheet" href="./style.css">
     <link rel="stylesheet" href="./styles/standard.css">
+    <link rel="stylesheet" href="./styles/start-screen.css">
+    <link rel="stylesheet" href="./styles/menu-screen.css">
+    <link rel="stylesheet" href="./styles/game-over-screen.css">
+    <link rel="stylesheet" href="./styles/win-screen.css">
 
     <script src="./classes/drawable-object.class.js"></script>
     <script src="./classes/movable-object.class.js"></script>
@@ -54,7 +58,7 @@
                 <div class="ground"></div>
             </section>
             <section id="menu_screen" class="menu-screen d_none">
-                <button class="imprint-button" onclick="openImprint()"></button>
+                <button class="imprint-button" onclick="openOverlay('imprint-dialog')"></button>
 
                 <div class="select-your-tiny-hero">
                     <h1>Select your Tiny Hero</h1>
@@ -68,20 +72,44 @@
                     </div>
                 </div>
                 <div class="menu-div">
-                    <button class="menu-btn" onclick="openSettings()">Settings</button>
-                    <button class="menu-btn" onclick="openWorld()">World</button>
-                    <button class="menu-btn" onclick="openControls()">Controls</button>
+                    <button class="menu-btn" onclick="openOverlay('settings-dialog')">Settings</button>
+                    <button class="menu-btn" onclick="openOverlay('world-dialog')">World</button>
+                    <button class="menu-btn" onclick="openControls('controls-dialog')">Controls</button>
                     <button class="menu-btn" onclick="loadLevel1()" disabled id="play_button">Play</button>
+                    <div class="tooltip">Choose your Hero to start!</div>
                 </div>
                 <div class="ground"></div>
             </section>
             <canvas id="canvas" width="720" height="480" class="d_none"></canvas>
+            <section id="game_over_screen" class="game-over-screen d_none">
+                <div class="logo">
+                    <h1>GAME OVER!</h1>
+                </div>
+                <div class="game-over-body">
+                    <button>
+                        <img src="./assets/img/game-ui-pixel-art/3 Icons/Icons_45.png" alt="" onclick="retryGame()">TRY AGAIN</button>
+                    <button>
+                        <img src="./assets/img/game-ui-pixel-art/3 Icons/Icons_14.png" alt="" onclick="returnToStart() ">RETURN TO START</button>
+                </div>
+            </section>
+            <section id="win_screen" class="win-screen d_none">
+                <div class="logo">
+                    <h1>YOU WIN!</h1>
+                </div>
+                <div class="game-over-body">
+                    <button>
+                        <img src="./assets/img/game-ui-pixel-art/3 Icons/Icons_45.png" alt="">PLAY AGAIN</button>
+                    <button>
+                        <img src="./assets/img/game-ui-pixel-art/3 Icons/Icons_14.png" alt="">RETURN TO START</button>
+                </div>
+                <div class="ground"></div>
+            </section>
         </section>
-        <section class="overlay d_none" id="settings-dialog" onclick="closeSettings(event)">
+        <section class="overlay d_none" id="settings-dialog" onclick="closeOverlay(event, id)">
             <div class="dialog" onclick="event.stopPropagation()">
                 <div class="dialog-close-wrapper">
                     <img src="./assets/img/game-ui-pixel-art/1 Frames/Frame_tile_31.png" alt="">
-                    <button class="close-img" onclick="closeSettings(event)">
+                    <button class="close-img" onclick="closeOverlay(event, 'settings-dialog')">
                         <img src="./assets/img/game-ui-pixel-art/3 Icons/Icons_37.png" alt="">
                     </button>
                 </div>
@@ -106,11 +134,11 @@
                 </div>
             </div>
         </section>
-        <section class="overlay d_none" id="world-dialog" onclick="closeWorld(event)">
+        <section class="overlay d_none" id="world-dialog" onclick="closeOverlay(event, id)">
             <div class="dialog" onclick="event.stopPropagation()">
                 <div class="dialog-close-wrapper">
                     <img src="./assets/img/game-ui-pixel-art/1 Frames/Frame_tile_31.png" alt="">
-                    <button class="close-img" onclick="closeWorld(event)">
+                    <button class="close-img" onclick="closeOverlay(event, 'world-dialog')">
                         <img src="./assets/img/game-ui-pixel-art/3 Icons/Icons_37.png" alt="">
                     </button>
                 </div>
@@ -126,16 +154,17 @@
                         valley, defeat all monsters, and face the mighty Endboss.</p>
                     <p>But beware:<br>The more coins you collect, the stronger the Endboss becomes — his power grows
                         with your greed. Yet the reward is great: a tougher foe means more gold and glory!</p>
-                    <p>Steel yourself for battle, jump, throw, and dodge your way through the shadows. Will you be the
+                    <p>Steel yourself for battle, jump, throw, and dodge your way through the shadows. Select your hero
+                        and begin your quest. Will you be the
                         hero who frees Happy Hollow from the curse of darkness?</p>
                 </div>
             </div>
         </section>
-        <section class="overlay d_none" id="controls-dialog" onclick="closeControls(event)">
+        <section class="overlay d_none" id="controls-dialog" onclick="closeOverlay(event, id)">
             <div class="dialog" onclick="event.stopPropagation()">
                 <div class="dialog-close-wrapper">
                     <img src="./assets/img/game-ui-pixel-art/1 Frames/Frame_tile_31.png" alt="">
-                    <button class="close-img" onclick="closeControls(event)">
+                    <button class="close-img" onclick="closeOverlay(event, 'controls-dialog')">
                         <img src="./assets/img/game-ui-pixel-art/3 Icons/Icons_37.png" alt="">
                     </button>
                 </div>
@@ -153,6 +182,30 @@
                         <li>Throw <span class="key">Key F</span> </li>
                     </ul>
                 </div>
+            </div>
+        </section>
+        <section class="overlay d_none" id="imprint-dialog" onclick="closeOverlay(event, id)">
+            <div class="dialog" onclick="event.stopPropagation()">
+                <div class="dialog-close-wrapper">
+                    <img src="./assets/img/game-ui-pixel-art/1 Frames/Frame_tile_31.png" alt="">
+                    <button class="close-img" onclick="closeOverlay(event, 'imprint-dialog')">
+                        <img src="./assets/img/game-ui-pixel-art/3 Icons/Icons_37.png" alt="">
+                    </button>
+                </div>
+                <div class="dialog-title">
+                    <title>Imprint</title>
+                </div>
+                <div class="dialog-body">
+                    <p>Information according to § 5 DDG</p>
+                    <p>Stefanie Vengels <br>
+                        Wandastr. 24 <br>
+                        45136 Essen <br>
+                        Germany</p>
+                    <p>Contact: <br>
+                        Email: <a href="mailto:vengels.stefanie@gmail.com">vengels.stefanie@gmail.com</a></p>
+
+                </div>
+
             </div>
         </section>
     </main>

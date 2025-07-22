@@ -122,6 +122,23 @@ function fadeInFromWhite() {
 }
 
 
+function retryGame() {
+    endGame();  // Cleanup
+    loadLevel1(); // Startet neu
+}
+
+
+function endGame() {
+    
+}
+
+
+function returnToStart() {
+    endGame();
+    showStartScreen(); // Zeigt Start-Screen an
+}
+
+
 
 /* /* *
  * This function initializes the game by setting up the level and creating a new world instance.

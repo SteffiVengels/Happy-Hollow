@@ -1,0 +1,86 @@
+.game-over-screen {
+    position: absolute;
+    top: 32px;
+    left: 32px;
+    height: 480px;
+    width: 720px;
+    background-color: rgba(0, 0, 0, 0.375);
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.logo {
+    padding-left: 8px;
+    background-image: url('../assets/img/game-ui-pixel-art/5 Logo/Logo.png');
+    background-size: cover;
+    background-position: center;
+    width: 424px;
+    height: 192px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #de3440;
+    text-shadow:
+        -1px -1px 0 black,
+        1px -1px 0 black,
+        -1px 1px 0 black,
+        1px 1px 0 black;
+}
+
+.game-over-body {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    position: absolute;
+    bottom: 64px;
+}
+
+.game-over-body button {
+    transition: transform 0.2s ease;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+    color: white;
+    font-family: 'Planes';
+    font-size: 16px;
+    padding: 32px;
+    background-color: #2a304e;
+    background-image:
+        url('../assets/img/game-ui-pixel-art/1 Frames/Frame_tile_05.png'),
+        url('../assets/img/game-ui-pixel-art/1 Frames/Frame_tile_06.png'),
+        url('../assets/img/game-ui-pixel-art/1 Frames/Frame_tile_13.png'),
+        url('../assets/img/game-ui-pixel-art/1 Frames/Frame_tile_14.png'),
+        url('../assets/img/game-ui-pixel-art/1 Frames/Frame_tile_01.png'),
+        url('../assets/img/game-ui-pixel-art/1 Frames/Frame_tile_09.png'),
+        url('../assets/img/game-ui-pixel-art/1 Frames/Frame_tile_02.png'),
+        url('../assets/img/game-ui-pixel-art/1 Frames/Frame_tile_10.png');
+
+    background-position:
+        top left,
+        top right,
+        bottom left,
+        bottom right,
+        top center,
+        center left,
+        center right,
+        bottom center;
+
+    background-repeat:
+        no-repeat,
+        no-repeat,
+        no-repeat,
+        no-repeat,
+        repeat-x,
+        repeat-y,
+        repeat-y,
+        repeat-x;
+}
+
+.game-over-body button:hover {
+    transform: scale(1.1);
+    cursor: pointer;
+
+}

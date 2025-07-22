@@ -114,24 +114,6 @@ class MovableObject extends DrawableObject {
         this.speedY = 15;
     }
 
-
-    playDeathAnimation(images, intervalTime) {
-        this.currentImage = 0;
-        let interval = setInterval(() => {
-            if (this.currentImage < images.length) {
-                const path = images[this.currentImage];
-                if (this.imageCache[path]) {
-                    this.img = this.imageCache[path];
-                }
-                this.currentImage++;
-            } else {
-                clearInterval(interval);
-                this.dead = true;
-            }
-        }, intervalTime);
-    }
-
-
     applyBounce() {
         this.speedY = 10;
         this.y = 398;

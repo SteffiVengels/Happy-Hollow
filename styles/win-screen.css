@@ -1,0 +1,11 @@
+.win-screen {
+    position: relative;
+    height: 480px;
+    width: 720px;
+    background-image: url('../assets/img/platformer-pixel-art-tileset/Background/Background.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}

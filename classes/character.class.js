@@ -18,6 +18,7 @@ class Character extends MovableObject {
     isThrowing = false;
     isJumping = false;
     coinCount = 0;
+    inDeadAnimation = false;
 
 
     constructor(type) {
@@ -52,19 +53,26 @@ class Character extends MovableObject {
 
         setInterval(() => {
             if (this.isDead()) {
-                this.playAnimation(this.IMAGES_DEAD);
-            } else if (this.isHurt()) {
-                this.playAnimation(this.IMAGES_HURT);
-            } else if (this.isJumping && !this.isHurt()) {
-                return
-            } else if ((this.world.keyboard.RIGHT || this.world.keyboard.LEFT) && !this.isHurt()) {
-                return
-            } else if (this.isThrowing && !this.noEnergy() && !this.isHurt()) {
-                return
-            } else {
-                this.playAnimation(this.IMAGES_IDLE);
-            }
-        }, 240);
+                    if (!this.inDeadAnimation) {
+                        this.currentImage = 0;
+                        this.inDeadAnimation = true;
+                    }
+                    this.playAnimation(this.IMAGES_DEAD);
+                    if (this.currentImage >= this.IMAGES_DEAD.length) {
+                        this.world.gameOver();
+                    }
+                } else if (this.isHurt()) {
+                    this.playAnimation(this.IMAGES_HURT);
+                } else if (this.isJumping && !this.isHurt()) {
+                    return
+                } else if ((this.world.keyboard.RIGHT || this.world.keyboard.LEFT) && !this.isHurt()) {
+                    return
+                } else if (this.isThrowing && !this.noEnergy() && !this.isHurt()) {
+                    return
+                } else {
+                    this.playAnimation(this.IMAGES_IDLE);
+                }
+            }, 240);
 
         setInterval(() => {
             if (this.isThrowing && !this.noEnergy() && !this.isHurt()) {
