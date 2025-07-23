@@ -74,7 +74,7 @@
                 <div class="menu-div">
                     <button class="menu-btn" onclick="openOverlay('settings-dialog')">Settings</button>
                     <button class="menu-btn" onclick="openOverlay('world-dialog')">World</button>
-                    <button class="menu-btn" onclick="openControls('controls-dialog')">Controls</button>
+                    <button class="menu-btn" onclick="openOverlay('controls-dialog')">Controls</button>
                     <button class="menu-btn" onclick="loadLevel1()" disabled id="play_button">Play</button>
                     <div class="tooltip">Choose your Hero to start!</div>
                 </div>
@@ -86,10 +86,10 @@
                     <h1>GAME OVER!</h1>
                 </div>
                 <div class="game-over-body">
-                    <button>
-                        <img src="./assets/img/game-ui-pixel-art/3 Icons/Icons_45.png" alt="" onclick="retryGame()">TRY AGAIN</button>
-                    <button>
-                        <img src="./assets/img/game-ui-pixel-art/3 Icons/Icons_14.png" alt="" onclick="returnToStart() ">RETURN TO START</button>
+                    <button onclick="retryGame()">
+                        <img src="./assets/img/game-ui-pixel-art/3 Icons/Icons_45.png" alt="">TRY AGAIN</button>
+                    <button  onclick="returnToStart()">
+                        <img src="./assets/img/game-ui-pixel-art/3 Icons/Icons_14.png" alt="">RETURN TO START</button>
                 </div>
             </section>
             <section id="win_screen" class="win-screen d_none">

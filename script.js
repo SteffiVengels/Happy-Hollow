@@ -2,6 +2,9 @@
 const frameWidth = 50;
 const walkFrames = 6;
 const idleFrames = 4;
+let walkTimeoutId;
+let animationFrameId;
+let idleTimeoutId;
 let selectedCharacterType;
 
 /**
@@ -35,7 +38,7 @@ function startIdleAnimation(element, currentFrame) {
 
     function idle() {
         updateSprite(element, currentFrame, idleFrames);
-        setTimeout(idle, 240);
+        idleTimeoutId = setTimeout(idle, 240);
     }
     idle();
 }
@@ -56,12 +59,15 @@ function walk(element, currentFrame, startPos, endPos, speed) {
             position += speed;
             element.style.left = position + 'px';
             updateSprite(element, currentFrame, walkFrames);
-            setTimeout(() => requestAnimationFrame(step), 120);
+            animationFrameId = requestAnimationFrame(() => {
+                walkTimeoutId = setTimeout(step, 120);
+            });
         } else {
             element.style.transform = 'scaleX(-1)';
             startIdleAnimation(element, currentFrame);
         }
     }
+
     step();
 }
 
@@ -75,6 +81,14 @@ function animateCharacter() {
     const currentFrame = { value: 0 };
     walk(character, currentFrame, 0, 620, 4);
 }
+
+
+function stopStartScreenAnimation() {
+    clearTimeout(walkTimeoutId);
+    clearTimeout(idleTimeoutId);
+    cancelAnimationFrame(animationFrameId);
+}
+
 
 /**
  * Menü-Character erstellen & idle animieren
@@ -104,6 +118,7 @@ function animateHeader() {
  * Menü-Screen öffnen
  */
 function openMenuScreen() {
+    stopStartScreenAnimation();
     animateHeader();
     document.getElementById("new_game_button").classList.add('d_none');
 

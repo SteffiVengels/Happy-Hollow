@@ -4,12 +4,6 @@ let keyboard = new Keyboard();
 let fadeOverlayOpacity = 0;
 
 
-function init() {
-    
-    animateCharacter();
-/*     loadLevel1(); */
-}
-
 
 window.addEventListener("keydown", (e) => {
     if (e.code == "ArrowRight" || e.code == "KeyD") {
@@ -53,6 +47,7 @@ window.addEventListener("keyup", (e) => {
 })
 
 function loadLevel1() {
+    clearTimeout(idleTimeoutId);
     document.getElementById("menu_screen").classList.add('d_none');
     canvas = document.getElementById('canvas');
     canvas.classList.remove("d_none");
@@ -121,21 +116,35 @@ function fadeInFromWhite() {
     }, 50);
 }
 
+function stopGame() {
+    world.clearAllIntervals();
+    world.stopDrawing();
+}
+
+function gameOver() {
+    stopGame();
+    document.getElementById("game_over_screen").classList.remove("d_none");
+}
+
 
 function retryGame() {
-    endGame();  // Cleanup
-    loadLevel1(); // Startet neu
+    document.getElementById("game_over_screen").classList.add('d_none');
+    loadLevel1();
 }
-
-
-function endGame() {
-    
-}
-
 
 function returnToStart() {
-    endGame();
-    showStartScreen(); // Zeigt Start-Screen an
+    const startChar = document.querySelector('.character-animation');
+    if (startChar) startChar.style.display = 'none';
+    showMenuCharacter();
+    document.getElementById("menu_screen").classList.remove('d_none');
+    document.getElementById("Pink-Monster").classList.remove('active');
+    document.getElementById("Owlet-Monster").classList.remove('active');
+    document.getElementById("Dude-Monster").classList.remove('active');
+    document.getElementById("play_button").disabled = true;
+    document.getElementById("play_button").classList.remove("play-buttn-enabled");
+    document.getElementById("game_over_screen").classList.add('d_none');
+    document.getElementById("canvas").classList.add('d_none');
+
 }
 
 

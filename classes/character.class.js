@@ -59,7 +59,7 @@ class Character extends MovableObject {
                     }
                     this.playAnimation(this.IMAGES_DEAD);
                     if (this.currentImage >= this.IMAGES_DEAD.length) {
-                        this.world.gameOver();
+                        gameOver();
                     }
                 } else if (this.isHurt()) {
                     this.playAnimation(this.IMAGES_HURT);

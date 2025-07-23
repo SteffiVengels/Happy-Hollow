@@ -68,13 +68,6 @@ class World {
         }
     }
 
-    gameOver() {
-            world.clearAllIntervals();
-            world.stopDrawing();
-            document.getElementById("game_over_screen").classList.remove("d_none");
-
-    }
-
 
     triggerLevelEndTransition() {
         if (this.transitioning) return;
