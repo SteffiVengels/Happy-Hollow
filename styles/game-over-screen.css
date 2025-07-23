@@ -7,6 +7,7 @@
     background-color: rgba(0, 0, 0, 0.375);
     display: flex;
     align-items: center;
+    justify-content: center;
     flex-direction: column;
 }
 
@@ -26,14 +27,30 @@
         1px -1px 0 black,
         -1px 1px 0 black,
         1px 1px 0 black;
+    width: 424px;
+    height: 192px;
+    position: fixed;
+    top: 40px;
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: none;
+    transition: transform 1s ease, opacity 1s ease;
+    /*     z-index: 10; */
 }
+
+
+.show {
+    transform: translateY(400px);
+    opacity: 1;
+    /* passt du je nach Layout an */
+    pointer-events: none;
+}
+
 
 .game-over-body {
     display: flex;
     flex-direction: column;
     gap: 32px;
-    position: absolute;
-    bottom: 64px;
 }
 
 .game-over-body button {

@@ -124,15 +124,51 @@ function stopGame() {
 function gameOver() {
     stopGame();
     document.getElementById("game_over_screen").classList.remove("d_none");
+    document.getElementById("header").classList.add("d_none");
+    setTimeout(() => {
+        document.getElementById("game_over_logo").classList.add("show");
+    }, 10);
+    setTimeout(() => {
+        showGameOver();
+    }, 1000);
+    setTimeout(() => {
+        document.getElementById("game_over_logo").classList.add("d_none");
+        document.getElementById("game_over_body").classList.remove("d_none");
+    }, 4500);
 }
 
+function gameWin() {
+    stopGame();
+    document.getElementById("win_screen").classList.remove("d_none");
+    showYouWin();
+    setTimeout(() => {
+        fadeOutWinScreen(() => {
+
+        });
+    }, 3000);
+}
+
+function fadeOutWinScreen(callback) {
+    const overlay = document.getElementById('win_fade_overlay');
+    overlay.classList.add('fade-in-white');
+    setTimeout(() => {
+        if (callback) callback();
+    }, 600); // nach CSS transition
+}
+
+function fadeInWinScreen() {
+    const overlay = document.getElementById('win_fade_overlay');
+    overlay.classList.remove('fade-in-white');
+}
 
 function retryGame() {
+    document.getElementById("header").classList.remove("d_none");
     document.getElementById("game_over_screen").classList.add('d_none');
     loadLevel1();
 }
 
-function returnToStart() {
+function returnToMenu() {
+    document.getElementById("header").classList.remove("d_none");
     const startChar = document.querySelector('.character-animation');
     if (startChar) startChar.style.display = 'none';
     showMenuCharacter();
@@ -146,6 +182,9 @@ function returnToStart() {
     document.getElementById("canvas").classList.add('d_none');
 
 }
+
+
+
 
 
 

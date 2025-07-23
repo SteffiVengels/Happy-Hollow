@@ -37,9 +37,9 @@
     <script src="./classes/endboss-level1.class.js"></script>
     <script src="./levels/level1.js"></script>
     <script src="./levels/endboss-level1.js"></script>
-
-    <script src="./scripts/game.js"></script>
     <script src="./script.js"></script>
+    <script src="./scripts/game.js"></script>
+    
 </head>
 
 <body onload="init()">
@@ -82,27 +82,27 @@
             </section>
             <canvas id="canvas" width="720" height="480" class="d_none"></canvas>
             <section id="game_over_screen" class="game-over-screen d_none">
-                <div class="logo">
-                    <h1>GAME OVER!</h1>
+                <div class="logo" id="game_over_logo">
+                    <h1 id="game_over_text"></h1>
                 </div>
-                <div class="game-over-body">
+                <div class="game-over-body d_none" id="game_over_body">
                     <button onclick="retryGame()">
                         <img src="./assets/img/game-ui-pixel-art/3 Icons/Icons_45.png" alt="">TRY AGAIN</button>
-                    <button  onclick="returnToStart()">
+                    <button  onclick="returnToMenu()">
                         <img src="./assets/img/game-ui-pixel-art/3 Icons/Icons_14.png" alt="">RETURN TO START</button>
                 </div>
             </section>
             <section id="win_screen" class="win-screen d_none">
-                <div class="logo">
-                    <h1>YOU WIN!</h1>
+                <div class="logo" id="win_logo">
+                    <h1 id="you_win_text"></h1>
                 </div>
-                <div class="game-over-body">
-                    <button>
+                <div class="game-over-body d_none" id="win_body">
+                    <button onclick="retryGame()">
                         <img src="./assets/img/game-ui-pixel-art/3 Icons/Icons_45.png" alt="">PLAY AGAIN</button>
-                    <button>
+                    <button onclick="returnToStart()">
                         <img src="./assets/img/game-ui-pixel-art/3 Icons/Icons_14.png" alt="">RETURN TO START</button>
                 </div>
-                <div class="ground"></div>
+                <div id="win_fade_overlay"></div>
             </section>
         </section>
         <section class="overlay d_none" id="settings-dialog" onclick="closeOverlay(event, id)">

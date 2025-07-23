@@ -126,7 +126,6 @@ class World {
             if (enemy instanceof EndbossLevel1 && !enemy.inDeadAnimation) {
                 if (this.character.isColliding(enemy) && !this.character.isHurt()) {
                     this.character.hit();
-                    console.log('health', this.character.health)
                     this.statusBar.setPercentage(this.character.health);
                 }
             }
@@ -188,7 +187,7 @@ class World {
         const now = Date.now();
         if (now - enemy.lastHit > 400) {
             if (enemy instanceof EndbossLevel1) {
-                enemy.health -= 10;
+                enemy.health -= 100;
                 console.log('enemy health', enemy.health);
             } else {
                 enemy.health = 0;

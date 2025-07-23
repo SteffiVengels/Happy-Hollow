@@ -114,6 +114,10 @@ function animateHeader() {
     header.classList.add('animate');
 }
 
+function animateLogo() {
+    document.getElementById("game_over_logo").classList.add("animate");
+}
+
 /**
  * Menü-Screen öffnen
  */
@@ -159,6 +163,57 @@ function setupToggleSwitch(id) {
     const element = document.getElementById(id);
     element.classList.toggle('on');
 
+}
+
+function showGameOver() {
+    const gameOverText = document.getElementById('game_over_text');
+    const screen = document.getElementById('game_over_logo');
+    screen.classList.remove('hidden');
+    gameOverText.innerHTML = ''; // Reset in case it's shown again
+
+    const text = 'GAME OVER!';
+    [...text].forEach((char, index) => {
+        const span = document.createElement('span');
+        span.textContent = char;
+        span.classList.add('letter');
+        span.style.animationDelay = `${index * 0.2}s`;
+        gameOverText.appendChild(span);
+    });
+
+}
+
+function showYouWin() {
+    const winText = document.getElementById('you_win_text');
+    const text = 'YOU WIN';
+    winText.innerHTML = '';
+
+    const animationDelay = 0.2; // schneller als bei Game Over
+    const animationDuration = 0.4;
+
+    [...text].forEach((char, i) => {
+        const span = document.createElement('span');
+        span.textContent = char === ' ' ? '\u00A0' : char;
+        span.classList.add('letter-win');
+        span.style.animationDelay = `${i * animationDelay}s`;
+        span.style.animationDuration = `${animationDuration}s`;
+        winText.appendChild(span);
+    });
+}
+
+function showStartScreen() {
+    // Verstecke andere Screens
+    document.getElementById('win_screen').classList.add('d_none');
+    document.getElementById('canvas').classList.add('d_none');
+    document.getElementById('header').classList.add('d_none');
+
+    // Zeige den Startscreen
+    document.getElementById('start_screen').classList.remove('d_none');
+    const header = document.querySelector('#start_screen header');
+    header.classList.remove('animate');
+    document.getElementById('new_game_button').classList.remove('d_none');
+   animateCharacter();
+    
+    // Falls nötig, hier noch Start-Button aktivieren oder Animation starten
 }
 
 

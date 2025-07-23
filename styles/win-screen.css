@@ -1,11 +1,78 @@
 .win-screen {
-    position: relative;
+    position: absolute;
+    top: 32px;
+    left: 32px;
     height: 480px;
     width: 720px;
-    background-image: url('../assets/img/platformer-pixel-art-tileset/Background/Background.png');
-    background-repeat: no-repeat;
-    background-size: cover;
+    background-color: rgba(0, 0, 0, 0.375);
     display: flex;
     align-items: center;
+    justify-content: center;
     flex-direction: column;
+}
+
+@keyframes fallIn {
+    0% {
+        transform: translateY(-60px);
+        opacity: 0;
+    }
+
+    80% {
+        transform: translateY(5px);
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateY(0);
+    }
+}
+
+@keyframes impactPulse {
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.1);
+    }
+}
+
+.letter-win {
+    display: inline-block;
+    color: #de3440;
+    text-shadow:
+        -1px -1px 0 black,
+        1px -1px 0 black,
+        -1px 1px 0 black,
+        1px 1px 0 black;
+    animation-fill-mode: forwards;
+    animation-name: fallIn;
+    animation-duration: 0.5s;
+    animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    animation-delay: var(--delay, 0s);
+}
+
+/* Trigger Impact-Puls nach der Fall-Animation für das ganze Text-Container */
+#you_win_text.impact {
+    animation: impactPulse 0.4s ease-in-out 1 forwards;
+    animation-delay: calc(var(--last-delay, 0s) + 0.5s);
+}
+
+#win_fade_overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: white;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 999;
+    transition: opacity 0.5s ease-in-out;
+}
+
+.fade-in-white {
+    opacity: 1 !important;
 }

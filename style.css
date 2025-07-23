@@ -28,16 +28,15 @@
         calc(100% - 64px) 32px;
 }
 
+.letter {
+    transform: translateY(-200px);
+    opacity: 0;
+    animation: dropIn 0.6s ease-out forwards;
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
+@keyframes dropIn {
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
