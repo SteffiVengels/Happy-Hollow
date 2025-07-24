@@ -135,6 +135,7 @@ function gameOver() {
         document.getElementById("game_over_logo").classList.add("d_none");
         document.getElementById("game_over_body").classList.remove("d_none");
     }, 4500);
+    document.getElementById('game_over_text').innerHTML = '';
 }
 
 function gameWin() {
