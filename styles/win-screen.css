@@ -62,10 +62,10 @@
 
 #win_fade_overlay {
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    top: 32px;
+    left: 32px;
+    width: 720px;
+    height: 480px;
     background: white;
     opacity: 0;
     pointer-events: none;
@@ -75,4 +75,9 @@
 
 .fade-in-white {
     opacity: 1 !important;
+}
+
+.fade-out-white {
+    opacity: 0 !important;
+    transition: opacity 0.5s ease-in-out;
 }

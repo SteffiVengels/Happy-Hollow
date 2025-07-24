@@ -140,12 +140,24 @@ function gameOver() {
 function gameWin() {
     stopGame();
     document.getElementById("win_screen").classList.remove("d_none");
-    showYouWin();
+    document.getElementById("header").classList.add("d_none");
+    setTimeout(() => {
+        document.getElementById("win_logo").classList.add("show");
+    }, 10);
+    setTimeout(() => {
+        showYouWin();
+    }, 1000);
     setTimeout(() => {
         fadeOutWinScreen(() => {
-
         });
-    }, 3000);
+    }, 4500);
+    setTimeout(() => {
+        showStartScreen()
+        fadeInWinScreen();
+    }, 5500);
+    document.getElementById('win_fade_overlay').classList.remove("fade-out-white");
+    document.getElementById('win_logo').classList.remove("show");
+    document.getElementById('you_win_text').innerHTML = '';
 }
 
 function fadeOutWinScreen(callback) {
@@ -159,6 +171,10 @@ function fadeOutWinScreen(callback) {
 function fadeInWinScreen() {
     const overlay = document.getElementById('win_fade_overlay');
     overlay.classList.remove('fade-in-white');
+    setTimeout(() => {
+        overlay.classList.add('fade-out-white');
+    }, 10);
+
 }
 
 function retryGame() {
@@ -169,8 +185,8 @@ function retryGame() {
 
 function returnToMenu() {
     document.getElementById("header").classList.remove("d_none");
-    const startChar = document.querySelector('.character-animation');
-    if (startChar) startChar.style.display = 'none';
+/*     const startChar = document.querySelector('.character-animation');
+    if (startChar) startChar.style.display = 'none'; */
     showMenuCharacter();
     document.getElementById("menu_screen").classList.remove('d_none');
     document.getElementById("Pink-Monster").classList.remove('active');

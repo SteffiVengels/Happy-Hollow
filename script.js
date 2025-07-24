@@ -94,15 +94,16 @@ function stopStartScreenAnimation() {
  * Menü-Character erstellen & idle animieren
  */
 function showMenuCharacter() {
-    const menuChar = document.createElement('div');
+/*     const menuChar = document.createElement('div');
     menuChar.classList.add('character-animation');
     menuChar.style.position = 'absolute';
     menuChar.style.left = '20px';
     menuChar.style.bottom = '32px';
 
-    document.getElementById('menu_screen').appendChild(menuChar);
+    document.getElementById('menu_screen').appendChild(menuChar);*/
 
-    const currentFrame = { value: 0 };
+    const currentFrame = { value: 0 }; 
+    const menuChar = document.getElementById("character_menu")
     startIdleAnimation(menuChar, currentFrame);
 }
 
@@ -125,9 +126,10 @@ function openMenuScreen() {
     stopStartScreenAnimation();
     animateHeader();
     document.getElementById("new_game_button").classList.add('d_none');
+    document.getElementById("character_start").classList.add('d_none');
 
-    const startChar = document.querySelector('.character-animation');
-    if (startChar) startChar.style.display = 'none';
+/*     const startChar = document.querySelector('.character-animation');
+    if (startChar) startChar.style.display = 'none'; */
 
     setTimeout(() => {
         document.getElementById("start_screen").classList.add('d_none');
@@ -184,7 +186,7 @@ function showGameOver() {
 
 function showYouWin() {
     const winText = document.getElementById('you_win_text');
-    const text = 'YOU WIN';
+    const text = 'YOU WIN!';
     winText.innerHTML = '';
 
     const animationDelay = 0.2; // schneller als bei Game Over
@@ -202,12 +204,12 @@ function showYouWin() {
 
 function showStartScreen() {
     // Verstecke andere Screens
-    document.getElementById('win_screen').classList.add('d_none');
-    document.getElementById('canvas').classList.add('d_none');
-    document.getElementById('header').classList.add('d_none');
+        document.getElementById('win_screen').classList.add('d_none');
+        document.getElementById('canvas').classList.add('d_none');
 
     // Zeige den Startscreen
     document.getElementById('start_screen').classList.remove('d_none');
+    document.getElementById("character_start").classList.remove('d_none');
     const header = document.querySelector('#start_screen header');
     header.classList.remove('animate');
     document.getElementById('new_game_button').classList.remove('d_none');
