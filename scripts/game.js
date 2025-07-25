@@ -343,27 +343,6 @@ function resetGameWinAnimation() {
 
 
 /**
- * Starts a fade-out effect on the win screen by adding a CSS class
- * that fades the overlay from transparent to white.
- */
-function fadeOutWinScreen() {
-    const overlay = document.getElementById('win_fade_overlay');
-    overlay.classList.add('fade-in-white');
-}
-
-
-/**
- * Reverses the fade-out effect on the win screen by removing the fade-in class
- * and adding a fade-out class that transitions back to transparency.
- */
-function fadeInWinScreen() {
-    const overlay = document.getElementById('win_fade_overlay');
-    overlay.classList.remove('fade-in-white');
-    overlay.classList.add('fade-out-white');
-}
-
-
-/**
  * Restarts the game after a game over by:
  * - Showing the header again
  * - Hiding the game over screen
@@ -376,42 +355,3 @@ function retryGame() {
 }
 
 
-/**
- * Returns the player to the main menu by:
- * - Showing the header
- * - Displaying the menu screen
- * - Resetting the selected character
- * - Resetting the game UI state (e.g., play button, canvas, etc.)
- */
-function returnToMenu() {
-    document.getElementById('header').classList.remove('d_none');
-    showMenuCharacter();
-    document.getElementById('menu_screen').classList.remove('d_none');
-    resetSelectedCharacter();
-    resetGameUI();
-}
-
-
-/**
- * Removes the 'active' class from all selectable characters
- * to clear any previous character selection in the menu.
- */
-function resetSelectedCharacter() {
-    document.getElementById('Pink-Monster').classList.remove('active');
-    document.getElementById('Owlet-Monster').classList.remove('active');
-    document.getElementById('Dude-Monster').classList.remove('active');
-}
-
-
-/**
- * Resets the game UI by:
- * - Disabling and visually resetting the play button
- * - Hiding the game over screen
- * - Hiding the game canvas
- */
-function resetGameUI() {
-    document.getElementById('play_button').disabled = true;
-    document.getElementById('play_button').classList.remove('play-buttn-enabled');
-    document.getElementById('game_over_screen').classList.add('d_none');
-    document.getElementById('canvas').classList.add('d_none');
-}
