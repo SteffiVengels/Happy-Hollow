@@ -1,5 +1,6 @@
 function createEndBossLevel1() {
     return new Level(
+        new Audio('./assets/audio/game_start.mp3'),
         [
             new EndbossLevel1()
         ],

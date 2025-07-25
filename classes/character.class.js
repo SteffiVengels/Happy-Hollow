@@ -19,6 +19,9 @@ class Character extends MovableObject {
     isJumping = false;
     coinCount = 0;
     inDeadAnimation = false;
+    AUDIO_JUMPING = new Audio('./assets/audio/jump.mp3');
+    AUDIO_DEAD = new Audio('./assets/audio/dead.mp3');
+    AUDIO_COLLECT_COINS = new Audio ('./assets/audio/coin_collected.mp3');
 
 
     constructor(type) {
@@ -56,10 +59,12 @@ class Character extends MovableObject {
                     if (!this.inDeadAnimation) {
                         this.currentImage = 0;
                         this.inDeadAnimation = true;
+                        this.AUDIO_DEAD.play();
                     }
                     this.playAnimation(this.IMAGES_DEAD);
                     if (this.currentImage >= this.IMAGES_DEAD.length) {
                         gameOver();
+                        
                     }
                 } else if (this.isHurt()) {
                     this.playAnimation(this.IMAGES_HURT);
@@ -87,6 +92,7 @@ class Character extends MovableObject {
         setInterval(() => {
             if (this.isJumping && !this.isHurt()) {
                 this.playAnimation(this.IMAGES_JUMPING);
+                
                 if (this.currentImage >= this.IMAGES_JUMPING.length) {
                     this.isJumping = false;
                 }

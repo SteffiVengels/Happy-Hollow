@@ -28,6 +28,13 @@ class World {
         this.setWorld();
         this.draw();
         this.run();
+        
+    }
+
+
+    playBackgroundMusic() {
+            this.AUDIO_BACKGROUND.play();
+            this.AUDIO_BACKGROUND.loop = true
     }
 
 
@@ -72,6 +79,7 @@ class World {
     triggerLevelEndTransition() {
         if (this.transitioning) return;
         this.transitioning = true;
+        this.level.AUDIO_BACKGROUND.pause();
         fadeOutToWhite(this.canvas, () => {
             if (world) {
                 world.clearAllIntervals();
@@ -160,6 +168,8 @@ class World {
             if (this.character.isColliding(coin)) {
                 this.character.coinCount++;
                 this.level.coins.splice(index, 1);
+                this.character.AUDIO_COLLECT_COINS.currentTime = 0;
+                this.character.AUDIO_COLLECT_COINS.play();
             }
         });
     }

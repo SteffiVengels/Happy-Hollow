@@ -2,6 +2,7 @@ let canvas;
 let world;
 let keyboard = new Keyboard();
 let fadeOverlayOpacity = 0;
+let AUDIO_GAME_START = new Audio('./assets/audio/game_start.mp3');
 
 
 /**
@@ -147,6 +148,7 @@ function loadLevel1() {
     const level1 = createLevel1();
     world = new World(canvas, keyboard, level1);
     fadeInFromWhite();
+    AUDIO_GAME_START.play();
 }
 
 
