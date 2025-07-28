@@ -1,8 +1,8 @@
-function createEndBossLevel1() {
+function createEndBossLevel1(character, world, Type) {
     return new Level(
         new Audio('./assets/audio/game_start.mp3'),
         [
-            new EndbossLevel1()
+            new EndbossLevel1(character, world, Type)
         ],
         [],
         [

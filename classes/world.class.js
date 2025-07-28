@@ -198,7 +198,6 @@ class World {
         if (now - enemy.lastHit > 400) {
             if (enemy instanceof EndbossLevel1) {
                 enemy.health -= 100;
-                console.log('enemy health', enemy.health);
             } else {
                 enemy.health = 0;
             }

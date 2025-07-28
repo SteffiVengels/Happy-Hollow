@@ -1,5 +1,5 @@
 class EndbossLevel1 extends MovableObject {
-    Type = 'Mage-Monster';
+    Type;
     height = 154;
     width = 154;
     y = 294;
@@ -21,13 +21,14 @@ class EndbossLevel1 extends MovableObject {
     speed = 0.5;
 
 
-    constructor(character, world) {
+    constructor(character, world, Type) {
         super();
-        this.selectMonsterTyp();
-        this.changeDimensionForSelectedMonster();
         this.x = 520;
         this.character = character;
         this.world = world;
+        this.Type = Type;
+        this.selectMonsterTyp();
+        this.changeDimensionForSelectedMonster();
         this.loadImages(this.IMAGES_SNEER);
         this.loadImages(this.IMAGES_DEAD);
         this.loadImages(this.IMAGES_WALKING);

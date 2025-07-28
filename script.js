@@ -310,6 +310,7 @@ function returnToMenu() {
     document.getElementById('menu_screen').classList.remove('d_none');
     resetSelectedCharacter();
     resetGameUI();
+    resetGameOverAnimation();
 }
 
 

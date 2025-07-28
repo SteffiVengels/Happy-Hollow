@@ -84,8 +84,9 @@ window.addEventListener('keyup', (e) => {
  * @returns {World} The initialized World object for the Endboss level.
  */
 function loadEndbossLevel(canvas, keyboard) {
-    const level = createEndBossLevel1();
     const existingCharacter = world.character;
+    const endbossType = determineEndbossType(existingCharacter.coinCount);
+    const level = createEndBossLevel1(existingCharacter, world, endbossType);
     const newWorld = new World(canvas, keyboard, level);
     copyCharacterStats(existingCharacter, newWorld);
     initializeWorldPosition(newWorld);
@@ -132,6 +133,22 @@ function connectEnemiesToWorld(newWorld) {
         enemy.character = newWorld.character;
         enemy.world = newWorld;
     });
+}
+
+
+/**
+ * Bestimmt den Endboss-Typ basierend auf der Coin-Anzahl.
+ * @param {number} coinCount
+ * @returns {string} Endboss-Typ
+ */
+function determineEndbossType(coinCount) {
+    if (coinCount === 35) {
+        return 'Mage-Monster';
+    } else if (coinCount > 32) {
+        return 'Demon-Monster';
+    } else if (coinCount <= 32) {
+        return 'Ooze-Monster';
+    }
 }
 
 
@@ -206,7 +223,6 @@ function gameOver() {
     stopGame();
     showGameOverScreen();
     scheduleGameOverSequence();
-    resetGameOverAnimation();
 }
 
 
@@ -286,7 +302,9 @@ function gameWin() {
     showWinScreen();
     animateWinLogo();
     scheduleWinSequence();
-    resetGameWinAnimation();
+    setTimeout(() => {
+        resetGameWinAnimation();
+    }, 6000);
 }
 
 
@@ -354,6 +372,7 @@ function retryGame() {
     document.getElementById('header').classList.remove('d_none');
     document.getElementById('game_over_screen').classList.add('d_none');
     loadLevel1();
+    resetGameOverAnimation();
 }
 
 
