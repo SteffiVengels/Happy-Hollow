@@ -27,6 +27,7 @@ class EndbossLevel1 extends MovableObject {
         this.character = character;
         this.world = world;
         this.Type = Type;
+        this.coinsGiven = false;
         this.selectMonsterTyp();
         this.changeDimensionForSelectedMonster();
         this.loadImages(this.IMAGES_SNEER);
@@ -135,8 +136,36 @@ class EndbossLevel1 extends MovableObject {
         this.playAnimation(this.IMAGES_DEAD);
         if (this.currentImage >= this.IMAGES_DEAD.length) {
             this.markedForDeletion = true;
-            gameWin();
+            this.rewardCoinsForEndboss();
+            setTimeout(() => {
+                gameWin();
+            }, 3000);
         }
+    }
+
+
+    rewardCoinsForEndboss() {
+        let coinsToAdd;
+        if (this.Type === 'Mage-Monster') coinsToAdd = 25;
+        else if (this.Type === 'Demon-Monster') coinsToAdd = 20;
+        else if (this.Type === 'Ooze-Monster') coinsToAdd = 15;
+        this.incrementCoinCount(coinsToAdd); // z. B. 20 Coins, alle 100ms
+        this.coinsGiven = true;
+    }
+
+
+    incrementCoinCount(coinsToAdd) {
+        let steps = 0;
+        const interval = setInterval(() => {
+            if (steps >= coinsToAdd) {
+                clearInterval(interval);
+                return;
+            }
+            this.character.coinCount++;
+            this.character.AUDIO_COLLECT_COINS.currentTime = 0;
+            this.character.AUDIO_COLLECT_COINS.play();
+            steps++;
+        }, 100);
     }
 
 

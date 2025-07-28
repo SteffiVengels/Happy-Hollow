@@ -28,13 +28,12 @@ class World {
         this.setWorld();
         this.draw();
         this.run();
-        
     }
 
 
     playBackgroundMusic() {
-            this.AUDIO_BACKGROUND.play();
-            this.AUDIO_BACKGROUND.loop = true
+        this.AUDIO_BACKGROUND.play();
+        this.AUDIO_BACKGROUND.loop = true
     }
 
 
