@@ -3,8 +3,8 @@ let world;
 let keyboard = new Keyboard();
 let fadeOverlayOpacity = 0;
 let AUDIO_GAME_START = new Audio('./assets/audio/game_start.mp3');
-let AUDIO_MENU;
-let AUDIO_BUTTON;
+let AUDIO_MENU = new Audio('./assets/audio/menu.mp3');;
+let AUDIO_BUTTON = new Audio('./assets/audio/button.mp3');
 let AUDIO_GAME_OVER;
 let AUDIO_GAME_WIN;
 let soundOn = true;
@@ -166,6 +166,7 @@ function determineEndbossType(coinCount) {
  * and starting the fade-in effect from white.
  */
 function loadLevel1() {
+    AUDIO_MENU.pause();
     clearTimeout(idleTimeoutId);
     document.getElementById('menu_screen').classList.add('d_none');
     canvas = document.getElementById('canvas');
@@ -330,7 +331,7 @@ function showWinScreen() {
 /**
  * Starts the win logo animation shortly after showing the win screen.
  */
-function animateWinLogo() {
+function animateWinLogo() {    
     setTimeout(() => {
         document.getElementById('win_logo').classList.add('show');
     }, 10);
