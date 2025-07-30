@@ -72,6 +72,7 @@ class YellowMonster extends MovableObject {
                         this.playAnimation(this.IMAGES_ATTACK);
                         if (this.currentImage >= this.IMAGES_ATTACK.length && !this.hasFired) {
                             this.playFireBallAttack();
+                            this.playEnemieAttackSound();
                         }
                     }
                 } else {

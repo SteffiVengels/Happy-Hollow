@@ -12,6 +12,8 @@ class World {
     animationFrameId;
 
 
+
+
     constructor(canvas, keyboard, level) {
         this.character = new Character(selectedCharacterType);
         this.ctx = canvas.getContext('2d');
@@ -28,6 +30,24 @@ class World {
         this.setWorld();
         this.draw();
         this.run();
+    }
+
+
+    playCollectCoinSound() {
+        if (soundOn) {
+            this.character.AUDIO_COLLECT_COINS.volume = 0.5;
+            this.character.AUDIO_COLLECT_COINS.currentTime = 0;
+            this.character.AUDIO_COLLECT_COINS.play();
+        }
+    }
+
+
+    playCollectFoodSound() {
+        if (soundOn) {
+            this.character.AUDIO_COLLECT_FOOD.volume = 0.5;
+            this.character.AUDIO_COLLECT_FOOD.currentTime = 0;
+            this.character.AUDIO_COLLECT_FOOD.play();
+        }
     }
 
 
@@ -145,6 +165,7 @@ class World {
             if (this.character.isColliding(food)) {
                 this.character.select(food);
                 this.energyBar.setPercentage(this.character.energy);
+                this.playCollectFoodSound();
             }
         });
     }
@@ -167,8 +188,8 @@ class World {
             if (this.character.isColliding(coin)) {
                 this.character.coinCount++;
                 this.level.coins.splice(index, 1);
-                this.character.AUDIO_COLLECT_COINS.currentTime = 0;
-                this.character.AUDIO_COLLECT_COINS.play();
+                this.playCollectCoinSound();
+
             }
         });
     }

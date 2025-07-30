@@ -24,7 +24,10 @@ class Level {
         }
         this.repeatBackground();
         this.repeatGroundObjects();
-        this.playBackgroundMusic();
+        if (musicOn) {
+            this.playBackgroundMusic();
+        }
+
     }
 
     playBackgroundMusic() {

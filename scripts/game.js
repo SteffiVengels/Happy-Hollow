@@ -3,6 +3,14 @@ let world;
 let keyboard = new Keyboard();
 let fadeOverlayOpacity = 0;
 let AUDIO_GAME_START = new Audio('./assets/audio/game_start.mp3');
+let AUDIO_MENU;
+let AUDIO_BUTTON;
+let AUDIO_GAME_OVER;
+let AUDIO_GAME_WIN;
+let soundOn = true;
+let musicOn = true;
+
+AUDIO_GAME_START.load();
 
 
 /**
@@ -164,8 +172,10 @@ function loadLevel1() {
     canvas.classList.remove('d_none');
     const level1 = createLevel1();
     world = new World(canvas, keyboard, level1);
+    if (soundOn) {
+        AUDIO_GAME_START.play();
+    }
     fadeInFromWhite();
-    AUDIO_GAME_START.play();
 }
 
 

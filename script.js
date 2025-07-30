@@ -218,13 +218,18 @@ function openOverlay(id) {
 
 
 /**
- * Toggles the 'on' CSS class on an element identified by the given ID.
+ * Toggles the 'on' CSS class on an element identified by the given ID and the corresponding boolean variable.
  *
  * @param {string} id - The ID of the element to toggle the 'on' class.
  */
 function setupToggleSwitch(id) {
     const element = document.getElementById(id);
     element.classList.toggle('on');
+    if (id === 'music-toggle') {
+        musicOn = !musicOn;
+    } else if (id === 'sound-toggle') {
+        soundOn = !soundOn;
+    }
 }
 
 

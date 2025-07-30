@@ -12,6 +12,17 @@ class MovableObject extends DrawableObject {
     health = 100;
     energy = 100;
     lastHit = 0;
+    AUDIO_ENEMIE_DEAD;
+    AUDIO_ENEMIE_ATTACK = new Audio('./assets/audio/enemie_attack.mp3');
+
+
+    playEnemieAttackSound() {
+        if (soundOn) {
+            this.AUDIO_ENEMIE_ATTACK.volume = 0.15;
+            this.AUDIO_ENEMIE_ATTACK.currentTime = 0;
+            this.AUDIO_ENEMIE_ATTACK.play();
+        }
+    }
 
 
     applyGravity() {
@@ -112,8 +123,10 @@ class MovableObject extends DrawableObject {
 
     jump() {
         this.speedY = 15;
-        this.AUDIO_JUMPING.volume = 0.5;
-        this.AUDIO_JUMPING.play();
+        if (soundOn) {
+            this.AUDIO_JUMPING.volume = 0.5;
+            this.AUDIO_JUMPING.play();
+        }
     }
 
     applyBounce() {

@@ -21,7 +21,10 @@ class Character extends MovableObject {
     inDeadAnimation = false;
     AUDIO_JUMPING = new Audio('./assets/audio/jump.mp3');
     AUDIO_DEAD = new Audio('./assets/audio/dead.mp3');
-    AUDIO_COLLECT_COINS = new Audio ('./assets/audio/coin_collected.mp3');
+    AUDIO_COLLECT_COINS = new Audio('./assets/audio/coin_collected.mp3');
+    AUDIO_COLLECT_FOOD = new Audio('./assets/audio/food_collected.mp3');
+    AUDIO_HURT;
+    AUDIO_THROW;
 
 
     constructor(type) {
@@ -35,6 +38,10 @@ class Character extends MovableObject {
         this.loadImages(this.IMAGES_HURT);
         this.loadImages(this.IMAGES_THROW);
         this.loadImages(this.IMAGE_PORTRAIT);
+        this.AUDIO_JUMPING.load();
+        this.AUDIO_DEAD.load();
+        this.AUDIO_COLLECT_COINS.load();
+        this.AUDIO_COLLECT_FOOD.load();
         this.animate();
         this.applyGravity();
     }
@@ -56,28 +63,30 @@ class Character extends MovableObject {
 
         setInterval(() => {
             if (this.isDead()) {
-                    if (!this.inDeadAnimation) {
-                        this.currentImage = 0;
-                        this.inDeadAnimation = true;
+                if (!this.inDeadAnimation) {
+                    this.currentImage = 0;
+                    this.inDeadAnimation = true;
+                    if (soundOn) {
+                        this.world.level.AUDIO_BACKGROUND.pause();
                         this.AUDIO_DEAD.play();
                     }
-                    this.playAnimation(this.IMAGES_DEAD);
-                    if (this.currentImage >= this.IMAGES_DEAD.length) {
-                        gameOver();
-                        
-                    }
-                } else if (this.isHurt()) {
-                    this.playAnimation(this.IMAGES_HURT);
-                } else if (this.isJumping && !this.isHurt()) {
-                    return
-                } else if ((this.world.keyboard.RIGHT || this.world.keyboard.LEFT) && !this.isHurt()) {
-                    return
-                } else if (this.isThrowing && !this.noEnergy() && !this.isHurt()) {
-                    return
-                } else {
-                    this.playAnimation(this.IMAGES_IDLE);
                 }
-            }, 240);
+                this.playAnimation(this.IMAGES_DEAD);
+                if (this.currentImage >= this.IMAGES_DEAD.length) {
+                    gameOver();
+                }
+            } else if (this.isHurt()) {
+                this.playAnimation(this.IMAGES_HURT);
+            } else if (this.isJumping && !this.isHurt()) {
+                return
+            } else if ((this.world.keyboard.RIGHT || this.world.keyboard.LEFT) && !this.isHurt()) {
+                return
+            } else if (this.isThrowing && !this.noEnergy() && !this.isHurt()) {
+                return
+            } else {
+                this.playAnimation(this.IMAGES_IDLE);
+            }
+        }, 240);
 
         setInterval(() => {
             if (this.isThrowing && !this.noEnergy() && !this.isHurt()) {
@@ -92,7 +101,7 @@ class Character extends MovableObject {
         setInterval(() => {
             if (this.isJumping && !this.isHurt()) {
                 this.playAnimation(this.IMAGES_JUMPING);
-                
+
                 if (this.currentImage >= this.IMAGES_JUMPING.length) {
                     this.isJumping = false;
                 }

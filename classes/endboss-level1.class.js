@@ -136,6 +136,7 @@ class EndbossLevel1 extends MovableObject {
         this.playAnimation(this.IMAGES_DEAD);
         if (this.currentImage >= this.IMAGES_DEAD.length) {
             this.markedForDeletion = true;
+            this.world.level.AUDIO_BACKGROUND.pause();
             this.rewardCoinsForEndboss();
             setTimeout(() => {
                 gameWin();
@@ -162,8 +163,7 @@ class EndbossLevel1 extends MovableObject {
                 return;
             }
             this.character.coinCount++;
-            this.character.AUDIO_COLLECT_COINS.currentTime = 0;
-            this.character.AUDIO_COLLECT_COINS.play();
+            this.world.playCollectCoinSound();
             steps++;
         }, 100);
     }
