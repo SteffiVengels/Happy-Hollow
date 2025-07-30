@@ -171,11 +171,11 @@ function loadLevel1() {
     document.getElementById('menu_screen').classList.add('d_none');
     canvas = document.getElementById('canvas');
     canvas.classList.remove('d_none');
-    const level1 = createLevel1();
-    world = new World(canvas, keyboard, level1);
     if (soundOn) {
         AUDIO_GAME_START.play();
     }
+    const level1 = createLevel1();
+    world = new World(canvas, keyboard, level1);
     fadeInFromWhite();
 }
 
@@ -331,7 +331,7 @@ function showWinScreen() {
 /**
  * Starts the win logo animation shortly after showing the win screen.
  */
-function animateWinLogo() {    
+function animateWinLogo() {
     setTimeout(() => {
         document.getElementById('win_logo').classList.add('show');
     }, 10);

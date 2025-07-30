@@ -1,6 +1,6 @@
 function createEndBossLevel1(character, world, Type) {
     return new Level(
-        new Audio('./assets/audio/game_start.mp3'),
+        new Audio('./assets/audio/endboss_background.mp3'),
         [
             new EndbossLevel1(character, world, Type)
         ],
