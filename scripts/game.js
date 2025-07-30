@@ -5,12 +5,10 @@ let fadeOverlayOpacity = 0;
 let AUDIO_GAME_START = new Audio('./assets/audio/game_start.mp3');
 let AUDIO_MENU = new Audio('./assets/audio/menu.mp3');;
 let AUDIO_BUTTON = new Audio('./assets/audio/button.mp3');
-let AUDIO_GAME_OVER;
+let AUDIO_GAME_OVER = new Audio('./assets/audio/game_over.mp3');
 let AUDIO_GAME_WIN;
 let soundOn = true;
 let musicOn = true;
-
-AUDIO_GAME_START.load();
 
 
 /**
@@ -80,6 +78,13 @@ window.addEventListener('keyup', (e) => {
         keyboard.DOWN = false;
     }
 })
+
+
+function playGameOverSound() {
+    AUDIO_GAME_OVER.volume = 0.1;
+    AUDIO_GAME_OVER.currentTime = 0;
+    AUDIO_GAME_OVER.play();
+}
 
 
 /**
@@ -232,6 +237,7 @@ function fadeOutToWhite(canvas, callback) {
  */
 function gameOver() {
     stopGame();
+    playGameOverSound();
     showGameOverScreen();
     scheduleGameOverSequence();
 }

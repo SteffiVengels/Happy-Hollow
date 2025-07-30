@@ -35,7 +35,7 @@ class World {
 
     playCollectCoinSound() {
         if (soundOn) {
-            this.character.AUDIO_COLLECT_COINS.volume = 0.5;
+            this.character.AUDIO_COLLECT_COINS.volume = 0.15;
             this.character.AUDIO_COLLECT_COINS.currentTime = 0;
             this.character.AUDIO_COLLECT_COINS.play();
         }
@@ -44,7 +44,7 @@ class World {
 
     playCollectFoodSound() {
         if (soundOn) {
-            this.character.AUDIO_COLLECT_FOOD.volume = 0.5;
+            this.character.AUDIO_COLLECT_FOOD.volume = 0.15;
             this.character.AUDIO_COLLECT_FOOD.currentTime = 0;
             this.character.AUDIO_COLLECT_FOOD.play();
         }

@@ -71,6 +71,7 @@ class EndbossLevel1 extends MovableObject {
                     this.currentImage = 0;
                     this.inAttack = true;
                 } else if (this.inAttack) {
+                    this.playEnemieAttackSound();
                     this.playAnimation(this.IMAGES_ATTACK);
                     if (this.currentImage >= this.IMAGES_ATTACK.length) {
                         this.inAttack = false;

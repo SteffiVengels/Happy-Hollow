@@ -26,7 +26,20 @@ function animateCharacter() {
     const character = document.querySelector('.character-animation');
     if (!character) return;
     const currentFrame = { value: 0 };
+    stopIdleAnimation(character);
     walk(character, currentFrame, 0, 620, 4);
+}
+
+
+/**
+ * Stops the idle animation by clearing the idle timeout and resetting the background.
+ *
+ * @param {HTMLElement} element - The element whose idle animation should stop.
+ */
+function stopIdleAnimation(element) {
+    clearTimeout(idleTimeoutId);
+    element.style.backgroundImage = '';
+    element.style.backgroundSize = '';
 }
 
 
@@ -41,6 +54,7 @@ function animateCharacter() {
  * @param {number} speed - Number of pixels to move per step.
  */
 function walk(element, currentFrame, startPos, endPos, speed) {
+    element.style.transform = 'scaleX(+1)';
     let position = startPos;
     function step() {
         if (position < endPos) {
@@ -144,7 +158,7 @@ function animateHeader() {
 
 function playButtonSound() {
     if (soundOn) {
-        AUDIO_BUTTON.volume = 0.5;
+        AUDIO_BUTTON.volume = 0.15;
         AUDIO_BUTTON.currentTime = 0;
         AUDIO_BUTTON.play();
     }
