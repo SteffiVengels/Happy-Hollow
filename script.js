@@ -131,7 +131,7 @@ function openMenuScreen() {
     audioManager.playButtonSound();
     stopStartScreenAnimation();
     animateHeader();
-    audioManager.playMenuSound();
+    audioManager.playMenuMusic();
     document.getElementById("new_game_button").classList.add('d_none');
     document.getElementById("character_start").classList.add('d_none');
     delayMenuScreenTransition();
