@@ -91,10 +91,10 @@ class Ooze extends MovableObject {
 
 
     handleDeathAnimation() {
-        this.world.audioManager.playEnemieDeadSound();
         if (!this.inDeadAnimation) {
             this.currentImage = 0;
             this.inDeadAnimation = true;
+            this.world.audioManager.playEnemieDeadSound();
         }
         this.playAnimation(this.IMAGES_DEAD);
         if (this.currentImage >= this.IMAGES_DEAD.length) {

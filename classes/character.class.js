@@ -65,7 +65,7 @@ class Character extends MovableObject {
                     gameOver();
                 }
             } else if (this.isHurt()) {
-                this.world.audioManager.playHurtSound()
+
                 this.playAnimation(this.IMAGES_HURT);
             } else if (this.isJumping && !this.isHurt()) {
                 return

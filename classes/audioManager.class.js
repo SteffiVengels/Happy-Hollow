@@ -3,8 +3,8 @@ class AudioManager {
     AUDIO_DEAD = new Audio('./assets/audio/dead.mp3');
     AUDIO_COLLECT_COINS = new Audio('./assets/audio/coin_collected.mp3');
     AUDIO_COLLECT_FOOD = new Audio('./assets/audio/food_collected.mp3');
-    AUDIO_HURT = new Audio('./assets/audio/hurt.mp3');// neu!!!
-    AUDIO_THROW = new Audio('./assets/audio/throw.mp3'); // neu!!!
+    AUDIO_HURT = new Audio('./assets/audio/hurt2.mp3');
+    AUDIO_THROW = new Audio('./assets/audio/throw2.mp3');
 
     AUDIO_LEVEL1_BACKGROUND = new Audio('./assets/audio/background.mp3');
     AUDIO_ENDBOSSLEVEL1_BACKGROUND = new Audio('./assets/audio/endboss_background2.mp3');
@@ -14,7 +14,7 @@ class AudioManager {
 
     AUDIO_ENDBOSS_SNEER = new Audio('./assets/audio/endboss_sneer.mp3');
     AUDIO_ENDBOSS_ATTACK = new Audio('./assets/audio/endboss_attack.mp3');
-    AUDIO_ENDBOSS_DEAD;
+    AUDIO_ENDBOSS_DEAD = new Audio('./assets/audio/endboss_dead.mp3');
 
     AUDIO_MENU = new Audio('./assets/audio/menu.mp3');;
     AUDIO_BUTTON = new Audio('./assets/audio/button.mp3');
@@ -144,6 +144,11 @@ class AudioManager {
 
     playEndbossAttackSound() {
         this.playSound(this.AUDIO_ENDBOSS_ATTACK);
+    }
+
+
+    playEndbossDeadSound() {
+        this.playSound(this.AUDIO_ENDBOSS_DEAD);
     }
 
 

@@ -134,6 +134,7 @@ class EndbossLevel1 extends MovableObject {
         if (!this.inDeadAnimation) {
             this.currentImage = 0;
             this.inDeadAnimation = true;
+            this.world.audioManager.playEndbossDeadSound();
         }
         this.playAnimation(this.IMAGES_DEAD);
         if (this.currentImage >= this.IMAGES_DEAD.length) {
