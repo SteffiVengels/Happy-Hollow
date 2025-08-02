@@ -40,6 +40,7 @@ class EndbossLevel1 extends MovableObject {
 
 
     startIntroAnimation() {
+        this.world.audioManager.playEndbossSneerSound();
         let sneerInterval = setInterval(() => {
             this.playAnimation(this.IMAGES_SNEER);
         }, 160);
@@ -71,7 +72,7 @@ class EndbossLevel1 extends MovableObject {
                     this.currentImage = 0;
                     this.inAttack = true;
                 } else if (this.inAttack) {
-                    this.world.audioManager.playEnemieAttackSound();
+                    this.world.audioManager.playEndbossAttackSound();
                     this.playAnimation(this.IMAGES_ATTACK);
                     if (this.currentImage >= this.IMAGES_ATTACK.length) {
                         this.inAttack = false;

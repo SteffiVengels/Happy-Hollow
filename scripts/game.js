@@ -307,6 +307,7 @@ function showGameOverButtons() {
  */
 function gameWin() {
     stopGame();
+    audioManager.playGameWinSound();
     showWinScreen();
     animateWinLogo();
     scheduleWinSequence();

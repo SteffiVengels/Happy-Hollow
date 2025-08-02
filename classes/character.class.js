@@ -69,6 +69,7 @@ class Character extends MovableObject {
                     gameOver();
                 }
             } else if (this.isHurt()) {
+                this.world.audioManager.playHurtSound()
                 this.playAnimation(this.IMAGES_HURT);
             } else if (this.isJumping && !this.isHurt()) {
                 return
@@ -86,6 +87,7 @@ class Character extends MovableObject {
                 this.playAnimation(this.IMAGES_THROW);
                 if (this.currentImage >= this.IMAGES_THROW.length) {
                     this.isThrowing = false;
+                    this.world.audioManager.playThrowSound();
                     this.world.throwRock(this.x, this.y, this.otherDirection);
                 }
             }
