@@ -1,12 +1,8 @@
 let canvas;
 let world;
 let keyboard = new Keyboard();
+let audioManager = new AudioManager();
 let fadeOverlayOpacity = 0;
-let AUDIO_GAME_START = new Audio('./assets/audio/game_start.mp3');
-let AUDIO_MENU = new Audio('./assets/audio/menu.mp3');;
-let AUDIO_BUTTON = new Audio('./assets/audio/button.mp3');
-let AUDIO_GAME_OVER = new Audio('./assets/audio/game_over.mp3');
-let AUDIO_GAME_WIN;
 let soundOn = true;
 let musicOn = true;
 
@@ -80,13 +76,6 @@ window.addEventListener('keyup', (e) => {
 })
 
 
-function playGameOverSound() {
-    AUDIO_GAME_OVER.volume = 0.1;
-    AUDIO_GAME_OVER.currentTime = 0;
-    AUDIO_GAME_OVER.play();
-}
-
-
 /**
  * Loads the Endboss level by creating a new World instance,
  * copying character stats from the previous world, setting the initial position,
@@ -99,11 +88,12 @@ function playGameOverSound() {
 function loadEndbossLevel(canvas, keyboard) {
     const existingCharacter = world.character;
     const endbossType = determineEndbossType(existingCharacter.coinCount);
-    const level = createEndBossLevel1(existingCharacter, world, endbossType);
-    const newWorld = new World(canvas, keyboard, level);
+    const endbossLevel = createEndBossLevel1(existingCharacter, world, endbossType);
+    const newWorld = new World(canvas, keyboard, endbossLevel, audioManager);
     copyCharacterStats(existingCharacter, newWorld);
     initializeWorldPosition(newWorld);
     connectEnemiesToWorld(newWorld);
+    audioManager.playEndbossLevel1BackgroundMusic();
     return newWorld;
 }
 
@@ -171,17 +161,18 @@ function determineEndbossType(coinCount) {
  * and starting the fade-in effect from white.
  */
 function loadLevel1() {
-    AUDIO_MENU.pause();
+    audioManager.AUDIO_MENU.pause();
     clearTimeout(idleTimeoutId);
     document.getElementById('menu_screen').classList.add('d_none');
     canvas = document.getElementById('canvas');
     canvas.classList.remove('d_none');
     if (soundOn) {
-        AUDIO_GAME_START.play();
+        audioManager.AUDIO_GAME_START.play();
     }
     const level1 = createLevel1();
-    world = new World(canvas, keyboard, level1);
+    world = new World(canvas, keyboard, level1, audioManager);
     fadeInFromWhite();
+    audioManager.playLevel1BackgroundMusic();
 }
 
 
@@ -237,7 +228,7 @@ function fadeOutToWhite(canvas, callback) {
  */
 function gameOver() {
     stopGame();
-    playGameOverSound();
+    audioManager.playGameOverSound();
     showGameOverScreen();
     scheduleGameOverSequence();
 }

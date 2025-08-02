@@ -19,12 +19,7 @@ class Character extends MovableObject {
     isJumping = false;
     coinCount = 0;
     inDeadAnimation = false;
-    AUDIO_JUMPING = new Audio('./assets/audio/jump.mp3');
-    AUDIO_DEAD = new Audio('./assets/audio/dead.mp3');
-    AUDIO_COLLECT_COINS = new Audio('./assets/audio/coin_collected.mp3');
-    AUDIO_COLLECT_FOOD = new Audio('./assets/audio/food_collected.mp3');
-    AUDIO_HURT;
-    AUDIO_THROW;
+
 
 
     constructor(type) {
@@ -38,10 +33,6 @@ class Character extends MovableObject {
         this.loadImages(this.IMAGES_HURT);
         this.loadImages(this.IMAGES_THROW);
         this.loadImages(this.IMAGE_PORTRAIT);
-        this.AUDIO_JUMPING.load();
-        this.AUDIO_DEAD.load();
-        this.AUDIO_COLLECT_COINS.load();
-        this.AUDIO_COLLECT_FOOD.load();
         this.animate();
         this.applyGravity();
     }
@@ -58,6 +49,7 @@ class Character extends MovableObject {
             }
             if (this.world.keyboard.UP && !this.isAboveGround()) {
                 this.jump();
+                this.world.audioManager.playJumpingSound();
             }
         }, 1000 / 60);
 
@@ -67,8 +59,9 @@ class Character extends MovableObject {
                     this.currentImage = 0;
                     this.inDeadAnimation = true;
                     if (soundOn) {
-                        this.world.level.AUDIO_BACKGROUND.pause();
-                        this.AUDIO_DEAD.play();
+                        this.world.audioManager.AUDIO_LEVEL1_BACKGROUND.pause();
+                        this.world.audioManager.AUDIO_ENDBOSSLEVEL1_BACKGROUND.pause();
+                        this.world.audioManager.AUDIO_DEAD.play();
                     }
                 }
                 this.playAnimation(this.IMAGES_DEAD);

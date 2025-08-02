@@ -71,7 +71,7 @@ class EndbossLevel1 extends MovableObject {
                     this.currentImage = 0;
                     this.inAttack = true;
                 } else if (this.inAttack) {
-                    this.playEnemieAttackSound();
+                    this.world.audioManager.playEnemieAttackSound();
                     this.playAnimation(this.IMAGES_ATTACK);
                     if (this.currentImage >= this.IMAGES_ATTACK.length) {
                         this.inAttack = false;
@@ -137,7 +137,7 @@ class EndbossLevel1 extends MovableObject {
         this.playAnimation(this.IMAGES_DEAD);
         if (this.currentImage >= this.IMAGES_DEAD.length) {
             this.markedForDeletion = true;
-            this.world.level.AUDIO_BACKGROUND.pause();
+            this.world.audioManager.AUDIO_ENDBOSSLEVEL1_BACKGROUND.pause();
             this.rewardCoinsForEndboss();
             setTimeout(() => {
                 gameWin();
@@ -164,7 +164,7 @@ class EndbossLevel1 extends MovableObject {
                 return;
             }
             this.character.coinCount++;
-            this.world.playCollectCoinSound();
+            this.world.audioManager.playCollectCoinSound();
             steps++;
         }, 100);
     }

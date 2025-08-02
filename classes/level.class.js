@@ -1,5 +1,4 @@
 class Level {
-    AUDIO_BACKGROUND;
     enemies;
     foodItems;
     background;
@@ -10,8 +9,7 @@ class Level {
     level_end_x = 670;
 
 
-    constructor(AUDIO_BACKGROUND, enemies, foodItems, background, coins, backgroundObjects, spikes, groundObjects, repeatBackground = true) {
-        this.AUDIO_BACKGROUND = AUDIO_BACKGROUND;
+    constructor(enemies, foodItems, background, coins, backgroundObjects, spikes, groundObjects, repeatBackground = true) {
         this.enemies = enemies;
         this.foodItems = foodItems;
         this.background = background;
@@ -24,16 +22,10 @@ class Level {
         }
         this.repeatBackground();
         this.repeatGroundObjects();
-        if (musicOn) {
-            this.playBackgroundMusic();
-        }
 
     }
 
-    playBackgroundMusic() {
-        this.AUDIO_BACKGROUND.play();
-        this.AUDIO_BACKGROUND.loop = true;
-    }
+
 
     repeatBackground() {
         const repeatedBackgrounds = [];

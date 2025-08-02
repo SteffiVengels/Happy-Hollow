@@ -1,6 +1,5 @@
 function createLevel1() {
     return new Level(
-        new Audio('./assets/audio/background.mp3'),
         [
             new Bear(),
             new Mage(),

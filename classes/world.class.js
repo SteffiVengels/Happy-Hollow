@@ -14,12 +14,13 @@ class World {
 
 
 
-    constructor(canvas, keyboard, level) {
+    constructor(canvas, keyboard, level, audioManager) {
         this.character = new Character(selectedCharacterType);
         this.ctx = canvas.getContext('2d');
         this.canvas = canvas;
         this.keyboard = keyboard;
         this.level = level;
+        this.audioManager = audioManager;
         this.portraitFrameImg.src = this.character.IMAGE_PORTRAIT[0];
         this.portraitImg.src = this.character.IMAGE_PORTRAIT[1];
         this.coinImg.src = './assets/img/platformer-pixel-art-tileset/Objects_Animated/coin/tile000.png';
@@ -30,30 +31,6 @@ class World {
         this.setWorld();
         this.draw();
         this.run();
-    }
-
-
-    playCollectCoinSound() {
-        if (soundOn) {
-            this.character.AUDIO_COLLECT_COINS.volume = 0.15;
-            this.character.AUDIO_COLLECT_COINS.currentTime = 0;
-            this.character.AUDIO_COLLECT_COINS.play();
-        }
-    }
-
-
-    playCollectFoodSound() {
-        if (soundOn) {
-            this.character.AUDIO_COLLECT_FOOD.volume = 0.15;
-            this.character.AUDIO_COLLECT_FOOD.currentTime = 0;
-            this.character.AUDIO_COLLECT_FOOD.play();
-        }
-    }
-
-
-    playBackgroundMusic() {
-        this.AUDIO_BACKGROUND.play();
-        this.AUDIO_BACKGROUND.loop = true
     }
 
 
@@ -98,7 +75,7 @@ class World {
     triggerLevelEndTransition() {
         if (this.transitioning) return;
         this.transitioning = true;
-        this.level.AUDIO_BACKGROUND.pause();
+        this.audioManager.AUDIO_LEVEL1_BACKGROUND.pause();
         fadeOutToWhite(this.canvas, () => {
             if (world) {
                 world.clearAllIntervals();
@@ -165,7 +142,7 @@ class World {
             if (this.character.isColliding(food)) {
                 this.character.select(food);
                 this.energyBar.setPercentage(this.character.energy);
-                this.playCollectFoodSound();
+                this.audioManager.playCollectFoodSound();
             }
         });
     }
@@ -188,7 +165,7 @@ class World {
             if (this.character.isColliding(coin)) {
                 this.character.coinCount++;
                 this.level.coins.splice(index, 1);
-                this.playCollectCoinSound();
+                this.audioManager.playCollectCoinSound();
 
             }
         });
