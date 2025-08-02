@@ -161,14 +161,11 @@ function determineEndbossType(coinCount) {
  * and starting the fade-in effect from white.
  */
 function loadLevel1() {
-    audioManager.AUDIO_MENU.pause();
     clearTimeout(idleTimeoutId);
     document.getElementById('menu_screen').classList.add('d_none');
     canvas = document.getElementById('canvas');
     canvas.classList.remove('d_none');
-    if (soundOn) {
-        audioManager.AUDIO_GAME_START.play();
-    }
+    audioManager.stopMenuMusicAndPlayGameStartSound();
     const level1 = createLevel1();
     world = new World(canvas, keyboard, level1, audioManager);
     fadeInFromWhite();

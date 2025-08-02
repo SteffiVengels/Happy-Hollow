@@ -58,11 +58,7 @@ class Character extends MovableObject {
                 if (!this.inDeadAnimation) {
                     this.currentImage = 0;
                     this.inDeadAnimation = true;
-                    if (soundOn) {
-                        this.world.audioManager.AUDIO_LEVEL1_BACKGROUND.pause();
-                        this.world.audioManager.AUDIO_ENDBOSSLEVEL1_BACKGROUND.pause();
-                        this.world.audioManager.AUDIO_DEAD.play();
-                    }
+                    this.world.audioManager.stopBackgroundMusicAndPlayDeathSound();
                 }
                 this.playAnimation(this.IMAGES_DEAD);
                 if (this.currentImage >= this.IMAGES_DEAD.length) {

@@ -48,9 +48,7 @@ class AudioManager {
         this.setGlobalVolume(0.1);
     }
 
-    /**
- * Set the volume for all audio files.
- */
+
     setGlobalVolume(volume) {
         this.allSounds.forEach(audio => {
             if (audio) {
@@ -59,101 +57,109 @@ class AudioManager {
         });
     }
 
-    playCollectCoinSound() {
+    playSound(sound) {
         if (soundOn) {
-            this.AUDIO_COLLECT_COINS.currentTime = 0;
-            this.AUDIO_COLLECT_COINS.play();
+            sound.currentTime = 0;
+            sound.play();
         }
     }
+
+
+    playMusic(music) {
+        if (musicOn) {
+            music.currentTime = 0;
+            music.play();
+            music.loop = true;
+        }
+    }
+
+
+    stopBackgroundMusicAndPlayDeathSound() {
+        if (soundOn) {
+            this.AUDIO_LEVEL1_BACKGROUND.pause();
+            this.AUDIO_ENDBOSSLEVEL1_BACKGROUND.pause();
+            this.AUDIO_DEAD.play();
+        }
+    }
+
+
+    stopMenuMusicAndPlayGameStartSound() {
+        this.AUDIO_MENU.pause();
+        this.playSound(this.AUDIO_GAME_START);
+    }
+
+
+    playCollectCoinSound() {
+        this.playSound(this.AUDIO_COLLECT_COINS);
+    }
+
 
     playJumpingSound() {
-        if (soundOn) {
-            this.AUDIO_JUMPING.currentTime = 0;
-            this.AUDIO_JUMPING.play();
-        }
+        this.playSound(this.AUDIO_JUMPING);
     }
+
 
     playThrowSound() {
-        if (soundOn) {
-            this.AUDIO_THROW.currentTime = 0;
-            this.AUDIO_THROW.play();
-        }
+        this.playSound(this.AUDIO_THROW);
     }
+
 
     playHurtSound() {
-        if (soundOn) {
-            this.AUDIO_HURT.currentTime = 0;
-            this.AUDIO_HURT.play();
-        }
+        this.playSound(this.AUDIO_HURT);
     }
 
-    playLevel1BackgroundMusic() {
-        this.AUDIO_LEVEL1_BACKGROUND.play();
-        this.AUDIO_LEVEL1_BACKGROUND.loop = true;
-    }
-
-    playEndbossLevel1BackgroundMusic() {
-        this.AUDIO_ENDBOSSLEVEL1_BACKGROUND.play();
-        this.AUDIO_ENDBOSSLEVEL1_BACKGROUND.loop = true;
-    }
 
     playEnemieAttackSound() {
-        if (soundOn) {
-            this.AUDIO_ENEMIE_ATTACK.currentTime = 0;
-            this.AUDIO_ENEMIE_ATTACK.play();
-        }
+        this.playSound(this.AUDIO_ENEMIE_ATTACK);
     }
+
 
     playEnemieDeadSound() {
-        if (soundOn) {
-            this.AUDIO_ENEMIE_DEAD.currentTime = 0;
-            this.AUDIO_ENEMIE_DEAD.play();
-        }
+        this.playSound(this.AUDIO_ENEMIE_DEAD);
     }
+
 
     playEndbossSneerSound() {
-        if (soundOn) {
-            this.AUDIO_ENDBOSS_SNEER.currentTime = 0;
-            this.AUDIO_ENDBOSS_SNEER.play();
-        }
+        this.playSound(this.AUDIO_ENDBOSS_SNEER);
     }
+
 
     playEndbossAttackSound() {
-        if (soundOn) {
-            this.AUDIO_ENDBOSS_ATTACK.currentTime = 0;
-            this.AUDIO_ENDBOSS_ATTACK.play();
-        }
+        this.playSound(this.AUDIO_ENDBOSS_ATTACK);
     }
+
 
     playCollectFoodSound() {
-        if (soundOn) {
-            this.AUDIO_COLLECT_FOOD.currentTime = 0;
-            this.AUDIO_COLLECT_FOOD.play();
-        }
+        this.playSound(this.AUDIO_COLLECT_FOOD);
     }
+
 
     playGameOverSound() {
-        this.AUDIO_GAME_OVER.currentTime = 0;
-        this.AUDIO_GAME_OVER.play();
+        this.playSound(this.AUDIO_GAME_OVER);
     }
+
 
     playGameWinSound() {
-        this.AUDIO_GAME_WIN.currentTime = 0;
-        this.AUDIO_GAME_WIN.play();
+        this.playSound(this.AUDIO_GAME_WIN);
     }
+
 
     playButtonSound() {
-        if (soundOn) {
-            this.AUDIO_BUTTON.currentTime = 0;
-            this.AUDIO_BUTTON.play();
-        }
+        this.playSound(this.AUDIO_BUTTON);
     }
 
+
     playMenuSound() {
-        if (musicOn) {
-            this.AUDIO_MENU.currentTime = 0;
-            this.AUDIO_MENU.play();
-            this.AUDIO_MENU.loop = true;
-        }
+        this.playMusic(this.AUDIO_MENU);
+    }
+
+
+    playLevel1BackgroundMusic() {
+        this.playMusic(this.AUDIO_LEVEL1_BACKGROUND);
+    }
+
+
+    playEndbossLevel1BackgroundMusic() {
+        this.playMusic(this.AUDIO_ENDBOSSLEVEL1_BACKGROUND);
     }
 }
