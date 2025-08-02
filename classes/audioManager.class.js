@@ -74,18 +74,36 @@ class AudioManager {
     }
 
 
+    stopMusic(music) {
+        music.pause();
+    }
+
+
     stopBackgroundMusicAndPlayDeathSound() {
-        if (soundOn) {
-            this.AUDIO_LEVEL1_BACKGROUND.pause();
-            this.AUDIO_ENDBOSSLEVEL1_BACKGROUND.pause();
-            this.AUDIO_DEAD.play();
-        }
+        this.stopLevel1BackgroundMusic();
+        this.stopEndbossLevel1BackgroundMusic();
+        this.playSound(this.AUDIO_DEAD);
     }
 
 
     stopMenuMusicAndPlayGameStartSound() {
-        this.AUDIO_MENU.pause();
+        this.stopMenuMusic();
         this.playSound(this.AUDIO_GAME_START);
+    }
+
+
+    stopMenuMusic() {
+        this.stopMusic(this.AUDIO_MENU);
+    }
+
+
+    stopLevel1BackgroundMusic() {
+        this.stopMusic(this.AUDIO_LEVEL1_BACKGROUND);
+    }
+
+
+    stopEndbossLevel1BackgroundMusic() {
+        this.stopMusic(this.AUDIO_ENDBOSSLEVEL1_BACKGROUND);
     }
 
 
@@ -149,7 +167,7 @@ class AudioManager {
     }
 
 
-    playMenuSound() {
+    playMenuMusic() {
         this.playMusic(this.AUDIO_MENU);
     }
 

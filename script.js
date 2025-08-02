@@ -249,9 +249,9 @@ function setupToggleSwitch(id) {
     if (id === 'music-toggle') {
         musicOn = !musicOn;
         if (musicOn) {
-            audioManager.playMenuSound();
+            audioManager.playMenuMusic();
         } else {
-            audioManager.AUDIO_MENU.pause();
+            audioManager.stopMenuMusic();
         }
     } else if (id === 'sound-toggle') {
         soundOn = !soundOn;

@@ -75,7 +75,7 @@ class World {
     triggerLevelEndTransition() {
         if (this.transitioning) return;
         this.transitioning = true;
-        this.audioManager.AUDIO_LEVEL1_BACKGROUND.pause();
+        this.audioManager.stopLevel1BackgroundMusic();
         fadeOutToWhite(this.canvas, () => {
             if (world) {
                 world.clearAllIntervals();

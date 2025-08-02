@@ -138,7 +138,7 @@ class EndbossLevel1 extends MovableObject {
         this.playAnimation(this.IMAGES_DEAD);
         if (this.currentImage >= this.IMAGES_DEAD.length) {
             this.markedForDeletion = true;
-            this.world.audioManager.AUDIO_ENDBOSSLEVEL1_BACKGROUND.pause();
+            this.world.audioManager.stopEndbossLevel1BackgroundMusic();
             this.rewardCoinsForEndboss();
             setTimeout(() => {
                 gameWin();
