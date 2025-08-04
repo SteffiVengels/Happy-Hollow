@@ -388,3 +388,25 @@ function fadeInWinScreen() {
         overlay.classList.add('fade-out-white');
     }, 5500);
 }
+
+
+function enterFullScreen() {
+    let element = document.getElementById('fullscreen');
+    if (element.requestFullScreen) {
+        element.requestFullScreen();
+    } else if (element.msRequestFullScreen) {
+        element.msRequestFullScreen();
+    } else if (element.webkitRequestFullScreen) {
+        element.webkitRequestFullScreen();
+    }
+}
+
+
+function exitFullScreen() {
+    let element = document.getElementById('fullscreen');
+    if (element.exitFullscreen) {
+        element.exitFullscreen();
+    } else if (element.webkitExitFullscreen) {
+        element.webkitExitFullscreen();
+    }
+}

@@ -40,3 +40,24 @@
         opacity: 1;
     }
 }
+
+#fullscreen {
+    height: 544px;
+    width: 784px;
+    position: relative;
+}
+
+#fullscreen_button {
+    background-color: transparent;
+    border: none;
+    height: 24px;
+    width: 24px;
+    position: absolute;
+    right: 54px;
+    bottom: 44px;
+    cursor: pointer;
+}
+
+#fullscreen_button:hover {
+    scale: 1.1;
+}
