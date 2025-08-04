@@ -261,15 +261,16 @@ function showGameOverScreen() {
  * - Displays the game over buttons after 4.5 seconds
  */
 function scheduleGameOverSequence() {
+    animateGameOverLogo()
+    showGameOver();
+    showGameOverButtons()
+}
+
+
+function animateGameOverLogo() {
     setTimeout(() => {
         document.getElementById('game_over_logo').classList.add('show');
     }, 10);
-    setTimeout(() => {
-        showGameOver();
-    }, 1000);
-    setTimeout(() => {
-        showGameOverButtons()
-    }, 4500);
 }
 
 
@@ -292,9 +293,11 @@ function resetGameOverAnimation() {
  * clearing the game over text, and displaying the action buttons.
  */
 function showGameOverButtons() {
-    document.getElementById('game_over_logo').classList.add('d_none');
-    document.getElementById('game_over_text').innerHTML = '';
-    document.getElementById('game_over_body').classList.remove('d_none');
+    setTimeout(() => {
+        document.getElementById('game_over_logo').classList.add('d_none');
+        document.getElementById('game_over_text').innerHTML = '';
+        document.getElementById('game_over_body').classList.remove('d_none');
+    }, 4500);
 }
 
 
@@ -306,11 +309,8 @@ function gameWin() {
     stopGame();
     audioManager.playGameWinSound();
     showWinScreen();
-    animateWinLogo();
     scheduleWinSequence();
-    setTimeout(() => {
-        resetGameWinAnimation();
-    }, 6000);
+    resetGameWinAnimation();
 }
 
 
@@ -340,16 +340,11 @@ function animateWinLogo() {
  * - Transitions to the start screen and fades it in after 5.5 seconds
  */
 function scheduleWinSequence() {
-    setTimeout(() => {
-        showYouWin();
-    }, 1000);
-    setTimeout(() => {
-        fadeOutWinScreen();
-    }, 4500);
-    setTimeout(() => {
-        showStartScreen()
-        fadeInWinScreen();
-    }, 5500);
+    animateWinLogo();
+    showYouWin();
+    fadeOutWinScreen();
+    showStartScreen()
+    fadeInWinScreen();
 }
 
 
@@ -362,9 +357,11 @@ function scheduleWinSequence() {
  * This prepares the win screen for future re-use or replay.
  */
 function resetGameWinAnimation() {
-    document.getElementById('win_fade_overlay').classList.remove('fade-out-white');
-    document.getElementById('win_logo').classList.remove('show');
-    document.getElementById('you_win_text').innerHTML = '';
+    setTimeout(() => {
+        document.getElementById('win_fade_overlay').classList.remove('fade-out-white');
+        document.getElementById('win_logo').classList.remove('show');
+        document.getElementById('you_win_text').innerHTML = '';
+    }, 6000);
 }
 
 

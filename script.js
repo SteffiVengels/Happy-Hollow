@@ -263,9 +263,11 @@ function setupToggleSwitch(id) {
  * Shows the "GAME OVER!" animated text on the screen.
  */
 function showGameOver() {
-    const gameOverText = document.getElementById('game_over_text');
-    document.getElementById('game_over_logo').classList.remove('hidden');
-    animateTextByLetters(gameOverText, 'GAME OVER!', 'letter', 0.2);
+    setTimeout(() => {
+        const gameOverText = document.getElementById('game_over_text');
+        document.getElementById('game_over_logo').classList.remove('hidden');
+        animateTextByLetters(gameOverText, 'GAME OVER!', 'letter', 0.2);
+    }, 1000);
 }
 
 
@@ -273,8 +275,10 @@ function showGameOver() {
  * Shows the "YOU WIN!" animated text on the screen.
  */
 function showYouWin() {
-    const winText = document.getElementById('you_win_text');
-    animateTextByLetters(winText, 'YOU WIN!', 'letter-win', 0.2, 0.4);
+    setTimeout(() => {
+        const winText = document.getElementById('you_win_text');
+        animateTextByLetters(winText, 'YOU WIN!', 'letter-win', 0.2, 0.4);
+    }, 1000);
 }
 
 
@@ -307,8 +311,10 @@ function animateTextByLetters(targetElement, text, letterClass, delayStep, durat
  * Calls animateCharacter() to start the character animation on the start screen.
  */
 function showStartScreen() {
-    resetStartScreenUI();
-    animateCharacter();
+    setTimeout(() => {
+        resetStartScreenUI();
+        animateCharacter();
+    }, 5500);
 }
 
 
@@ -338,7 +344,7 @@ function resetStartScreenUI() {
 function returnToMenu() {
     document.getElementById('header').classList.remove('d_none');
     showMenuCharacter();
-    audioManager.playMenuSound();
+    audioManager.playMenuMusic();
     document.getElementById('menu_screen').classList.remove('d_none');
     resetSelectedCharacter();
     resetGameUI();
@@ -365,8 +371,9 @@ function resetGameUI() {
  * that fades the overlay from transparent to white.
  */
 function fadeOutWinScreen() {
-    const overlay = document.getElementById('win_fade_overlay');
-    overlay.classList.add('fade-in-white');
+    setTimeout(() => {
+        document.getElementById('win_fade_overlay').classList.add('fade-in-white');
+    }, 4500);
 }
 
 
@@ -375,7 +382,9 @@ function fadeOutWinScreen() {
  * and adding a fade-out class that transitions back to transparency.
  */
 function fadeInWinScreen() {
-    const overlay = document.getElementById('win_fade_overlay');
-    overlay.classList.remove('fade-in-white');
-    overlay.classList.add('fade-out-white');
+    setTimeout(() => {
+        const overlay = document.getElementById('win_fade_overlay');
+        overlay.classList.remove('fade-in-white');
+        overlay.classList.add('fade-out-white');
+    }, 5500);
 }
