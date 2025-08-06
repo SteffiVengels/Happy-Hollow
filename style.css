@@ -41,11 +41,6 @@
     }
 }
 
-#fullscreen {
-    height: 544px;
-    width: 784px;
-    position: relative;
-}
 
 #fullscreen_button {
     background-color: transparent;

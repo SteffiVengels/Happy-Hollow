@@ -264,8 +264,7 @@ function setupToggleSwitch(id) {
  */
 function showGameOver() {
     setTimeout(() => {
-        const gameOverText = document.getElementById('game_over_text');
-        document.getElementById('game_over_logo').classList.remove('hidden');
+        const gameOverText = document.getElementById('logo_text');
         animateTextByLetters(gameOverText, 'GAME OVER!', 'letter', 0.2);
     }, 1000);
 }
@@ -276,7 +275,7 @@ function showGameOver() {
  */
 function showYouWin() {
     setTimeout(() => {
-        const winText = document.getElementById('you_win_text');
+        const winText = document.getElementById('logo_text');
         animateTextByLetters(winText, 'YOU WIN!', 'letter-win', 0.2, 0.4);
     }, 1000);
 }
@@ -292,7 +291,6 @@ function showYouWin() {
  * @param {number} [duration] - Optional animation duration in seconds for each letter.
  */
 function animateTextByLetters(targetElement, text, letterClass, delayStep, duration) {
-    targetElement.innerHTML = '';
     [...text].forEach((char, i) => {
         const span = document.createElement('span');
         span.textContent = char === ' ' ? '\u00A0' : char;

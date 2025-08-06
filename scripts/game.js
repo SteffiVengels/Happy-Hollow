@@ -247,7 +247,6 @@ function stopGame() {
  */
 function showGameOverScreen() {
     document.getElementById('game_over_screen').classList.remove('d_none');
-    document.getElementById('header').classList.add('d_none');
 }
 
 
@@ -268,8 +267,9 @@ function scheduleGameOverSequence() {
 
 
 function animateGameOverLogo() {
+    document.getElementById('logo_text').innerHTML = '';
     setTimeout(() => {
-        document.getElementById('game_over_logo').classList.add('show');
+        document.getElementById('header').classList.add('show');
     }, 10);
 }
 
@@ -282,9 +282,10 @@ function animateGameOverLogo() {
  * This prepares the game over screen for a fresh display.
  */
 function resetGameOverAnimation() {
-    document.getElementById('game_over_logo').classList.remove('d_none');
-    document.getElementById('game_over_logo').classList.remove('show');
+
+    document.getElementById('header').classList.remove('d_none');
     document.getElementById('game_over_body').classList.add('d_none');
+
 }
 
 
@@ -294,8 +295,9 @@ function resetGameOverAnimation() {
  */
 function showGameOverButtons() {
     setTimeout(() => {
-        document.getElementById('game_over_logo').classList.add('d_none');
-        document.getElementById('game_over_text').innerHTML = '';
+        document.getElementById('header').classList.add('d_none');
+        document.getElementById('logo_text').innerHTML = 'Happy Hollow';
+        document.getElementById('header').classList.remove('show');
         document.getElementById('game_over_body').classList.remove('d_none');
     }, 4500);
 }
@@ -319,7 +321,6 @@ function gameWin() {
  */
 function showWinScreen() {
     document.getElementById('win_screen').classList.remove('d_none');
-    document.getElementById('header').classList.add('d_none');
 }
 
 
@@ -327,8 +328,9 @@ function showWinScreen() {
  * Starts the win logo animation shortly after showing the win screen.
  */
 function animateWinLogo() {
+    document.getElementById('logo_text').innerHTML = '';
     setTimeout(() => {
-        document.getElementById('win_logo').classList.add('show');
+        document.getElementById('header').classList.add('show');
     }, 10);
 }
 
@@ -358,9 +360,10 @@ function scheduleWinSequence() {
  */
 function resetGameWinAnimation() {
     setTimeout(() => {
+        document.getElementById('header').classList.add('d_none');
+        document.getElementById('logo_text').innerHTML = 'Happy Hollow';
+        document.getElementById('header').classList.remove('show');
         document.getElementById('win_fade_overlay').classList.remove('fade-out-white');
-        document.getElementById('win_logo').classList.remove('show');
-        document.getElementById('you_win_text').innerHTML = '';
     }, 6000);
 }
 
