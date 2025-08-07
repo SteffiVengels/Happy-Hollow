@@ -270,12 +270,29 @@ function showGameOver() {
 }
 
 
+function showGameOverResponsiv() {
+    setTimeout(() => {
+        const gameOverText = document.getElementById('game_over_text');
+        animateTextByLetters(gameOverText, 'GAME OVER!', 'letter', 0.2);
+    }, 1000);
+}
+
+
 /**
  * Shows the "YOU WIN!" animated text on the screen.
  */
 function showYouWin() {
     setTimeout(() => {
         const winText = document.getElementById('logo_text');
+        animateTextByLetters(winText, 'YOU WIN!', 'letter-win', 0.2, 0.4);
+    }, 1000);
+}
+
+
+
+function showYouWinResponsiv() {
+    setTimeout(() => {
+        const winText = document.getElementById('you_win_text');
         animateTextByLetters(winText, 'YOU WIN!', 'letter-win', 0.2, 0.4);
     }, 1000);
 }

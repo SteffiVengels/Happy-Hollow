@@ -4,7 +4,7 @@ let keyboard = new Keyboard();
 let audioManager = new AudioManager();
 let fadeOverlayOpacity = 0;
 let soundOn = true;
-let musicOn = true;
+let musicOn = false;
 
 
 /**
@@ -261,7 +261,9 @@ function showGameOverScreen() {
  */
 function scheduleGameOverSequence() {
     animateGameOverLogo()
+    animateGameOverLogoResponsiv();
     showGameOver();
+    showGameOverResponsiv();
     showGameOverButtons()
 }
 
@@ -274,6 +276,14 @@ function animateGameOverLogo() {
 }
 
 
+function animateGameOverLogoResponsiv() {
+    document.getElementById('game_over_text').innerHTML = '';
+    setTimeout(() => {
+        document.getElementById('game_over_logo_responsiv').classList.add('show_responsiv');
+    }, 10);
+}
+
+
 /**
  * Resets the game over animation state by:
  * - Ensuring the game over logo is visible but not animated
@@ -282,7 +292,7 @@ function animateGameOverLogo() {
  * This prepares the game over screen for a fresh display.
  */
 function resetGameOverAnimation() {
-
+    document.getElementById('game_over_logo_responsiv').classList.remove('d_none');
     document.getElementById('header').classList.remove('d_none');
     document.getElementById('game_over_body').classList.add('d_none');
 
@@ -295,6 +305,8 @@ function resetGameOverAnimation() {
  */
 function showGameOverButtons() {
     setTimeout(() => {
+        document.getElementById('game_over_logo_responsiv').classList.remove('show_responsiv');
+        document.getElementById('game_over_logo_responsiv').classList.add('d_none');
         document.getElementById('header').classList.add('d_none');
         document.getElementById('logo_text').innerHTML = 'Happy Hollow';
         document.getElementById('header').classList.remove('show');
@@ -335,6 +347,14 @@ function animateWinLogo() {
 }
 
 
+function animateWinLogoResponsiv() {
+    document.getElementById('you_win_text').innerHTML = '';
+    setTimeout(() => {
+        document.getElementById('win_logo_responsiv').classList.add('show_responsiv');
+    }, 10);
+}
+
+
 /**
  * Schedules the sequence of events after winning:
  * - Shows the "You Win" text after 1 second
@@ -343,9 +363,11 @@ function animateWinLogo() {
  */
 function scheduleWinSequence() {
     animateWinLogo();
+    animateWinLogoResponsiv();
     showYouWin();
+    showYouWinResponsiv();
     fadeOutWinScreen();
-    showStartScreen()
+    showStartScreen();
     fadeInWinScreen();
 }
 
@@ -361,6 +383,7 @@ function scheduleWinSequence() {
 function resetGameWinAnimation() {
     setTimeout(() => {
         document.getElementById('header').classList.add('d_none');
+        document.getElementById('win_logo_responsiv').classList.remove('show_responsiv');
         document.getElementById('logo_text').innerHTML = 'Happy Hollow';
         document.getElementById('header').classList.remove('show');
         document.getElementById('win_fade_overlay').classList.remove('fade-out-white');

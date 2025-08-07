@@ -90,3 +90,18 @@ a:hover {
         -1px 1px 0 black,
         1px 1px 0 black;
 }
+
+@media (max-width:1400px) {
+    header {
+        display: none;
+    }
+.start-screen header.animate {
+    transform: translateY(-320px) scale(1);
+    opacity: 1;
+}
+
+    main {
+        height: auto;
+        justify-content: center;
+    }
+}

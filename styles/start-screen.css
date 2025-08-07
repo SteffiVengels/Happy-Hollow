@@ -35,7 +35,7 @@
 
 
 .start-screen header.animate {
-    transform: translateY(-320px) scale(1);
+    transform: translateY(-305px) scale(1);
     opacity: 1;
 }
 
@@ -117,4 +117,13 @@
     background-image: url('../assets/img/platformer-pixel-art-tileset/Tiles/Tileset/TileSet_02.png');
     background-repeat: repeat-x;
     background-size: 32px 32px;
+}
+
+@media (max-width:1400px) {
+.start-screen header.animate {
+    transform: translateY(-620px) scale(1);
+    opacity: 1;
+}
+
+
 }
