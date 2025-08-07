@@ -89,6 +89,7 @@
 }
 
 #win_logo_responsiv.show_responsiv {
+    display: flex;
     transform: translateY(0);
     opacity: 1;
 }

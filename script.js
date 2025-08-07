@@ -168,6 +168,7 @@ function delayMenuScreenTransition() {
         document.getElementById("start_screen").classList.add('d_none');
         document.getElementById("menu_screen").classList.remove('d_none');
         document.getElementById("header").classList.remove('d_none');
+        document.getElementById('fullscreen_button').classList.remove('d_none');
         showMenuCharacter();
     }, 800);
 }
@@ -346,6 +347,11 @@ function resetStartScreenUI() {
     document.getElementById("character_start").classList.remove('d_none');
     document.querySelector('#start_screen header').classList.remove('animate');
     document.getElementById('new_game_button').classList.remove('d_none');
+    exitFullscreenModus();
+    setTimeout(() => {
+        document.getElementById('fullscreen_button').classList.add('d_none');
+    }, 100);
+
 }
 
 
@@ -405,23 +411,56 @@ function fadeInWinScreen() {
 }
 
 
-function enterFullScreen() {
-    let element = document.getElementById('fullscreen');
-    if (element.requestFullScreen) {
-        element.requestFullScreen();
-    } else if (element.msRequestFullScreen) {
-        element.msRequestFullScreen();
-    } else if (element.webkitRequestFullScreen) {
-        element.webkitRequestFullScreen();
+function toggleFullScreen() {
+    const element = document.getElementById('fullscreen');
+
+    if (!document.fullscreenElement &&      // Standard
+        !document.webkitFullscreenElement && // Safari
+        !document.msFullscreenElement) {     // IE11
+        // → Vollbild starten
+        if (element.requestFullscreen) {
+            element.requestFullscreen();
+        } else if (element.webkitRequestFullscreen) {
+            element.webkitRequestFullscreen();
+        } else if (element.msRequestFullscreen) {
+            element.msRequestFullscreen();
+        }
+    } else {
+        exitFullscreenModus();
     }
 }
 
-
-function exitFullScreen() {
-    let element = document.getElementById('fullscreen');
-    if (element.exitFullscreen) {
-        element.exitFullscreen();
-    } else if (element.webkitExitFullscreen) {
-        element.webkitExitFullscreen();
+function exitFullscreenModus() {
+    // → Vollbild beenden
+    if (document.exitFullscreen) {
+        document.exitFullscreen();
+    } else if (document.webkitExitFullscreen) {
+        document.webkitExitFullscreen();
+    } else if (document.msExitFullscreen) {
+        document.msExitFullscreen();
     }
 }
+
+// 🔁 Vollbildwechsel beobachten (auch bei ESC)
+function handleFullscreenChange() {
+    const fullscreenButton = document.getElementById('fullscreen_button');
+    const exitFullscreenButton = document.getElementById('exit_fullscreen_button');
+
+    if (document.fullscreenElement ||
+        document.webkitFullscreenElement ||
+        document.msFullscreenElement) {
+        // → Vollbild ist aktiv
+        fullscreenButton.classList.add('d_none');
+        exitFullscreenButton.classList.remove('d_none');
+    } else {
+        // → Vollbild wurde verlassen
+        fullscreenButton.classList.remove('d_none');
+        exitFullscreenButton.classList.add('d_none');
+    }
+}
+
+// 📡 Event Listener für alle Browser
+document.addEventListener('fullscreenchange', handleFullscreenChange);
+document.addEventListener('webkitfullscreenchange', handleFullscreenChange);
+document.addEventListener('mozfullscreenchange', handleFullscreenChange);
+document.addEventListener('MSFullscreenChange', handleFullscreenChange);

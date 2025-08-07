@@ -261,7 +261,9 @@ function showGameOverScreen() {
  */
 function scheduleGameOverSequence() {
     animateGameOverLogo()
-    animateGameOverLogoResponsiv();
+    if (window.innerWidth <= 1400 || document.fullscreenElement) {
+        animateGameOverLogoResponsiv();
+    }
     showGameOver();
     showGameOverResponsiv();
     showGameOverButtons()
@@ -363,7 +365,9 @@ function animateWinLogoResponsiv() {
  */
 function scheduleWinSequence() {
     animateWinLogo();
-    animateWinLogoResponsiv();
+    if (window.innerWidth <= 1400 || document.fullscreenElement) {
+        animateWinLogoResponsiv();
+    }
     showYouWin();
     showYouWinResponsiv();
     fadeOutWinScreen();
@@ -387,7 +391,7 @@ function resetGameWinAnimation() {
         document.getElementById('logo_text').innerHTML = 'Happy Hollow';
         document.getElementById('header').classList.remove('show');
         document.getElementById('win_fade_overlay').classList.remove('fade-out-white');
-    }, 6000);
+    }, 5500);
 }
 
 

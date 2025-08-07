@@ -45,14 +45,38 @@
 #fullscreen_button {
     background-color: transparent;
     border: none;
-    height: 24px;
-    width: 24px;
     position: absolute;
-    right: 54px;
-    bottom: 44px;
+    right: 48px;
+    bottom: 38px;
     cursor: pointer;
+    color: white;
 }
 
 #fullscreen_button:hover {
     scale: 1.1;
+}
+
+#exit_fullscreen_button {
+    background-color: transparent;
+    border: none;
+    position: absolute;
+    right: 48px;
+    bottom: 38px;
+    cursor: pointer;
+    color: white;
+}
+
+#exit_fullscreen_button:hover {
+    scale: 1.1;
+}
+
+:fullscreen #game_over_screen,
+:-webkit-full-screen #game_over_screen,
+:fullscreen #start_screen,
+:fullscreen #menu_screen,
+:fullscreen #canvas,
+:fullscreen #win_screen,
+:fullscreen #win_fade_overlay {
+    width: calc(100vw - 64px);
+    height: calc(100vh - 64px);
 }

@@ -39,8 +39,8 @@ header {
     width: 424px;
     height: 192px;
     margin-bottom: 40px;
-    z-index: 10;
-/*     position: absolute;
+    z-index: 100;
+    /*     position: absolute;
     top: 40px; */
     display: flex;
     justify-content: center;
@@ -95,10 +95,11 @@ a:hover {
     header {
         display: none;
     }
-.start-screen header.animate {
-    transform: translateY(-320px) scale(1);
-    opacity: 1;
-}
+
+    .start-screen header.animate {
+        transform: translateY(-320px) scale(1);
+        opacity: 1;
+    }
 
     main {
         height: auto;

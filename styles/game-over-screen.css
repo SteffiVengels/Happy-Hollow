@@ -96,12 +96,14 @@
 }
 
 #game_over_logo_responsiv {
+    z-index: 100;
     transform: translateY(-100%);
     opacity: 0;
     transition: transform 0.6s ease-out, opacity 0.6s ease-out;
 }
 
 #game_over_logo_responsiv.show_responsiv {
+    display: flex;
     transform: translateY(0);
     opacity: 1;
 }
