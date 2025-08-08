@@ -80,3 +80,25 @@
     width: calc(100vw - 64px);
     height: calc(100vh - 64px);
 }
+
+.orientation-warning {
+    color: white;
+    height: 100vh;
+    width: 100vw;
+    background-color: black;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    text-align: center;
+}
+
+.orientation-warning img {
+    height: 32px;
+    width: 32px;
+}

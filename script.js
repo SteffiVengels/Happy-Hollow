@@ -13,6 +13,7 @@ let selectedCharacterType;
  */
 function init() {
     animateCharacter();
+    checkScreenWidth();
 }
 
 
@@ -464,3 +465,27 @@ document.addEventListener('fullscreenchange', handleFullscreenChange);
 document.addEventListener('webkitfullscreenchange', handleFullscreenChange);
 document.addEventListener('mozfullscreenchange', handleFullscreenChange);
 document.addEventListener('MSFullscreenChange', handleFullscreenChange);
+
+
+/**
+ * Toggles visibility of the orientation warning based on screen width.
+ */
+function checkScreenWidth() {
+    const warning = document.getElementById('orientation_warning');
+    const mainContent = document.getElementById('main_content');
+    if (!warning || !mainContent) return;
+
+    const isSmallScreen = window.innerWidth < 790;
+    const isPortrait = window.innerHeight > window.innerWidth;
+
+    if (isSmallScreen && isPortrait) {
+        warning.classList.remove('d_none');
+        mainContent.classList.add('d_none');
+    } else {
+        warning.classList.add('d_none');
+        mainContent.classList.remove('d_none');
+    }
+}
+
+// Check again whenever the window is resized
+window.addEventListener('resize', checkScreenWidth);
