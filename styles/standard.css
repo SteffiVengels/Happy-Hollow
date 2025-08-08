@@ -110,7 +110,7 @@ a:hover {
     }
 }
 
-@media only screen and (max-width: 740px) {
+@media only screen and (max-width: 780px) {
 
     #start_screen,
     #fullscreen,
@@ -250,4 +250,11 @@ a:hover {
     width: 100vw;
     height: 100dvh;
 }
+}
+
+@media only screen and (max-height: 360px) {
+        #new_game_button {
+        bottom: 32px;
+
+    }
 }
