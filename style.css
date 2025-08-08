@@ -83,7 +83,7 @@
     height: calc(100vh - 64px);
 }
 
-:fullscreen #main_content {
+:fullscreen body {
         display: block;
     margin: auto;
 }
