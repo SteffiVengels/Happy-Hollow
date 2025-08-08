@@ -252,7 +252,7 @@ a:hover {
 }
 }
 
-@media only screen and (max-height: 340px) {
+@media only screen and (max-height: 360px) {
         #new_game_button {
         bottom: 32px;
 
