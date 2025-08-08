@@ -484,6 +484,7 @@ function checkScreenWidth() {
     } else {
         warning.classList.add('d_none');
         mainContent.classList.remove('d_none');
+        toggleFullScreen();
     }
 }
 
