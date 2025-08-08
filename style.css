@@ -77,15 +77,14 @@
 :fullscreen #canvas,
 :fullscreen #win_screen,
 :fullscreen #win_fade_overlay {
-    display: block;
-    margin: auto;
     width: calc(100vw - 64px);
     height: calc(100vh - 64px);
 }
 
-:fullscreen body {
-        display: block;
-    margin: auto;
+#fullscreen:fullscreen  {
+        display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .orientation-warning {
