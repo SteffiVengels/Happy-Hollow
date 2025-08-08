@@ -83,6 +83,11 @@
     height: calc(100vh - 64px);
 }
 
+:fullscreen #main_content {
+        display: block;
+    margin: auto;
+}
+
 .orientation-warning {
     color: white;
     height: 100vh;
