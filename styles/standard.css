@@ -190,6 +190,7 @@ a:hover {
     #win_screen,
     main {
         height: 100vh;
+        height: 100lvh;
     }
 
     #fullscreen {
@@ -247,6 +248,6 @@ a:hover {
 :fullscreen #win_screen,
 :fullscreen #win_fade_overlay {
     width: 100vw;
-    height: 100lvh;
+    height: 100dvh;
 }
 }
