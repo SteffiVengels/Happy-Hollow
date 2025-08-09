@@ -11,9 +11,11 @@
     flex-direction: column;
 }
 
+
 .menu-screen h1 {
     color: white;
 }
+
 
 .menu-btn {
     transition: transform 0.2s ease;
@@ -62,6 +64,7 @@
         repeat-x;
 }
 
+
 .select-your-tiny-hero {
     display: flex;
     flex-direction: column;
@@ -69,15 +72,18 @@
     align-items: center;
 }
 
+
 .select-your-tiny-hero div {
     display: flex;
     flex-direction: row;
     gap: 56px;
 }
 
+
 .menu-screen h1 {
     padding-top: 0;
 }
+
 
 .character-preview-pink {
     background-image: url('../assets/img/game-ui-pixel-art/1 Frames/Portrait_frame.png'), url('../assets/img/30-pixel-art-monster-portrait-icons/1 Main characters/Portraits_01.png');
@@ -91,6 +97,7 @@
     transition: transform 0.2s ease;
 }
 
+
 .character-preview-owlet {
     background-image: url('../assets/img/game-ui-pixel-art/1 Frames/Portrait_frame.png'), url('../assets/img/30-pixel-art-monster-portrait-icons/1 Main characters/Portraits_07.png');
     background-position: center, center;
@@ -102,6 +109,7 @@
     background-color: transparent;
     transition: transform 0.2s ease;
 }
+
 
 .character-preview-dude {
     background-image: url('../assets/img/game-ui-pixel-art/1 Frames/Portrait_frame.png'), url('../assets/img/30-pixel-art-monster-portrait-icons/1 Main characters/Portraits_13.png');
@@ -115,12 +123,14 @@
     transition: transform 0.2s ease;
 }
 
+
 .menu-div {
     display: flex;
     flex-direction: row;
     margin: 56px 0;
     gap: 40px;
 }
+
 
 .select-your-tiny-hero button:hover {
     cursor: pointer;
@@ -129,9 +139,11 @@
     box-shadow: 4px 8px 19px -3px rgba(0, 0, 0, 0.27);
 }
 
+
 .active {
     transform: scale(1.1);
 }
+
 
 .menu-btn:hover {
     transform: scale(1.05);
@@ -139,13 +151,16 @@
     box-shadow: 4px 8px 19px -3px rgba(0, 0, 0, 0.27);
 }
 
+
 #play_button {
     cursor: not-allowed;
 }
 
-.play-buttn-enabled {
+
+.play-button-enabled {
     cursor: pointer !important;
 }
+
 
 .overlay {
     position: fixed;
@@ -154,11 +169,12 @@
     height: 100vh;
     width: 100%;
     background-color: rgba(0, 0, 0, 0.375);
-    z-index: 2;
+    z-index: 100;
     display: flex;
     justify-content: center;
     align-items: center;
 }
+
 
 .dialog {
     position: relative;
@@ -195,12 +211,14 @@
         repeat-x;
 }
 
+
 .dialog-close-wrapper {
     position: absolute;
     right: -30px;
     width: 32px;
     height: 32px;
 }
+
 
 .dialog-close-wrapper img {
     position: absolute;
@@ -209,9 +227,11 @@
     transform: translate(-50%, -50%);
 }
 
+
 .close-img:hover {
     cursor: pointer;
 }
+
 
 .dialog-title {
     position: absolute;
@@ -242,15 +262,17 @@
     color: white;
 }
 
-.dialog-title title {
+
+.dialog-title h2 {
     display: flex;
 }
+
 
 .dialog-body {
     color: white;
     margin: 32px;
-
 }
+
 
 .setting-body {
     display: flex;
@@ -258,6 +280,7 @@
     flex-direction: row;
     gap: 32px;
 }
+
 
 .controls-list li {
     display: flex;
@@ -267,10 +290,12 @@
     height: 27px;
 }
 
+
 .controls-list img {
     width: 24px;
     height: 24px;
 }
+
 
 .controls-list span {
     display: flex;
@@ -278,9 +303,11 @@
     gap: 8px;
 }
 
+
 .controls-list {
     padding-left: 0;
 }
+
 
 .settings-menu {
     width: 200px;
@@ -291,6 +318,7 @@
     color: white;
 }
 
+
 .setting-item {
     margin: 16px;
     display: flex;
@@ -299,6 +327,7 @@
     gap: 8px;
 }
 
+
 .toggle-btn {
     width: 40px;
     height: 20px;
@@ -306,8 +335,8 @@
     cursor: pointer;
 }
 
-.toggle-switch {
 
+.toggle-switch {
     display: flex;
     align-items: center;
     width: 32px;
@@ -317,9 +346,11 @@
     cursor: pointer;
 }
 
+
 .toggle-switch.on {
     background-image: url('../assets/img/game-ui-pixel-art/2 Bars/Band2_on.png');
 }
+
 
 .toggle-thumb {
     width: 16px;
@@ -330,6 +361,7 @@
     left: -8px;
     transition: left 0.2s;
 }
+
 
 .toggle-switch.on .toggle-thumb {
     left: 24px;
@@ -348,17 +380,21 @@
     transition: transform 0.2s ease;
 }
 
+
 .imprint-button:hover {
     transform: scale(1.1);
 }
+
 
 #play_button:disabled+.tooltip {
     display: none;
 }
 
+
 #play_button:disabled:hover+.tooltip {
     display: block;
 }
+
 
 .tooltip {
     display: none;
@@ -373,14 +409,12 @@
     margin-top: 5px;
 }
 
+
 .character-animation-menu {
-        width: 50px;
+    width: 50px;
     height: 50px;
-    /* dein Lauf-Sprite */
     background-size: 300px;
-    /* (6 Frames * 50px Breite) */
     position: absolute;
     bottom: 32px;
     left: 20px;
-
 }

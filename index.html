@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="./styles/menu-screen.css">
     <link rel="stylesheet" href="./styles/game-over-screen.css">
     <link rel="stylesheet" href="./styles/win-screen.css">
+    <link rel="stylesheet" href="./styles/responsiv.css">
 
     <script src="./classes/drawable-object.class.js"></script>
     <script src="./classes/movable-object.class.js"></script>
@@ -44,7 +45,6 @@
 </head>
 
 <body onload="init()">
-
     <main id="main_content">
         <header id="header" class="d_none">
             <h1 id="logo_text">Happy Hollow</h1>
@@ -89,9 +89,11 @@
                 </div>
                 <div class="game-over-body d_none" id="game_over_body">
                     <button onclick="retryGame()">
-                        <img src="./assets/img/game-ui-pixel-art/3 Icons/Icons_45.png" alt="">TRY AGAIN</button>
+                        <img src="./assets/img/game-ui-pixel-art/3 Icons/Icons_45.png" alt="Try Again">TRY
+                        AGAIN</button>
                     <button onclick="returnToMenu()">
-                        <img src="./assets/img/game-ui-pixel-art/3 Icons/Icons_14.png" alt="">RETURN TO MENU</button>
+                        <img src="./assets/img/game-ui-pixel-art/3 Icons/Icons_14.png" alt="Return to Menu">RETURN TO
+                        MENU</button>
                 </div>
             </section>
             <section id="win_screen" class="win-screen d_none">
@@ -117,32 +119,32 @@
             <section id="mobile_buttons" class="d_none">
                 <div>
                     <button id="btn_left">
-                        <img src="./assets/img/game-ui-pixel-art/3 Icons/Icons_26.png" alt="">
+                        <img src="./assets/img/game-ui-pixel-art/3 Icons/Icons_26.png" alt="Button Left">
                     </button>
                     <button id="btn_right">
-                        <img src="./assets/img/game-ui-pixel-art/3 Icons/Icons_25.png" alt="">
+                        <img src="./assets/img/game-ui-pixel-art/3 Icons/Icons_25.png" alt="Button Right">
                     </button>
                 </div>
                 <div>
                     <button id="btn_jump">
-                        <img src="./assets/img/game-ui-pixel-art/3 Icons/Icons_27.png" alt="">
+                        <img src="./assets/img/game-ui-pixel-art/3 Icons/Icons_27.png" alt="Button Up">
                     </button>
                     <button id="btn_throw">
-                        <img src="./assets/img/game-ui-pixel-art/3 Icons/Icons_64.png" alt="">
+                        <img src="./assets/img/game-ui-pixel-art/3 Icons/Icons_64.png" alt="Button Throw">
                     </button>
                 </div>
             </section>
         </section>
-        <section class="overlay d_none" id="settings-dialog" onclick="closeOverlay(event, id)">
+        <dialog class="overlay d_none" id="settings-dialog" onclick="closeOverlay(event, id)">
             <div class="dialog" onclick="event.stopPropagation()">
                 <div class="dialog-close-wrapper">
-                    <img src="./assets/img/game-ui-pixel-art/1 Frames/Frame_tile_31.png" alt="">
+                    <img src="./assets/img/game-ui-pixel-art/1 Frames/Frame_tile_31.png" alt="Dialog Frame">
                     <button class="close-img" onclick="closeOverlay(event, 'settings-dialog')">
-                        <img src="./assets/img/game-ui-pixel-art/3 Icons/Icons_37.png" alt="">
+                        <img src="./assets/img/game-ui-pixel-art/3 Icons/Icons_37.png" alt="Close">
                     </button>
                 </div>
                 <div class="dialog-title">
-                    <title>Settings</title>
+                    <h2>Settings</h2>
                 </div>
                 <div class="dialog-body">
                     <div class="setting-body">
@@ -162,17 +164,17 @@
                     </div>
                 </div>
             </div>
-        </section>
-        <section class="overlay d_none" id="world-dialog" onclick="closeOverlay(event, id)">
+        </dialog>
+        <dialog class="overlay d_none" id="world-dialog" onclick="closeOverlay(event, id)">
             <div class="dialog" onclick="event.stopPropagation()">
                 <div class="dialog-close-wrapper">
-                    <img src="./assets/img/game-ui-pixel-art/1 Frames/Frame_tile_31.png" alt="">
+                    <img src="./assets/img/game-ui-pixel-art/1 Frames/Frame_tile_31.png" alt="Dialog Frame">
                     <button class="close-img" onclick="closeOverlay(event, 'world-dialog')">
-                        <img src="./assets/img/game-ui-pixel-art/3 Icons/Icons_37.png" alt="">
+                        <img src="./assets/img/game-ui-pixel-art/3 Icons/Icons_37.png" alt="Close">
                     </button>
                 </div>
                 <div class="dialog-title">
-                    <title>World</title>
+                    <h2>World</h2>
                 </div>
                 <div class="dialog-body">
                     <h3>Welcome to Happy Hollow!</h3>
@@ -194,43 +196,49 @@
                         hero who frees Happy Hollow from the curse of darkness?</p>
                 </div>
             </div>
-        </section>
-        <section class="overlay d_none" id="controls-dialog" onclick="closeOverlay(event, id)">
+        </dialog>
+        <dialog class="overlay d_none" id="controls-dialog" onclick="closeOverlay(event, id)">
             <div class="dialog" onclick="event.stopPropagation()">
                 <div class="dialog-close-wrapper">
-                    <img src="./assets/img/game-ui-pixel-art/1 Frames/Frame_tile_31.png" alt="">
+                    <img src="./assets/img/game-ui-pixel-art/1 Frames/Frame_tile_31.png" alt="Dialog Frame">
                     <button class="close-img" onclick="closeOverlay(event, 'controls-dialog')">
-                        <img src="./assets/img/game-ui-pixel-art/3 Icons/Icons_37.png" alt="">
+                        <img src="./assets/img/game-ui-pixel-art/3 Icons/Icons_37.png" alt="Close">
                     </button>
                 </div>
                 <div class="dialog-title">
-                    <title>Controls</title>
+                    <h2>Controls</h2>
                 </div>
                 <div class="dialog-body">
                     <ul class="controls-list">
-                        <li>Move Left <span class="key"><img src="./assets/img/game-ui-pixel-art/3 Icons/Icons_14.png"
-                                    alt=""> or Key
-                                A</span></li>
-                        <li>Move Right <span class="key"><img src="./assets/img/game-ui-pixel-art/3 Icons/Icons_15.png"
-                                    alt=""> or Key
-                                D</span></li>
-                        <li>Jump <span class="key"><img src="./assets/img/game-ui-pixel-art/3 Icons/Icons_22.png"
-                                    alt=""> or Space</span></li>
-                        <li>Throw <span class="key">Key F</span> </li>
+                        <li>Move Left
+                            <span class="key"><img src="./assets/img/game-ui-pixel-art/3 Icons/Icons_14.png"
+                                    alt="Arrow Left"> or Key A</span>
+                        </li>
+                        <li>Move Right
+                            <span class="key"><img src="./assets/img/game-ui-pixel-art/3 Icons/Icons_15.png"
+                                    alt="Arrow Right"> or Key D</span>
+                        </li>
+                        <li>Jump
+                            <span class="key"><img src="./assets/img/game-ui-pixel-art/3 Icons/Icons_22.png"
+                                    alt="Arrow Up"> or Space</span>
+                        </li>
+                        <li>Throw
+                            <span class="key">Key F</span>
+                        </li>
                     </ul>
                 </div>
             </div>
-        </section>
-        <section class="overlay d_none" id="imprint-dialog" onclick="closeOverlay(event, id)">
+        </dialog>
+        <dialog class="overlay d_none" id="imprint-dialog" onclick="closeOverlay(event, id)">
             <div class="dialog" onclick="event.stopPropagation()">
                 <div class="dialog-close-wrapper">
-                    <img src="./assets/img/game-ui-pixel-art/1 Frames/Frame_tile_31.png" alt="">
+                    <img src="./assets/img/game-ui-pixel-art/1 Frames/Frame_tile_31.png" alt="Dialog Frame">
                     <button class="close-img" onclick="closeOverlay(event, 'imprint-dialog')">
-                        <img src="./assets/img/game-ui-pixel-art/3 Icons/Icons_37.png" alt="">
+                        <img src="./assets/img/game-ui-pixel-art/3 Icons/Icons_37.png" alt="Close">
                     </button>
                 </div>
                 <div class="dialog-title">
-                    <title>Imprint</title>
+                    <h2>Imprint</h2>
                 </div>
                 <div class="dialog-body">
                     <p>Information according to § 5 DDG</p>
@@ -240,14 +248,12 @@
                         Germany</p>
                     <p>Contact: <br>
                         Email: <a href="mailto:vengels.stefanie@gmail.com">vengels.stefanie@gmail.com</a></p>
-
                 </div>
-
             </div>
-        </section>
+        </dialog>
     </main>
     <section id="orientation_warning" class="orientation-warning d_none">
-        <img src="./assets/img/game-ui-pixel-art/3 Icons/Icons_46.png" alt="">
+        <img src="./assets/img/game-ui-pixel-art/3 Icons/Icons_46.png" alt="Turn">
         <p>Please turn your device to play</p>
     </section>
 </body>

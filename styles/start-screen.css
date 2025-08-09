@@ -11,6 +11,7 @@
     flex-direction: column;
 }
 
+
 .start-screen header {
     padding-left: 8px;
     background-image: url('../assets/img/game-ui-pixel-art/5 Logo/Logo.png');
@@ -38,6 +39,7 @@
     transform: translateY(-305px) scale(1);
     opacity: 1;
 }
+
 
 .start-screen button {
     transition: transform 0.2s ease;
@@ -100,13 +102,12 @@
     width: 50px;
     height: 50px;
     background-image: url('../assets/img/pixel-art-tiny-hero-sprites/1 Pink_Monster/Pink_Monster_Walk_6.png');
-    /* dein Lauf-Sprite */
     background-size: 300px;
-    /* (6 Frames * 50px Breite) */
     position: absolute;
     bottom: 32px;
     left: 0;
 }
+
 
 .ground {
     position: absolute;
@@ -117,13 +118,4 @@
     background-image: url('../assets/img/platformer-pixel-art-tileset/Tiles/Tileset/TileSet_02.png');
     background-repeat: repeat-x;
     background-size: 32px 32px;
-}
-
-@media (max-width:1400px) {
-.start-screen header.animate {
-    transform: translateY(-620px) scale(1);
-    opacity: 1;
-}
-
-
 }

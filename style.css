@@ -28,11 +28,13 @@
         calc(100% - 64px) 32px;
 }
 
+
 .letter {
     transform: translateY(-200px);
     opacity: 0;
     animation: dropIn 0.6s ease-out forwards;
 }
+
 
 @keyframes dropIn {
     to {
@@ -52,9 +54,11 @@
     color: white;
 }
 
+
 #fullscreen_button:hover {
     scale: 1.1;
 }
+
 
 #exit_fullscreen_button {
     background-color: transparent;
@@ -66,9 +70,11 @@
     color: white;
 }
 
+
 #exit_fullscreen_button:hover {
     scale: 1.1;
 }
+
 
 :fullscreen #game_over_screen,
 :-webkit-full-screen #game_over_screen,
@@ -81,11 +87,13 @@
     height: calc(100vh - 64px);
 }
 
-#fullscreen:fullscreen  {
-        display: flex;
+
+#fullscreen:fullscreen {
+    display: flex;
     align-items: center;
     justify-content: center;
 }
+
 
 .orientation-warning {
     color: white;
@@ -104,10 +112,12 @@
     text-align: center;
 }
 
+
 .orientation-warning img {
     height: 32px;
     width: 32px;
 }
+
 
 #mobile_buttons {
     position: absolute;
@@ -118,19 +128,22 @@
     margin-top: 64px;
 }
 
+
 #mobile_buttons button {
-background-color: transparent;
-border-radius: 64px;
-height: 40px;
-cursor: pointer;
-display: flex;
-justify-content: center;
-align-items: center;
+    background-color: transparent;
+    border-radius: 64px;
+    height: 40px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
+
 #mobile_buttons button:hover {
-scale: 1.1;
+    scale: 1.1;
 }
+
 
 #mobile_buttons div {
     display: flex;

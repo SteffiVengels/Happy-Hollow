@@ -11,6 +11,7 @@
     flex-direction: column;
 }
 
+
 .logo {
     padding-left: 8px;
     background-image: url('../assets/img/game-ui-pixel-art/5 Logo/Logo.png');
@@ -45,6 +46,7 @@
     flex-direction: column;
     gap: 32px;
 }
+
 
 .game-over-body button {
     transition: transform 0.2s ease;
@@ -89,11 +91,12 @@
         repeat-x;
 }
 
+
 .game-over-body button:hover {
     transform: scale(1.1);
     cursor: pointer;
-
 }
+
 
 #game_over_logo_responsiv {
     z-index: 100;
@@ -102,14 +105,9 @@
     transition: transform 0.6s ease-out, opacity 0.6s ease-out;
 }
 
+
 #game_over_logo_responsiv.show_responsiv {
     display: flex;
     transform: translateY(0);
     opacity: 1;
-}
-
-@media (min-width:1400px) {
-#game_over_logo_responsiv {
-display: none;
-}
 }

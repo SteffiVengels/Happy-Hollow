@@ -197,7 +197,7 @@ function selectYourCharacter(id) {
     audioManager.playButtonSound();
     document.getElementById(id).classList.add('active');
     document.getElementById("play_button").disabled = false;
-    document.getElementById("play_button").classList.add("play-buttn-enabled");
+    document.getElementById("play_button").classList.add("play-button-enabled");
     selectedCharacterType = id;
 }
 
@@ -382,7 +382,7 @@ function returnToMenu() {
  */
 function resetGameUI() {
     document.getElementById('play_button').disabled = true;
-    document.getElementById('play_button').classList.remove('play-buttn-enabled');
+    document.getElementById('play_button').classList.remove('play-button-enabled');
     document.getElementById('game_over_screen').classList.add('d_none');
     document.getElementById('canvas').classList.add('d_none');
 }

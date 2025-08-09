@@ -11,6 +11,7 @@
     flex-direction: column;
 }
 
+
 @keyframes fallIn {
     0% {
         transform: translateY(-60px);
@@ -26,6 +27,7 @@
         transform: translateY(0);
     }
 }
+
 
 @keyframes impactPulse {
 
@@ -54,11 +56,12 @@
     animation-delay: var(--delay, 0s);
 }
 
-/* Trigger Impact-Puls nach der Fall-Animation für das ganze Text-Container */
+
 #you_win_text.impact {
     animation: impactPulse 0.4s ease-in-out 1 forwards;
     animation-delay: calc(var(--last-delay, 0s) + 0.5s);
 }
+
 
 #win_fade_overlay {
     position: absolute;
@@ -73,14 +76,17 @@
     transition: opacity 0.5s ease-in-out;
 }
 
+
 .fade-in-white {
     opacity: 1 !important;
 }
+
 
 .fade-out-white {
     opacity: 0 !important;
     transition: opacity 0.5s ease-in-out;
 }
+
 
 #win_logo_responsiv {
     transform: translateY(-100%);
@@ -88,14 +94,9 @@
     transition: transform 0.6s ease-out, opacity 0.6s ease-out;
 }
 
+
 #win_logo_responsiv.show_responsiv {
     display: flex;
     transform: translateY(0);
     opacity: 1;
-}
-
-@media (min-width:1400px) {
-#win_logo_responsiv {
-display: none;
-}
 }
