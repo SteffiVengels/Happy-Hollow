@@ -1,79 +1,10 @@
 let canvas;
 let world;
-let keyboard = new Keyboard();
 let audioManager = new AudioManager();
 let fadeOverlayOpacity = 0;
 let soundOn = true;
-let musicOn = false;
+let musicOn = true;
 
-
-/**
- * Adds an event listener to the window that listens for keydown events
- * and sets specific flags in the `keyboard` object based on the pressed key.
- * Also triggers character actions such as jumping and throwing in the game world.
- *
- * Supported keys and actions:
- * - ArrowRight / D: Move right
- * - ArrowLeft / A: Move left
- * - ArrowUp / Space: Jump (sets `isJumping` and resets animation frame)
- * - F: Throw (sets `isThrowing` and resets animation frame)
- * - ArrowDown: Move down
- *
- * @param {KeyboardEvent} e - The keyboard event triggered by a key press.
- */
-window.addEventListener('keydown', (e) => {
-    if (e.code == "ArrowRight" || e.code == "KeyD") {
-        keyboard.RIGHT = true;
-    }
-    if (e.code == "ArrowLeft" || e.code == "KeyA") {
-        keyboard.LEFT = true;
-    }
-    if (e.code == "ArrowUp" || e.code == "Space") {
-        keyboard.UP = true;
-        world.character.isJumping = true;
-        world.character.currentImage = 0;
-    }
-    if (e.code == "KeyF") {
-        keyboard.F = true;
-        world.character.isThrowing = true;
-        world.character.currentImage = 0;
-    }
-    if (e.code == "ArrowDown") {
-        keyboard.DOWN = true;
-    }
-})
-
-
-/**
- * Adds an event listener to the window that listens for keyup events
- * and resets the corresponding flags in the `keyboard` object when keys are released.
- *
- * Supported keys and released actions:
- * - ArrowRight / D: Stop moving right
- * - ArrowLeft / A: Stop moving left
- * - ArrowUp / Space: Stop jumping
- * - F: Stop throwing
- * - ArrowDown: Stop moving down
- *
- * @param {KeyboardEvent} e - The keyboard event triggered by a key release.
- */
-window.addEventListener('keyup', (e) => {
-    if (e.code == "ArrowRight" || e.code == "KeyD") {
-        keyboard.RIGHT = false;
-    }
-    if (e.code == "ArrowLeft" || e.code == "KeyA") {
-        keyboard.LEFT = false;
-    }
-    if (e.code == "ArrowUp" || e.code == "Space") {
-        keyboard.UP = false;
-    }
-    if (e.code == "KeyF") {
-        keyboard.F = false;
-    }
-    if (e.code == "ArrowDown") {
-        keyboard.DOWN = false;
-    }
-})
 
 
 /**
@@ -85,11 +16,11 @@ window.addEventListener('keyup', (e) => {
  * @param {Object} keyboard - The keyboard input object containing key states.
  * @returns {World} The initialized World object for the Endboss level.
  */
-function loadEndbossLevel(canvas, keyboard) {
+function loadEndbossLevel(canvas) {
     const existingCharacter = world.character;
     const endbossType = determineEndbossType(existingCharacter.coinCount);
     const endbossLevel = createEndBossLevel1(existingCharacter, world, endbossType);
-    const newWorld = new World(canvas, keyboard, endbossLevel, audioManager);
+    const newWorld = new World(canvas, endbossLevel, audioManager);
     copyCharacterStats(existingCharacter, newWorld);
     initializeWorldPosition(newWorld);
     connectEnemiesToWorld(newWorld);
@@ -167,9 +98,10 @@ function loadLevel1() {
     canvas.classList.remove('d_none');
     audioManager.stopMenuMusicAndPlayGameStartSound();
     const level1 = createLevel1();
-    world = new World(canvas, keyboard, level1, audioManager);
+    world = new World(canvas, level1, audioManager);
     fadeInFromWhite();
     audioManager.playLevel1BackgroundMusic();
+    document.getElementById('mobile_buttons').classList.remove('d_none');
 }
 
 
@@ -238,6 +170,7 @@ function gameOver() {
 function stopGame() {
     world.clearAllIntervals();
     world.stopDrawing();
+    document.getElementById('mobile_buttons').classList.add('d_none');
 }
 
 
@@ -334,6 +267,7 @@ function gameWin() {
  * Displays the win screen and hides the game header to focus on the win UI.
  */
 function showWinScreen() {
+    
     document.getElementById('win_screen').classList.remove('d_none');
 }
 

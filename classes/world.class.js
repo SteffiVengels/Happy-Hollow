@@ -1,7 +1,6 @@
 class World {
     canvas;
     ctx;
-    keyboard;
     camera_x = 0;
     statusBar = new StatusBar();
     energyBar = new EnergyBar();
@@ -14,11 +13,11 @@ class World {
 
 
 
-    constructor(canvas, keyboard, level, audioManager) {
+    constructor(canvas, level, audioManager) {
         this.character = new Character(selectedCharacterType);
         this.ctx = canvas.getContext('2d');
         this.canvas = canvas;
-        this.keyboard = keyboard;
+        this.keyboard = new Keyboard(this.character);
         this.level = level;
         this.audioManager = audioManager;
         this.portraitFrameImg.src = this.character.IMAGE_PORTRAIT[0];
@@ -194,7 +193,7 @@ class World {
         const now = Date.now();
         if (now - enemy.lastHit > 400) {
             if (enemy instanceof EndbossLevel1) {
-                enemy.health -= 100;
+                enemy.health -= 10;
             } else {
                 enemy.health = 0;
             }

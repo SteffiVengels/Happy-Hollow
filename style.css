@@ -108,3 +108,32 @@
     height: 32px;
     width: 32px;
 }
+
+#mobile_buttons {
+    position: absolute;
+    display: none;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 720px;
+    margin-top: 64px;
+}
+
+#mobile_buttons button {
+background-color: transparent;
+border-radius: 64px;
+height: 40px;
+cursor: pointer;
+display: flex;
+justify-content: center;
+align-items: center;
+}
+
+#mobile_buttons button:hover {
+scale: 1.1;
+}
+
+#mobile_buttons div {
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+}

@@ -110,6 +110,13 @@ a:hover {
     }
 }
 
+@media (max-width:1024px) {
+    #mobile_buttons {
+    display: flex;
+}
+    
+}
+
 @media only screen and (max-width: 800px) {
 
     #start_screen,
@@ -133,8 +140,8 @@ a:hover {
     }
 
     #fullscreen_button {
-        right: 16px;
-        bottom: 32px;
+        right: 0;
+        bottom: 0;
     }
 
     #win_fade_overlay {
@@ -178,6 +185,15 @@ a:hover {
     width: 100vw;
     height: 100lvh;
 }
+
+#mobile_buttons {
+        position: absolute;
+        bottom: 8px;
+        border: none;
+        padding-left: 64px;
+        width: -webkit-fill-available;
+        padding-right: 64px;
+}
 }
 
 @media only screen and (max-height: 480px) {
@@ -204,8 +220,8 @@ a:hover {
     }
 
     #fullscreen_button {
-        right: 16px;
-        bottom: 32px;
+        right: 0;
+        bottom: 0;
     }
 
 
@@ -249,6 +265,15 @@ a:hover {
 :fullscreen #win_fade_overlay {
     width: 100vw;
     height: 100dvh;
+}
+
+#mobile_buttons {
+        position: absolute;
+        bottom: 8px;
+        border: none;
+        padding-left: 64px;
+        width: -webkit-fill-available;
+        padding-right: 64px;
 }
 }
 
