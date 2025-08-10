@@ -39,6 +39,9 @@ class EndbossLevel1 extends MovableObject {
     }
 
 
+    /**
+      * Starts the intro animation of the endboss with sneer sounds.
+      */
     startIntroAnimation() {
         this.world.audioManager.playEndbossSneerSound();
         let sneerInterval = setInterval(() => {
@@ -51,70 +54,182 @@ class EndbossLevel1 extends MovableObject {
     }
 
 
+    /**
+     * Main animation loop that triggers various animations and movement.
+     */
     animate() {
-        setInterval(() => {
-            if (this.isDead() && !this.markedForDeletion) {
-                this.handleDeathAnimation();
-            } else if (this.isHurt()) {
-                this.playAnimation(this.IMAGES_HURT);
-            } else if ((this.character && this.character.isColliding(this) && this.Type !== 'Mage-Monster') || (this.character && Math.abs(this.character.x - this.x) <= 156 && this.Type === 'Mage-Monster')) {
-                return
-            } else if (this.character && !this.isDead() && !this.inAttack) {
-                this.playAnimation(this.IMAGES_WALKING);
-            } else {
-                this.inDeadAnimation = false;
-            }
-        }, 160);
-
-        setInterval(() => {
-            if (this.character && this.character.isColliding(this) && this.Type !== 'Mage-Monster') {
-                if (!this.inAttack) {
-                    this.currentImage = 0;
-                    this.inAttack = true;
-                } else if (this.inAttack) {
-                    this.world.audioManager.playEndbossAttackSound();
-                    this.playAnimation(this.IMAGES_ATTACK);
-                    if (this.currentImage >= this.IMAGES_ATTACK.length) {
-                        this.inAttack = false;
-                    }
-                }
-            } else if (this.Type !== 'Mage-Monster') {
-                this.inAttack = false;
-            }
-        }, 160);
-
-        setInterval(() => {
-            if (this.character && this.Type == 'Mage-Monster' && !this.isDead()) {
-                if (Math.abs(this.character.x - this.x) <= 204) {
-                    if (!this.inAttack) {
-                        this.startFireBallAttack();
-                    } else if (this.inAttack) {
-                        this.playAnimation(this.IMAGES_ATTACK);
-                        if (this.currentImage >= this.IMAGES_ATTACK.length && !this.hasFired) {
-                            this.playFireBallAttackEndboss();
-                        }
-                    }
-                } else if (this.Type == 'Mage-Monster') {
-                    this.inAttack = false;
-                }
-            }
-        }, 160);
-
-        setInterval(() => {
-            if (this.character && !this.isDead() && !this.inAttack) {
-                if (this.character.x - this.x > 51) {
-                    this.moveRight();
-                    this.otherDirection = true;
-                } else {
-                    this.moveLeft();
-                    this.otherDirection = false;
-                }
-            }
-        }, 1000 / 60);
-
+        setInterval(() => this.playEndboss(), 160);
+        setInterval(() => this.playOozeAndDemonAttackAnimation(), 160);
+        setInterval(() => this.playMageAttackAnimation(), 160);
+        setInterval(() => this.moveEndboss(), 1000 / 60);
     }
 
 
+    /**
+     * Handles the logic to play the endboss animations based on state.
+     */
+    playEndboss() {
+        if (this.isDead() && !this.markedForDeletion) {
+            this.handleDeathAnimation();
+        } else if (this.isHurt()) {
+            this.playAnimation(this.IMAGES_HURT);
+        } else if (this.canEndbossAttack()) {
+            return
+        } else if (this.canWalk()) {
+            this.playAnimation(this.IMAGES_WALKING);
+        } else {
+            this.inDeadAnimation = false;
+        }
+    }
+
+
+    /**
+     * Checks if the endboss can attack the player.
+     * @returns {boolean} True if attack is possible.
+     */
+    canEndbossAttack() {
+        return (this.character && this.character.isColliding(this) && this.Type !== 'Mage-Monster') || (this.character && Math.abs(this.character.x - this.x) <= 156 && this.Type === 'Mage-Monster');
+    }
+
+
+    /**
+     * Moves the endboss towards or away from the character.
+     */
+    moveEndboss() {
+        if (this.canWalk()) {
+            if (this.character.x - this.x > 51) {
+                this.moveRight();
+                this.otherDirection = true;
+            } else {
+                this.moveLeft();
+                this.otherDirection = false;
+            }
+        }
+    }
+
+
+    /**
+     * Determines if the endboss can walk (not dead and not attacking).
+     * @returns {boolean} True if the endboss can walk.
+     */
+    canWalk() {
+        return this.character && !this.isDead() && !this.inAttack;
+    }
+
+
+    /**
+     * Plays the mage-specific attack animation if conditions are met.
+     */
+    playMageAttackAnimation() {
+        if (this.canMageAttack()) {
+            if (this.isCharacterInRange(204)) {
+                this.handleMageAttack();
+            } else if (this.Type == 'Mage-Monster') {
+                this.resetAttack();
+            }
+        }
+    }
+
+
+    /**
+     * Checks if the endboss can perform a mage attack.
+     * @returns {boolean} True if mage attack is possible.
+     */
+    canMageAttack() {
+        return this.character && this.Type == 'Mage-Monster' && !this.isDead();
+    }
+
+
+    /**
+     * Checks if the player character is within a specified range.
+     * @param {number} range - The distance to check.
+     * @returns {boolean} True if character is in range.
+     */
+    isCharacterInRange(range) {
+        return Math.abs(this.character.x - this.x) <= range;
+    }
+
+
+    /**
+     * Handles the mage attack animation and triggers the fireball attack.
+     */
+    handleMageAttack() {
+        if (!this.inAttack) {
+            this.startFireBallAttack();
+        } else if (this.inAttack) {
+            this.playAnimation(this.IMAGES_ATTACK);
+            if (this.currentImage >= this.IMAGES_ATTACK.length && !this.hasFired) {
+                this.playFireBallAttackEndboss();
+            }
+        }
+    }
+
+
+    /**
+     * Resets the attack state.
+     */
+    resetAttack() {
+        this.inAttack = false;
+    }
+
+
+    /**
+     * Handles the attack animations for Ooze or Demon monsters.
+     */
+    playOozeAndDemonAttackAnimation() {
+        if (this.canOozeOrDemonAttack()) {
+            this.handleAttackState();
+        } else if (this.Type !== 'Mage-Monster') {
+            this.resetAttack();
+        }
+    }
+
+
+    /**
+     * Initializes or continues the attack animation state.
+     */
+    handleAttackState() {
+        if (!this.inAttack) {
+            this.startAttack();
+        } else {
+            this.executeAttack();
+        }
+    }
+
+
+    /**
+     * Starts the attack by resetting animation and setting state.
+     */
+    startAttack() {
+        this.currentImage = 0;
+        this.inAttack = true;
+    }
+
+
+    /**
+     * Plays attack animation and sound, ending the attack when finished.
+     */
+    executeAttack() {
+        this.world.audioManager.playEndbossAttackSound();
+        this.playAnimation(this.IMAGES_ATTACK);
+        if (this.currentImage >= this.IMAGES_ATTACK.length) {
+            this.inAttack = false;
+        }
+    }
+
+
+    /**
+     * Checks if Ooze or Demon monsters can attack.
+     * @returns {boolean} True if attack is possible.
+     */
+    canOozeOrDemonAttack() {
+        return this.character && this.character.isColliding(this) && this.Type !== 'Mage-Monster';
+    }
+
+
+    /**
+     * Starts the fireball attack animation for the mage monster.
+     */
     startFireBallAttack() {
         this.currentImage = 0;
         this.inAttack = true;
@@ -122,6 +237,9 @@ class EndbossLevel1 extends MovableObject {
     }
 
 
+    /**
+     * Fires the fireball projectile from the mage endboss.
+     */
     playFireBallAttackEndboss() {
         let fireBallX = this.otherDirection ? this.x + 102 : this.x;
         this.world.throwFireBallFromEndboss(fireBallX, this.y, this.otherDirection, this);
@@ -130,24 +248,38 @@ class EndbossLevel1 extends MovableObject {
     }
 
 
+    /**
+     * Handles the death animation and triggers the end of the boss fight.
+     */
     handleDeathAnimation() {
         if (!this.inDeadAnimation) {
             this.currentImage = 0;
             this.inDeadAnimation = true;
-            this.world.audioManager.playEndbossDeadSound();
+            this.world.audioManager.playEndbossDeadSound(); t
         }
         this.playAnimation(this.IMAGES_DEAD);
         if (this.currentImage >= this.IMAGES_DEAD.length) {
-            this.markedForDeletion = true;
-            this.world.audioManager.stopEndbossLevel1BackgroundMusic();
-            this.rewardCoinsForEndboss();
-            setTimeout(() => {
-                gameWin();
-            }, 3000);
+            this.endDeathAnimation();
         }
     }
 
 
+    /**
+     * Ends the death animation, marks boss for deletion and rewards the player.
+     */
+    endDeathAnimation() {
+        this.markedForDeletion = true;
+        this.world.audioManager.stopEndbossLevel1BackgroundMusic();
+        this.rewardCoinsForEndboss();
+        setTimeout(() => {
+            gameWin();
+        }, 3000);
+    }
+
+
+    /**
+     * Rewards the player with coins depending on the monster type.
+     */
     rewardCoinsForEndboss() {
         let coinsToAdd;
         if (this.Type === 'Mage-Monster') coinsToAdd = 25;
@@ -158,6 +290,10 @@ class EndbossLevel1 extends MovableObject {
     }
 
 
+    /**
+      * Increments the player's coin count over time.
+      * @param {number} coinsToAdd - The number of coins to add.
+      */
     incrementCoinCount(coinsToAdd) {
         let steps = 0;
         const interval = setInterval(() => {
@@ -172,6 +308,9 @@ class EndbossLevel1 extends MovableObject {
     }
 
 
+    /**
+     * Selects monster type and loads corresponding images.
+     */
     selectMonsterTyp() {
         if (this.Type === 'Mage-Monster') {
             this.loadImage('./assets/img/boss-monsters-pixel-art/1 Mage/Mage_boss.png');
@@ -186,6 +325,9 @@ class EndbossLevel1 extends MovableObject {
     }
 
 
+    /**
+     * Adjusts size and offsets based on the selected monster type.
+     */
     changeDimensionForSelectedMonster() {
         if (this.Type === 'Mage-Monster') {
             this.height = 102,
@@ -198,6 +340,9 @@ class EndbossLevel1 extends MovableObject {
     }
 
 
+    /**
+     * Loads mage monster animations.
+     */
     showMageMonsterAnimation() {
         this.IMAGES_WALKING = [
             './assets/img/boss-monsters-pixel-art/1 Mage/walk/tile000.png',
@@ -240,6 +385,9 @@ class EndbossLevel1 extends MovableObject {
     }
 
 
+    /**
+      * Loads demon monster animations.
+      */
     showDemonMonsterAnimation() {
         this.IMAGES_WALKING = [
             './assets/img/boss-monsters-pixel-art/2 Demon/walk/tile000.png',
@@ -282,6 +430,9 @@ class EndbossLevel1 extends MovableObject {
     }
 
 
+    /**
+     * Loads ooze monster animations.
+     */
     showOozeMonsterAnimation() {
         this.IMAGES_WALKING = [
             './assets/img/boss-monsters-pixel-art/3 Ooze/walk/tile000.png',
@@ -316,6 +467,5 @@ class EndbossLevel1 extends MovableObject {
             './assets/img/boss-monsters-pixel-art/3 Ooze/attack/tile003.png'
         ];
     }
-
 
 }
