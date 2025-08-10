@@ -51,50 +51,96 @@ class Mage extends MovableObject {
     }
 
 
+    /** Start enemy animations and movement */
     animate() {
-        setInterval(() => {
-            if (this.isDead() && !this.markedForDeletion) {
-                this.handleDeathAnimation();
-            } else if (this.character && Math.abs(this.character.x - this.x) <= 204) {
-                return
-            } else {
-                this.inDeadAnimation = false;
-                this.playAnimation(this.IMAGES_WALKING);
-            }
-        }, 240);
-
-        setInterval(() => {
-            if (this.character && !this.isDead()) {
-                if (Math.abs(this.character.x - this.x) <= 204) {
-                    if (!this.inAttack) {
-                        this.startFireBallAttack();
-                    } else if (this.inAttack) {
-                        this.playAnimation(this.IMAGES_ATTACK);
-                        if (this.currentImage >= this.IMAGES_ATTACK.length && !this.hasFired) {
-                            this.playFireBallAttack();
-                            this.world.audioManager.playEnemieAttackSound();
-                        }
-                    }
-                } else {
-                    this.inAttack = false;
-                }
-            }
-        }, 120);
-
-        setInterval(() => {
-            if (this.character && !this.isDead() && !this.inAttack) {
-                if (this.character.x - this.x > 51) {
-                    this.moveRight();
-                    this.otherDirection = true;
-                } else {
-                    this.moveLeft();
-                    this.otherDirection = false;
-                }
-            }
-        }, 1000 / 60);
+        setInterval(() => this.playEnemy(), 240);
+        setInterval(() => this.playEnemyAttack(), 120);
+        setInterval(() => this.moveEnemy(), 1000 / 60);
     }
 
 
+    /** Move the enemy towards or away from the character */
+    moveEnemy() {
+        if (this.character && !this.isDead() && !this.inAttack) {
+            if (this.characterIsRightFromEenemy()) {
+                this.moveRight();
+                this.otherDirection = true;
+            } else {
+                this.moveLeft();
+                this.otherDirection = false;
+            }
+        }
+    }
+
+
+    /**
+     * Checks if character is right of the enemy
+     * @returns {boolean} True if character is right of the enemy
+     */
+    characterIsRightFromEenemy() {
+        return this.character.x - this.x > 51;
+    }
+
+
+    /** Plays attack animation and handles attack logic */
+    playEnemyAttack() {
+        if (this.character && !this.isDead()) {
+            if (this.isEnemyInRange(204)) {
+                this.handleEnemyAttack();
+            } else {
+                this.resetEnemyAttack();
+            }
+        }
+    }
+
+
+    /**
+ * Handles the attack animations
+ */
+    handleEnemyAttack() {
+        if (!this.inAttack) {
+            this.startFireBallAttack();
+        } else if (this.inAttack) {
+            this.playAnimation(this.IMAGES_ATTACK);
+            if (this.currentImage >= this.IMAGES_ATTACK.length && !this.hasFired) {
+                this.playFireBallAttack();
+                this.world.audioManager.playEnemieAttackSound();
+            }
+        }
+    }
+
+    /**
+ * Resets the attack state.
+ */
+    resetEnemyAttack() {
+        this.inAttack = false;
+    }
+
+
+    /** Plays walking or death animation depending on state */
+    playEnemy() {
+        if (this.isDead() && !this.markedForDeletion) {
+            this.handleDeathAnimation();
+        } else if (this.character && this.isEnemyInRange(204)) {
+            return
+        } else {
+            this.inDeadAnimation = false;
+            this.playAnimation(this.IMAGES_WALKING);
+        }
+    }
+
+
+    /**
+     * Checks if the character is within range of the enemy
+     * @param {number} range - Range to check
+     * @returns {boolean} True if within range
+     */
+    isEnemyInRange(range) {
+        return Math.abs(this.character.x - this.x) <= range;
+    }
+
+
+    /** Handles the death animation and marks the bear for deletion */
     handleDeathAnimation() {
         if (!this.inDeadAnimation) {
             this.currentImage = 0;
@@ -108,6 +154,7 @@ class Mage extends MovableObject {
     }
 
 
+    /** Launches a fireball attack */
     playFireBallAttack() {
         let fireBallX = this.otherDirection ? this.x + 20 : this.x - 20;
         this.world.throwFireBall(fireBallX, this.y + 5, this.otherDirection, this);
@@ -116,10 +163,10 @@ class Mage extends MovableObject {
     }
 
 
+    /** Starts the fireball attack animation */
     startFireBallAttack() {
         this.currentImage = 0;
         this.inAttack = true;
         this.hasFired = false;
     }
-
 }
