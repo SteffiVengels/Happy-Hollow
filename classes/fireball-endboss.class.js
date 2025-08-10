@@ -14,7 +14,9 @@ class FireBallEndboss extends MovableObject {
         this.throw();
     }
 
-
+    /**
+     * Starts the movement of the fireball, moving it continuously in the specified direction.
+     */
     throw() {
         setInterval(() => {
             this.x += this.otherDirection ? this.speed : -this.speed;
