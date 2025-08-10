@@ -21,7 +21,6 @@ class Character extends MovableObject {
     inDeadAnimation = false;
 
 
-
     constructor(type) {
         super();
         this.Type = type
@@ -38,75 +37,165 @@ class Character extends MovableObject {
     }
 
 
+    /**
+     * Initializes character animation loops for movement and actions.
+     */
     animate() {
-
-        setInterval(() => {
-            if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
-                this.handleMoveRight();
-            }
-            if (this.world.keyboard.LEFT && this.x > 0) {
-                this.handleMoveLeft();
-            }
-            if (this.world.keyboard.UP && !this.isAboveGround()) {
-                this.jump();
-                this.world.audioManager.playJumpingSound();
-            }
-        }, 1000 / 60);
-
-        setInterval(() => {
-            if (this.isDead()) {
-                if (!this.inDeadAnimation) {
-                    this.currentImage = 0;
-                    this.inDeadAnimation = true;
-                    this.world.audioManager.stopBackgroundMusicAndPlayDeathSound();
-                }
-                this.playAnimation(this.IMAGES_DEAD);
-                if (this.currentImage >= this.IMAGES_DEAD.length) {
-                    gameOver();
-                }
-            } else if (this.isHurt()) {
-
-                this.playAnimation(this.IMAGES_HURT);
-            } else if (this.isJumping && !this.isHurt()) {
-                return
-            } else if ((this.world.keyboard.RIGHT || this.world.keyboard.LEFT) && !this.isHurt()) {
-                return
-            } else if (this.isThrowing && !this.noEnergy() && !this.isHurt()) {
-                return
-            } else {
-                this.playAnimation(this.IMAGES_IDLE);
-            }
-        }, 240);
-
-        setInterval(() => {
-            if (this.isThrowing && !this.noEnergy() && !this.isHurt()) {
-                this.playAnimation(this.IMAGES_THROW);
-                if (this.currentImage >= this.IMAGES_THROW.length) {
-                    this.isThrowing = false;
-                    this.world.audioManager.playThrowSound();
-                    this.world.throwRock(this.x, this.y, this.otherDirection);
-                }
-            }
-        }, 120);
-
-        setInterval(() => {
-            if (this.isJumping && !this.isHurt()) {
-                this.playAnimation(this.IMAGES_JUMPING);
-
-                if (this.currentImage >= this.IMAGES_JUMPING.length) {
-                    this.isJumping = false;
-                }
-            }
-        }, 240);
-
-        setInterval(() => {
-            if ((this.world.keyboard.RIGHT || this.world.keyboard.LEFT) && !this.isJumping && !this.isHurt()) {
-                this.playAnimation(this.IMAGES_WALKING);
-            }
-        }, 120);
+        setInterval(() => this.moveCharacter(), 1000 / 60);
+        setInterval(() => this.playCharacter(), 240);
+        setInterval(() => this.playThrowingCharacter(), 120);
+        setInterval(() => this.playJumpingCharacter(), 240);
+        setInterval(() => this.playWalkingCharacter(), 120);
     }
 
 
+    /**
+     * Handles character movement and jumping based on keyboard input.
+     */
+    moveCharacter() {
+        if (this.canMoveRight()) {
+            this.handleMoveRight();
+        }
+        if (this.canMoveLeft()) {
+            this.handleMoveLeft();
+        }
+        if (this.canJump()) {
+            this.jump();
+            this.world.audioManager.playJumpingSound();
+        }
+    }
+
+
+    /**
+     * Checks if the character can move right.
+     * @returns {boolean} True if moving right is allowed.
+     */
+    canMoveRight() {
+        return this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x;
+    }
+
+
+    /**
+     * Checks if the character can move left.
+     * @returns {boolean} True if moving left is allowed.
+     */
+    canMoveLeft() {
+        return this.world.keyboard.LEFT && this.x > 0;
+    }
+
+
+    /**
+     * Checks if the character can jump.
+     * @returns {boolean} True if jumping is allowed.
+     */
+    canJump() {
+        return this.world.keyboard.UP && !this.isAboveGround();
+    }
+
+
+    /**
+     * Plays the correct animation depending on character state.
+     */
+    playCharacter() {
+        if (this.isDead()) {
+            this.playDeathAnimation();
+        } else if (this.isHurt()) {
+            this.playAnimation(this.IMAGES_HURT);
+        } else if (this.onlyJump()) {
+            return
+        } else if (this.onlyWalk()) {
+            return
+        } else if (this.onlyThrow()) {
+            return
+        } else {
+            this.playAnimation(this.IMAGES_IDLE);
+        }
+    }
+
+
+    /**
+     * Checks if only the jump animation should be played.
+     * @returns {boolean} True if only jumping is active.
+     */
+    onlyJump() {
+        return this.isJumping && !this.isHurt();
+    }
+
+
+    /**
+     * Checks if only the walking animation should be played.
+     * @returns {boolean} True if only walking is active.
+     */
+    onlyWalk() {
+        return (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) && !this.isHurt();
+    }
+
+    /**
+      * Checks if only the throwing animation should be played.
+      * @returns {boolean} True if only throwing is active.
+      */
+    onlyThrow() {
+        return this.isThrowing && !this.noEnergy() && !this.isHurt();
+    }
+
+
+    /**
+     * Plays the death animation and triggers game over when complete.
+     */
+    playDeathAnimation() {
+        if (!this.inDeadAnimation) {
+            this.currentImage = 0;
+            this.inDeadAnimation = true;
+            this.world.audioManager.stopBackgroundMusicAndPlayDeathSound();
+        }
+        this.playAnimation(this.IMAGES_DEAD);
+        if (this.currentImage >= this.IMAGES_DEAD.length) {
+            gameOver();
+        }
+    }
+
+
+    /**
+     * Plays the throwing animation and throws a rock when complete.
+     */
+    playThrowingCharacter() {
+        if (this.onlyThrow()) {
+            this.playAnimation(this.IMAGES_THROW);
+            if (this.currentImage >= this.IMAGES_THROW.length) {
+                this.isThrowing = false;
+                this.world.audioManager.playThrowSound();
+                this.world.throwRock(this.x, this.y, this.otherDirection);
+            }
+        }
+    }
+
+
+    /**
+     * Plays the walking animation if character is moving and not jumping.
+     */
+    playWalkingCharacter() {
+        if (this.onlyWalk() && !this.isJumping) {
+            this.playAnimation(this.IMAGES_WALKING);
+        }
+    }
+
+
+    /**
+     * Plays the jumping animation and ends jumping state when complete.
+     */
+    playJumpingCharacter() {
+        if (this.onlyJump()) {
+            this.playAnimation(this.IMAGES_JUMPING);
+            if (this.currentImage >= this.IMAGES_JUMPING.length) {
+                this.isJumping = false;
+            }
+        }
+    }
+
+
+    /**
+     * Handles moving the character to the right and adjusts camera position.
+     */
     handleMoveRight() {
         if (this.x < 310 || this.x > (this.world.level.level_end_x - 330) || this.world.level.level_end_x == 670) {
             this.moveRight();
@@ -118,6 +207,9 @@ class Character extends MovableObject {
     }
 
 
+    /**
+     * Handles moving the character to the left and adjusts camera position.
+     */
     handleMoveLeft() {
         if (this.x <= 310 || this.x > (this.world.level.level_end_x - 330) || this.world.level.level_end_x == 670) {
             this.moveLeft();
@@ -129,6 +221,9 @@ class Character extends MovableObject {
     }
 
 
+    /**
+     * Loads the appropriate images for the selected character type.
+     */
     selectCharacterTyp() {
         if (this.Type === 'Pink-Monster') {
             this.loadImage('./assets/img/pixel-art-tiny-hero-sprites/1 Pink_Monster/Pink_Monster.png');
@@ -143,6 +238,9 @@ class Character extends MovableObject {
     }
 
 
+    /**
+     * Sets the animation frames for the Pink Monster.
+     */
     showPinkMonsterAnimation() {
         this.IMAGES_WALKING = [
             './assets/img/pixel-art-tiny-hero-sprites/1 Pink_Monster/walk/tile000.png',
@@ -193,6 +291,9 @@ class Character extends MovableObject {
     }
 
 
+    /**
+     * Sets the animation frames for the Owlet Monster.
+     */
     showOwletMonsterAnimation() {
         this.IMAGES_WALKING = [
             './assets/img/pixel-art-tiny-hero-sprites/2 Owlet_Monster/walk/tile000.png',
@@ -243,6 +344,9 @@ class Character extends MovableObject {
     }
 
 
+    /**
+     * Sets the animation frames for the Dude Monster.
+     */
     showDudeMonsterAnimation() {
         this.IMAGES_WALKING = [
             './assets/img/pixel-art-tiny-hero-sprites/3 Dude_Monster/walk/tile000.png',
