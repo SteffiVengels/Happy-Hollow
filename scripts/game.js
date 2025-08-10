@@ -6,6 +6,40 @@ let soundOn = true;
 let musicOn = true;
 
 
+/**
+ * Loads Level 1 of the game by clearing the idle timeout, hiding the menu,
+ * displaying the canvas, creating the level, initializing the world,
+ * and starting the fade-in effect from white.
+ */
+function loadLevel1() {
+    clearTimeout(idleTimeoutId);
+    document.getElementById('menu_screen').classList.add('d_none');
+    canvas = document.getElementById('canvas');
+    canvas.classList.remove('d_none');
+    audioManager.stopMenuMusicAndPlayGameStartSound();
+    const level1 = createLevel1();
+    world = new World(canvas, level1, audioManager);
+    fadeInFromWhite();
+    audioManager.playLevel1BackgroundMusic();
+    document.getElementById('mobile_buttons').classList.remove('d_none');
+}
+
+
+/**
+ * Gradually fades the screen in from white by decreasing the overlay opacity
+ * in intervals until it reaches full transparency.
+ */
+function fadeInFromWhite() {
+    fadeOverlayOpacity = 1;
+    const fade = setInterval(() => {
+        fadeOverlayOpacity -= 0.05;
+        if (fadeOverlayOpacity <= 0) {
+            fadeOverlayOpacity = 0;
+            clearInterval(fade);
+        }
+    }, 50);
+}
+
 
 /**
  * Loads the Endboss level by creating a new World instance,
@@ -83,41 +117,6 @@ function determineEndbossType(coinCount) {
     } else if (coinCount <= 32) {
         return 'Ooze-Monster';
     }
-}
-
-
-/**
- * Loads Level 1 of the game by clearing the idle timeout, hiding the menu,
- * displaying the canvas, creating the level, initializing the world,
- * and starting the fade-in effect from white.
- */
-function loadLevel1() {
-    clearTimeout(idleTimeoutId);
-    document.getElementById('menu_screen').classList.add('d_none');
-    canvas = document.getElementById('canvas');
-    canvas.classList.remove('d_none');
-    audioManager.stopMenuMusicAndPlayGameStartSound();
-    const level1 = createLevel1();
-    world = new World(canvas, level1, audioManager);
-    fadeInFromWhite();
-    audioManager.playLevel1BackgroundMusic();
-    document.getElementById('mobile_buttons').classList.remove('d_none');
-}
-
-
-/**
- * Gradually fades the screen in from white by decreasing the overlay opacity
- * in intervals until it reaches full transparency.
- */
-function fadeInFromWhite() {
-    fadeOverlayOpacity = 1;
-    const fade = setInterval(() => {
-        fadeOverlayOpacity -= 0.05;
-        if (fadeOverlayOpacity <= 0) {
-            fadeOverlayOpacity = 0;
-            clearInterval(fade);
-        }
-    }, 50);
 }
 
 
@@ -203,6 +202,9 @@ function scheduleGameOverSequence() {
 }
 
 
+/**
+ * Animates the game over logo by clearing the text and showing the header element with a slight delay.
+ */
 function animateGameOverLogo() {
     document.getElementById('logo_text').innerHTML = '';
     setTimeout(() => {
@@ -211,6 +213,9 @@ function animateGameOverLogo() {
 }
 
 
+/**
+ * Animates the responsive game over logo by clearing the text and showing the responsive logo element with a slight delay.
+ */
 function animateGameOverLogoResponsiv() {
     document.getElementById('game_over_text').innerHTML = '';
     setTimeout(() => {
@@ -267,7 +272,6 @@ function gameWin() {
  * Displays the win screen and hides the game header to focus on the win UI.
  */
 function showWinScreen() {
-    
     document.getElementById('win_screen').classList.remove('d_none');
 }
 
@@ -283,6 +287,9 @@ function animateWinLogo() {
 }
 
 
+/**
+ * Starts the responsiv win logo animation shortly after showing the win screen.
+ */
 function animateWinLogoResponsiv() {
     document.getElementById('you_win_text').innerHTML = '';
     setTimeout(() => {
@@ -341,5 +348,3 @@ function retryGame() {
     loadLevel1();
     resetGameOverAnimation();
 }
-
-
