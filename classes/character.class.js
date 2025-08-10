@@ -1,5 +1,9 @@
 class Character extends MovableObject {
     Type = 'Owlet-Monster';
+    height = 50;
+    width = 50;
+    x = 50;
+    y = 398;
     IMAGES_WALKING = [];
     IMAGES_JUMPING = [];
     IMAGES_IDLE = [];

@@ -1,24 +1,32 @@
 class DrawableObject {
-    height = 50;
-    width = 50;
-    x = 50;
-    y = 398;
     img;
     imageCache = {};
     currentImage = 0;
 
 
+    /**
+     * Loads a single image for the object.
+     * @param {string} path - Path to the image file.
+     */
     loadImage(path) {
         this.img = new Image();
         this.img.src = path;
     }
 
 
+    /**
+     * Draws the current image on the canvas.
+     * @param {CanvasRenderingContext2D} ctx - Canvas rendering context.
+     */
     draw(ctx) {
         ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
     }
 
 
+    /**
+     * Draws a blue frame around the object for debugging.
+     * @param {CanvasRenderingContext2D} ctx - Canvas rendering context.
+     */
     drawFrame(ctx) {
         if (this instanceof Character || this instanceof Bear || this instanceof Mage || this instanceof Ooze || this instanceof RedMonster || this instanceof TinyMonster || this instanceof YellowMonster || this instanceof EndbossLevel1) {
             ctx.beginPath();
@@ -30,6 +38,10 @@ class DrawableObject {
     }
 
 
+    /**
+     * Draws a red frame considering object offsets.
+     * @param {CanvasRenderingContext2D} ctx - Canvas rendering context.
+     */
     drawFrameRed(ctx) {
         if (this instanceof Character || this instanceof Bear || this instanceof Mage || this instanceof Ooze || this instanceof RedMonster || this instanceof TinyMonster || this instanceof YellowMonster || this instanceof EndbossLevel1) {
             ctx.beginPath();
@@ -41,6 +53,10 @@ class DrawableObject {
     }
 
 
+    /**
+     * Loads multiple images into the image cache.
+     * @param {string[]} arr - Array of image paths.
+     */
     loadImages(arr) {
         arr.forEach((path) => {
             let img = new Image();
