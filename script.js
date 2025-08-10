@@ -158,8 +158,6 @@ function animateHeader() {
 }
 
 
-
-
 /**
  * Handles the delayed transition from the start screen to the menu screen,
  * showing and hiding relevant UI elements after 800 milliseconds.
@@ -236,7 +234,6 @@ function closeOverlay(event, id) {
 function openOverlay(id) {
     audioManager.playButtonSound();
     document.getElementById(id).classList.remove("d_none");
-
 }
 
 
@@ -258,101 +255,6 @@ function setupToggleSwitch(id) {
     } else if (id === 'sound-toggle') {
         soundOn = !soundOn;
     }
-}
-
-
-/**
- * Shows the "GAME OVER!" animated text on the screen.
- */
-function showGameOver() {
-    setTimeout(() => {
-        const gameOverText = document.getElementById('logo_text');
-        animateTextByLetters(gameOverText, 'GAME OVER!', 'letter', 0.2);
-    }, 1000);
-}
-
-
-function showGameOverResponsiv() {
-    setTimeout(() => {
-        const gameOverText = document.getElementById('game_over_text');
-        animateTextByLetters(gameOverText, 'GAME OVER!', 'letter', 0.2);
-    }, 1000);
-}
-
-
-/**
- * Shows the "YOU WIN!" animated text on the screen.
- */
-function showYouWin() {
-    setTimeout(() => {
-        const winText = document.getElementById('logo_text');
-        animateTextByLetters(winText, 'YOU WIN!', 'letter-win', 0.2, 0.4);
-    }, 1000);
-}
-
-
-
-function showYouWinResponsiv() {
-    setTimeout(() => {
-        const winText = document.getElementById('you_win_text');
-        animateTextByLetters(winText, 'YOU WIN!', 'letter-win', 0.2, 0.4);
-    }, 1000);
-}
-
-
-/**
- * Animates text inside a target element by wrapping each character in a <span> with animation styles.
- *
- * @param {HTMLElement} targetElement - The DOM element to insert the animated text into.
- * @param {string} text - The text to animate.
- * @param {string} letterClass - CSS class to apply to each letter span.
- * @param {number} delayStep - Delay in seconds between each letter's animation start.
- * @param {number} [duration] - Optional animation duration in seconds for each letter.
- */
-function animateTextByLetters(targetElement, text, letterClass, delayStep, duration) {
-    [...text].forEach((char, i) => {
-        const span = document.createElement('span');
-        span.textContent = char === ' ' ? '\u00A0' : char;
-        span.classList.add(letterClass);
-        span.style.animationDelay = `${i * delayStep}s`;
-        if (duration !== undefined) {
-            span.style.animationDuration = `${duration}s`;
-        }
-        targetElement.appendChild(span);
-    });
-}
-
-
-/**
- * Shows the start screen by adjusting visibility and animation classes of various elements.
- * Calls animateCharacter() to start the character animation on the start screen.
- */
-function showStartScreen() {
-    setTimeout(() => {
-        resetStartScreenUI();
-        animateCharacter();
-    }, 5500);
-}
-
-
-/**
- * Resets the UI elements for the start screen:
- * - Hides win screen and canvas
- * - Shows start screen, character start, and new game button
- * - Removes animation class from the header
- */
-function resetStartScreenUI() {
-    document.getElementById('win_screen').classList.add('d_none');
-    document.getElementById('canvas').classList.add('d_none');
-    document.getElementById('start_screen').classList.remove('d_none');
-    document.getElementById("character_start").classList.remove('d_none');
-    document.querySelector('#start_screen header').classList.remove('animate');
-    document.getElementById('new_game_button').classList.remove('d_none');
-    exitFullscreenModus();
-    setTimeout(() => {
-        document.getElementById('fullscreen_button').classList.add('d_none');
-    }, 100);
-
 }
 
 
@@ -389,36 +291,14 @@ function resetGameUI() {
 
 
 /**
- * Starts a fade-out effect on the win screen by adding a CSS class
- * that fades the overlay from transparent to white.
+ * Toggles fullscreen mode for the element with id 'fullscreen'.
+ * Supports multiple browser implementations.
  */
-function fadeOutWinScreen() {
-    setTimeout(() => {
-        document.getElementById('win_fade_overlay').classList.add('fade-in-white');
-    }, 4500);
-}
-
-
-/**
- * Reverses the fade-out effect on the win screen by removing the fade-in class
- * and adding a fade-out class that transitions back to transparency.
- */
-function fadeInWinScreen() {
-    setTimeout(() => {
-        const overlay = document.getElementById('win_fade_overlay');
-        overlay.classList.remove('fade-in-white');
-        overlay.classList.add('fade-out-white');
-    }, 5500);
-}
-
-
 function toggleFullScreen() {
     const element = document.getElementById('fullscreen');
-
-    if (!document.fullscreenElement &&      // Standard
-        !document.webkitFullscreenElement && // Safari
-        !document.msFullscreenElement) {     // IE11
-        // → Vollbild starten
+    if (!document.fullscreenElement &&    
+        !document.webkitFullscreenElement && 
+        !document.msFullscreenElement) { 
         if (element.requestFullscreen) {
             element.requestFullscreen();
         } else if (element.webkitRequestFullscreen) {
@@ -431,36 +311,44 @@ function toggleFullScreen() {
     }
 }
 
+
+/**
+ * Exits fullscreen mode.
+ * Supports multiple browser implementations.
+ */
 function exitFullscreenModus() {
-    // → Vollbild beenden
-    if (document.exitFullscreen) {
-        document.exitFullscreen();
-    } else if (document.webkitExitFullscreen) {
-        document.webkitExitFullscreen();
-    } else if (document.msExitFullscreen) {
-        document.msExitFullscreen();
+    if (document.fullscreenElement || document.webkitFullscreenElement || document.msFullscreenElement) {
+        if (document.exitFullscreen) {
+            document.exitFullscreen();
+        } else if (document.webkitExitFullscreen) {
+            document.webkitExitFullscreen();
+        } else if (document.msExitFullscreen) {
+            document.msExitFullscreen();
+        }
     }
 }
 
-// 🔁 Vollbildwechsel beobachten (auch bei ESC)
+
+/**
+ * Handles UI changes when the fullscreen mode changes,
+ * toggling visibility of fullscreen buttons accordingly.
+ */
 function handleFullscreenChange() {
     const fullscreenButton = document.getElementById('fullscreen_button');
     const exitFullscreenButton = document.getElementById('exit_fullscreen_button');
-
     if (document.fullscreenElement ||
         document.webkitFullscreenElement ||
         document.msFullscreenElement) {
-        // → Vollbild ist aktiv
         fullscreenButton.classList.add('d_none');
         exitFullscreenButton.classList.remove('d_none');
     } else {
-        // → Vollbild wurde verlassen
         fullscreenButton.classList.remove('d_none');
         exitFullscreenButton.classList.add('d_none');
     }
 }
 
-// 📡 Event Listener für alle Browser
+
+// 📡 Event Listener for fullscreen change for all browsers
 document.addEventListener('fullscreenchange', handleFullscreenChange);
 document.addEventListener('webkitfullscreenchange', handleFullscreenChange);
 document.addEventListener('mozfullscreenchange', handleFullscreenChange);
@@ -474,10 +362,8 @@ function checkScreenWidth() {
     const warning = document.getElementById('orientation_warning');
     const mainContent = document.getElementById('main_content');
     if (!warning || !mainContent) return;
-
     const isSmallScreen = window.innerWidth < 790;
     const isPortrait = window.innerHeight > window.innerWidth;
-
     if (isSmallScreen && isPortrait) {
         warning.classList.remove('d_none');
         mainContent.classList.add('d_none');
@@ -487,5 +373,6 @@ function checkScreenWidth() {
     }
 }
 
-// Check again whenever the window is resized
+
+// Listen to window resize to check screen width and orientation
 window.addEventListener('resize', checkScreenWidth);
