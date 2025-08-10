@@ -14,6 +14,10 @@ class MovableObject extends DrawableObject {
     lastHit = 0;
 
 
+    /**
+     * Applies gravity to the object by adjusting vertical speed and position over time.
+     * Runs at approximately 25 frames per second.
+     */
     applyGravity() {
         setInterval(() => {
             if (this.isAboveGround() || this.speedY > 0) {
@@ -26,6 +30,10 @@ class MovableObject extends DrawableObject {
     }
 
 
+    /**
+     * Checks if the object is above the ground level.
+     * @returns {boolean} True if above ground or if object is throwable.
+     */
     isAboveGround() {
         if (this instanceof ThrowableObject) {
             return true
@@ -35,6 +43,11 @@ class MovableObject extends DrawableObject {
     }
 
 
+    /**
+      * Checks collision with another movable object considering offsets.
+      * @param {MovableObject} movabelObj - The other object to check collision against.
+      * @returns {boolean} True if this object collides with the other.
+      */
     isColliding(movabelObj) {
         return this.x + this.width - this.offset.right > movabelObj.x + movabelObj.offset.left &&
             this.y + this.height - this.offset.bottom > movabelObj.y + movabelObj.offset.top &&
@@ -43,6 +56,10 @@ class MovableObject extends DrawableObject {
     }
 
 
+    /**
+       * Applies damage to the object, reduces health and plays hurt sound.
+       * Sets last hit timestamp.
+       */
     hit() {
         this.health -= 12.5;
         this.world.audioManager.playHurtSound();
@@ -54,6 +71,10 @@ class MovableObject extends DrawableObject {
     }
 
 
+    /**
+     * Handles the selection of a food item by removing it from the level and restoring energy.
+     * @param {Object} food - The food item selected.
+     */
     select(food) {
         const index = this.world.level.foodItems.indexOf(food);
         if (index > -1) {
@@ -67,32 +88,56 @@ class MovableObject extends DrawableObject {
     }
 
 
+    /**
+     * Sets energy to full (100).
+     * @returns {number} Updated energy value.
+     */
     fullEnergy() {
         return this.energy = 100;
     }
 
 
+    /**
+     * Increases energy by 5.
+     * @returns {number} Updated energy value.
+     */
     giveEenergy() {
         return this.energy += 5;
     }
 
 
+    /**
+     * Checks if the object was hurt recently (within 1 second).
+     * @returns {boolean} True if recently hurt.
+     */
     isHurt() {
         let timepassed = new Date().getTime() - this.lastHit;
         return timepassed < 1000;
     }
 
 
+    /**
+      * Checks if the object is dead (health equals zero).
+      * @returns {boolean} True if dead.
+      */
     isDead() {
         return this.health == 0;
     }
 
 
+    /**
+     * Checks if the object has no energy left.
+     * @returns {boolean} True if energy is zero.
+     */
     noEnergy() {
         return this.energy == 0;
     }
 
 
+    /**
+     * Plays an animation by cycling through the given images.
+     * @param {string[]} images - Array of image paths for the animation.
+     */
     playAnimation(images) {
         let i = this.currentImage % images.length;
         let path = images[i];
@@ -101,25 +146,37 @@ class MovableObject extends DrawableObject {
     }
 
 
+    /**
+     * Moves the object to the right by its speed.
+     */
     moveRight() {
         this.x += this.speed;
     }
 
 
+    /**
+     * Moves the object to the left by its speed.
+     */
     moveLeft() {
         this.x -= this.speed;
     }
 
 
+    /**
+     * Initiates a jump by setting vertical speed.
+     */
     jump() {
         this.speedY = 15;
         if (soundOn) {
         }
     }
 
+
+    /**
+     * Applies a bounce effect by setting vertical speed and position.
+     */
     applyBounce() {
         this.speedY = 10;
         this.y = 398;
     }
-
 }
