@@ -22,11 +22,12 @@ class Level {
         }
         this.repeatBackground();
         this.repeatGroundObjects();
-
     }
 
 
-
+    /**
+     * Repeats the background images horizontally to fill the level width.
+     */
     repeatBackground() {
         const repeatedBackgrounds = [];
         for (let x = 0; x <= this.level_end_x; x += 719) {
@@ -39,6 +40,9 @@ class Level {
     }
 
 
+    /**
+     * Repeats ground objects (like floor tiles) horizontally to fill the level width plus margin.
+     */
     repeatGroundObjects() {
         const repeatedObjects = [];
         for (let x = 0; x <= this.level_end_x + 100; x += 32) {
