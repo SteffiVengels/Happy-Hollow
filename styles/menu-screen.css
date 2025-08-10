@@ -418,3 +418,8 @@
     bottom: 32px;
     left: 20px;
 }
+
+
+.controls-responsiv {
+    display: none;
+}

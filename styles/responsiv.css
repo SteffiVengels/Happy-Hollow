@@ -35,9 +35,18 @@
     #mobile_buttons {
         display: flex;
     }
+
+    .controls-main {
+        display: none;
+    }
+
+    .controls-responsiv {
+        display: block;
+    }
 }
 
 @media only screen and (max-width: 720px) {
+
     #start_screen,
     #fullscreen,
     #menu_screen,
@@ -50,6 +59,7 @@
 }
 
 @media only screen and (max-width: 800px) {
+
     #start_screen,
     #fullscreen,
     #menu_screen,
