@@ -93,8 +93,8 @@ class TinyMonster extends MovableObject {
 
 
     /**
- * Handles the attack animations
- */
+    * Handles the attack animations
+    */
     handleEnemyAttack() {
         if (!this.inAttack) {
             this.startFireBallAttack();
@@ -108,8 +108,8 @@ class TinyMonster extends MovableObject {
     }
 
     /**
- * Resets the attack state.
- */
+    * Resets the attack state.
+    */
     resetEnemyAttack() {
         this.inAttack = false;
     }

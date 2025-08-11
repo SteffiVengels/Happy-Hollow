@@ -423,3 +423,8 @@
 .controls-responsiv {
     display: none;
 }
+
+#controls-dialog .dialog {
+    width: 400px !important;
+    height: 230px !important;
+}

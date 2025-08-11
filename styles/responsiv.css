@@ -59,6 +59,10 @@
 }
 
 @media only screen and (max-width: 800px) {
+    .overlay {
+        height: -webkit-fill-available;
+        width: -webkit-fill-available;
+    }
 
     #start_screen,
     #fullscreen,
@@ -96,7 +100,7 @@
         display: flex;
         max-width: 90%;
         max-height: 90%;
-        width: auto !important;
+
     }
 
     .dialog-body {
@@ -179,7 +183,6 @@
         display: flex;
         max-width: 90%;
         max-height: 90%;
-        width: auto !important;
     }
 
     .dialog-body {
@@ -221,5 +224,17 @@
 @media only screen and (max-height: 360px) {
     #new_game_button {
         bottom: 32px;
+    }
+}
+
+
+@media only screen and (max-height: 330px) {
+    .menu-screen {
+        justify-content: space-between;
+    }
+
+    .menu-div {
+        margin: 0;
+        margin-bottom: 32px;
     }
 }

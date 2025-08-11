@@ -34,7 +34,7 @@ class AnimatedObjects extends BackgroundObjects {
         ]
     };
 
-    
+
     constructor(type, x, y) {
         let basePath;
 
@@ -55,7 +55,11 @@ class AnimatedObjects extends BackgroundObjects {
         this.animate();
     }
 
-
+    /**
+     * Starts animation and movement loops.
+     * Plays the animation frames in a set interval.
+     * If type is 'fireBall', moves the object horizontally each frame.
+     */
     animate() {
         setInterval(() => {
             this.playAnimation(this.animationImages)
