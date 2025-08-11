@@ -13,7 +13,7 @@ class ThrowableObject extends MovableObject {
         this.throw();
     }
 
-    
+
     /**
      * Initiates the throwing motion by applying gravity and horizontal movement.
      * Decreases character energy and updates the energy bar.
@@ -31,5 +31,4 @@ class ThrowableObject extends MovableObject {
             }
         }, 1000 / 60);
     }
-
 }

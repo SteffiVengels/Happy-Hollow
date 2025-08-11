@@ -19,6 +19,7 @@ class EndbossLevel1 extends MovableObject {
         bottom: 0
     };
     speed = 0.5;
+    endbossStatusBar = new StatusBar(554, 70);
 
 
     constructor(character, world, Type) {

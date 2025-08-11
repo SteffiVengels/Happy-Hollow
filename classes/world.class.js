@@ -2,7 +2,7 @@ class World {
     canvas;
     ctx;
     camera_x = 0;
-    statusBar = new StatusBar();
+    statusBar = new StatusBar(110, 10);
     energyBar = new EnergyBar();
     throwableObjects = [];
     portraitImg = new Image();
@@ -242,6 +242,7 @@ class World {
         this.level.enemies.forEach(enemy => {
             if (!enemy.isDead() && obj.isColliding(enemy)) {
                 this.handleEnemyHit(enemy);
+
             }
         });
     }
@@ -255,7 +256,8 @@ class World {
         const now = Date.now();
         if (now - enemy.lastHit > 400) {
             if (enemy instanceof EndbossLevel1) {
-                enemy.health -= 10;
+                enemy.health -= 12.5;
+                enemy.endbossStatusBar.setPercentage(enemy.health);
             } else {
                 enemy.health = 0;
             }
@@ -354,6 +356,7 @@ class World {
      * Draws fixed UI and HUD elements.
      */
     drawFixedObjects() {
+        const endboss = this.level.enemies.find(e => e instanceof EndbossLevel1);
         this.ctx.translate(-this.camera_x, 0);
         this.ctx.drawImage(this.portraitImg, 29, 29, 51, 51);
         this.ctx.drawImage(this.portraitFrameImg, 10, 10, 90, 90);
@@ -363,6 +366,7 @@ class World {
         this.ctx.fillText(`x ${this.character.coinCount}`, 660, 41);
         this.addToMap(this.statusBar);
         this.addToMap(this.energyBar);
+        if (endboss) this.addToMap(endboss.endbossStatusBar);
         this.ctx.translate(this.camera_x, 0);
     }
 

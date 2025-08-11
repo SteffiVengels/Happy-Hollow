@@ -38,6 +38,19 @@ class Character extends MovableObject {
         this.loadImages(this.IMAGE_PORTRAIT);
         this.animate();
         this.applyGravity();
+        this.charactersEnergyZero();
+    }
+
+
+    /**
+     * If haracter energy reaches zero or below, triggers game over.
+   */
+    charactersEnergyZero() {
+        setInterval(() => {
+            if (this.energy <= 0) {
+                gameOver();
+            }
+        }, 2000);
     }
 
 
