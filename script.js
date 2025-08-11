@@ -14,6 +14,7 @@ let selectedCharacterType;
 function init() {
     animateCharacter();
     checkScreenWidth();
+    loadSettingsFromLocalStorage();
 }
 
 
@@ -45,8 +46,7 @@ function stopIdleAnimation(element) {
 
 
 /**
- * Starts the walking animation for an element by moving it from startPos to endPos
- * and updating its sprite while walking. When the target is reached, idle animation starts.
+ * Starts the walking animation for an element by moving it from startPos to endPos and updating its sprite while walking. When the target is reached, idle animation starts.
  *
  * @param {HTMLElement} element - The element to move.
  * @param {number} currentFrame - The current animation frame index.
@@ -90,8 +90,7 @@ function moveElement(element, position, speed, currentFrame) {
 
 
 /**
- * Updates the sprite frame of an element by changing its background position
- * to show the next frame in a horizontal sprite sheet.
+ * Updates the sprite frame of an element by changing its background position to show the next frame in a horizontal sprite sheet.
  *
  * @param {HTMLElement} element - The element whose sprite to update.
  * @param {{value: number}} currentFrame - An object holding the current frame index (mutable).
@@ -105,8 +104,7 @@ function updateSprite(element, currentFrame, totalFrames) {
 
 
 /**
- * Starts the idle animation for an element by setting its idle sprite sheet
- * and repeatedly updating the sprite frame at fixed intervals.
+ * Starts the idle animation for an element by setting its idle sprite sheet and repeatedly updating the sprite frame at fixed intervals.
  *
  * @param {HTMLElement} element - The element to animate.
  * @param {{value: number}} currentFrame - An object holding the current frame index (mutable).
@@ -125,8 +123,7 @@ function startIdleAnimation(element, currentFrame) {
 
 /**
  * Opens the menu screen after stopping the start screen animation and animating the header.
- * Hides the new game button and character start elements immediately,
- * then after a delay shows the menu screen, header, and menu character.
+ * Hides the new game button and character start elements immediately, then after a delay shows the menu screen, header, and menu character.
  */
 function openMenuScreen() {
     audioManager.playButtonSound();
@@ -159,8 +156,7 @@ function animateHeader() {
 
 
 /**
- * Handles the delayed transition from the start screen to the menu screen,
- * showing and hiding relevant UI elements after 800 milliseconds.
+ * Handles the delayed transition from the start screen to the menu screen, showing and hiding relevant UI elements after 800 milliseconds.
  */
 function delayMenuScreenTransition() {
     setTimeout(() => {
@@ -174,8 +170,7 @@ function delayMenuScreenTransition() {
 
 
 /**
- * Initiates the idle animation for the menu character element.
- * Selects the element with ID "character_menu" and starts its idle animation from frame 0.
+ * Initiates the idle animation for the menu character element. Selects the element with ID "character_menu" and starts its idle animation from frame 0.
  */
 function showMenuCharacter() {
     const currentFrame = { value: 0 };
@@ -185,8 +180,7 @@ function showMenuCharacter() {
 
 
 /**
- * Selects a character by its element ID, updates the UI to reflect the selection,
- * enables the play button, and stores the selected character type.
+ * Selects a character by its element ID, updates the UI to reflect the selection, enables the play button, and stores the selected character type.
  *
  * @param {string} id - The ID of the character element to select.
  */
@@ -201,8 +195,7 @@ function selectYourCharacter(id) {
 
 
 /**
- * Removes the 'active' class from all selectable characters
- * to clear any previous character selection in the menu.
+ * Removes the 'active' class from all selectable characters to clear any previous character selection in the menu.
  */
 function resetSelectedCharacter() {
     document.getElementById('Pink-Monster').classList.remove('active');
@@ -212,8 +205,7 @@ function resetSelectedCharacter() {
 
 
 /**
- * Closes an overlay element by adding the "d_none" class to hide it.
- * Stops propagation of the event if provided.
+ * Closes an overlay element by adding the "d_none" class to hide it. Stops propagation of the event if provided.
  *
  * @param {Event} [event] - Optional event to stop propagation on.
  * @param {string} id - The ID of the overlay element to close.
@@ -238,7 +230,7 @@ function openOverlay(id) {
 
 
 /**
- * Toggles the 'on' CSS class on an element identified by the given ID and the corresponding boolean variable.
+ * Handles the toggle click by delegating to the correct toggle function.
  *
  * @param {string} id - The ID of the element to toggle the 'on' class.
  */
@@ -246,15 +238,45 @@ function setupToggleSwitch(id) {
     const element = document.getElementById(id);
     element.classList.toggle('on');
     if (id === 'music-toggle') {
-        musicOn = !musicOn;
-        if (musicOn) {
-            audioManager.playMenuMusic();
-        } else {
-            audioManager.stopMenuMusic();
-        }
+        toggleMusic();
     } else if (id === 'sound-toggle') {
-        soundOn = !soundOn;
+        toggleSound();
     }
+}
+
+
+/**
+ * Toggles music setting, updates localStorage and plays/stops menu music.
+ */
+function toggleMusic() {
+    musicOn = !musicOn;
+    localStorage.setItem('musicOn', musicOn.toString());
+    if (musicOn) {
+        audioManager.playMenuMusic();
+    } else {
+        audioManager.stopMenuMusic();
+    }
+}
+
+
+/**
+ * Toggles sound setting and updates localStorage.
+ */
+function toggleSound() {
+    soundOn = !soundOn;
+    localStorage.setItem('soundOn', soundOn.toString());
+}
+
+
+/**
+ * Loads saved music and sound settings from localStorage and updates the toggle button UI accordingly.
+ * Retrieves the 'musicOn' and 'soundOn' values from localStorage, converts them to booleans, and applies the 'on' CSS class to the corresponding toggle buttons if the values are true.
+ */
+function loadSettingsFromLocalStorage() {
+    musicOn = localStorage.getItem('musicOn') === 'true';
+    soundOn = localStorage.getItem('soundOn') === 'true';
+    document.getElementById('music-toggle').classList.toggle('on', musicOn);
+    document.getElementById('sound-toggle').classList.toggle('on', soundOn);
 }
 
 
@@ -291,8 +313,7 @@ function resetGameUI() {
 
 
 /**
- * Toggles fullscreen mode for the element with id 'fullscreen'.
- * Supports multiple browser implementations.
+ * Toggles fullscreen mode for the element with id 'fullscreen'. Supports multiple browser implementations.
  */
 function toggleFullScreen() {
     const element = document.getElementById('fullscreen');
@@ -313,8 +334,7 @@ function toggleFullScreen() {
 
 
 /**
- * Exits fullscreen mode.
- * Supports multiple browser implementations.
+ * Exits fullscreen mode. Supports multiple browser implementations.
  */
 function exitFullscreenModus() {
     if (document.fullscreenElement || document.webkitFullscreenElement || document.msFullscreenElement) {
@@ -330,8 +350,7 @@ function exitFullscreenModus() {
 
 
 /**
- * Handles UI changes when the fullscreen mode changes,
- * toggling visibility of fullscreen buttons accordingly.
+ * Handles UI changes when the fullscreen mode changes, toggling visibility of fullscreen buttons accordingly.
  */
 function handleFullscreenChange() {
     const fullscreenButton = document.getElementById('fullscreen_button');
