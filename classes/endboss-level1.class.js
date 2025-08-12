@@ -13,7 +13,7 @@ class EndbossLevel1 extends MovableObject {
     IMAGES_HURT = [];
     IMAGES_ATTACK = [];
     offset = {
-        top: 30,
+        top: 70,
         left: 25,
         right: 25,
         bottom: 0
@@ -98,7 +98,7 @@ class EndbossLevel1 extends MovableObject {
      */
     moveEndboss() {
         if (this.canWalk()) {
-            if (this.character.x - this.x > 51) {
+            if (this.character.x - this.x > 151) {
                 this.moveRight();
                 this.otherDirection = true;
             } else {

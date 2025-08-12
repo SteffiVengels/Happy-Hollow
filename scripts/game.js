@@ -113,9 +113,9 @@ function determineEndbossType(coinCount) {
     if (coinCount === 35) {
         return 'Mage-Monster';
     } else if (coinCount > 32) {
-        return 'Demon-Monster';
-    } else if (coinCount <= 32) {
         return 'Ooze-Monster';
+    } else if (coinCount <= 32) {
+        return 'Demon-Monster';
     }
 }
 

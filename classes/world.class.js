@@ -60,7 +60,6 @@ class World {
             this.cleanUpDeadEnemies();
             this.checkFireBallHitsCharacter();
             this.checkLevelEnd();
-            this.checkCollisionsWithEndboss();
         }, 120);
     }
 
@@ -149,33 +148,24 @@ class World {
      */
     checkCollisions() {
         this.level.enemies.forEach((enemy) => {
-            if (enemy instanceof EndbossLevel1) return;
-            if (this.character.isColliding(enemy)) {
-                if (this.didJumpOnEnemy(enemy)) {
+            if (!this.character.isColliding(enemy)) return;
+            if (this.didJumpOnEnemy(enemy)) {
+                if (enemy instanceof EndbossLevel1) {
+                    enemy.health -= 12.5;
+                    enemy.endbossStatusBar.setPercentage(enemy.health);
+                    enemy.lastHit = now;
+                } else {
                     enemy.health = 0;
-                    this.character.applyBounce();
-                } else if (!enemy.inDeadAnimation) {
-                    this.character.hit();
-                    this.statusBar.setPercentage(this.character.health);
                 }
+                this.character.applyBounce();
+            } else if (!enemy.inDeadAnimation && !this.character.isHurt()) {
+                this.character.hit();
+                this.statusBar.setPercentage(this.character.health);
+                this.character.lastHit = Date.now();
             }
         });
     }
 
-
-    /**
-     * Checks collisions between character and the endboss.
-     */
-    checkCollisionsWithEndboss() {
-        this.level.enemies.forEach((enemy) => {
-            if (enemy instanceof EndbossLevel1 && !enemy.inDeadAnimation) {
-                if (this.character.isColliding(enemy) && !this.character.isHurt()) {
-                    this.character.hit();
-                    this.statusBar.setPercentage(this.character.health);
-                }
-            }
-        });
-    }
 
 
     /**
@@ -254,7 +244,7 @@ class World {
       */
     handleEnemyHit(enemy) {
         const now = Date.now();
-        if (now - enemy.lastHit > 400) {
+        if (now - enemy.lastHit > 1000) {
             if (enemy instanceof EndbossLevel1) {
                 enemy.health -= 12.5;
                 enemy.endbossStatusBar.setPercentage(enemy.health);
@@ -303,6 +293,7 @@ class World {
         const isAbove = characterHeight < enemyHeight;
         const isFalling = this.character.speedY < 0;
         const isColliding = this.character.isColliding(enemy);
+        console.log('isAbove', isAbove, 'IsFalling', isFalling, 'isColliding', isColliding)
         return isAbove && isFalling && isColliding;
     }
 
@@ -402,6 +393,7 @@ class World {
             this.flipImage(movabelObj);
         }
         movabelObj.draw(this.ctx);
+        movabelObj.drawFrame(this.ctx);
         if (movabelObj.otherDirection) {
             this.flipImageBack(movabelObj);
         }
