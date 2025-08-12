@@ -99,7 +99,7 @@ class Ooze extends MovableObject {
             this.playAnimation(this.IMAGES_ATTACK);
             if (this.currentImage >= this.IMAGES_ATTACK.length && !this.hasFired) {
                 this.playFireBallAttack();
-                this.world.audioManager.playEnemieAttackSound();
+                this.world.audioManager.playSound(this.world.audioManager.AUDIO_ENEMIE_ATTACK);
             }
         }
     }
@@ -140,7 +140,7 @@ class Ooze extends MovableObject {
         if (!this.inDeadAnimation) {
             this.currentImage = 0;
             this.inDeadAnimation = true;
-            this.world.audioManager.playEnemieDeadSound();
+            this.world.audioManager.playSound(this.world.audioManager.AUDIO_ENEMIE_DEAD);
         }
         this.playAnimation(this.IMAGES_DEAD);
         if (this.currentImage >= this.IMAGES_DEAD.length) {

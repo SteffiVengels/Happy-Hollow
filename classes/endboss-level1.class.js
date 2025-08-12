@@ -44,7 +44,7 @@ class EndbossLevel1 extends MovableObject {
       * Starts the intro animation of the endboss with sneer sounds.
       */
     startIntroAnimation() {
-        this.world.audioManager.playEndbossSneerSound();
+        this.world.audioManager.playSound(this.world.audioManager.AUDIO_ENDBOSS_SNEER);
         let sneerInterval = setInterval(() => {
             this.playAnimation(this.IMAGES_SNEER);
         }, 160);
@@ -211,7 +211,7 @@ class EndbossLevel1 extends MovableObject {
      * Plays attack animation and sound, ending the attack when finished.
      */
     executeAttack() {
-        this.world.audioManager.playEndbossAttackSound();
+        this.world.audioManager.playSound(this.world.audioManager.AUDIO_ENDBOSS_ATTACK);
         this.playAnimation(this.IMAGES_ATTACK);
         if (this.currentImage >= this.IMAGES_ATTACK.length) {
             this.inAttack = false;
@@ -256,7 +256,7 @@ class EndbossLevel1 extends MovableObject {
         if (!this.inDeadAnimation) {
             this.currentImage = 0;
             this.inDeadAnimation = true;
-            this.world.audioManager.playEndbossDeadSound(); 
+            this.world.audioManager.playSound(this.world.audioManager.AUDIO_ENDBOSS_DEAD);
         }
         this.playAnimation(this.IMAGES_DEAD);
         if (this.currentImage >= this.IMAGES_DEAD.length) {
@@ -270,7 +270,7 @@ class EndbossLevel1 extends MovableObject {
      */
     endDeathAnimation() {
         this.markedForDeletion = true;
-        this.world.audioManager.stopEndbossLevel1BackgroundMusic();
+        this.world.audioManager.stopMusic(this.world.audioManager.AUDIO_ENDBOSSLEVEL1_BACKGROUND);
         this.rewardCoinsForEndboss();
         setTimeout(() => {
             gameWin();
@@ -303,7 +303,7 @@ class EndbossLevel1 extends MovableObject {
                 return;
             }
             this.character.coinCount++;
-            this.world.audioManager.playCollectCoinSound();
+            this.world.audioManager.playSound(this.world.audioManager.AUDIO_COLLECT_COINS);
             steps++;
         }, 100);
     }

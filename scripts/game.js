@@ -20,7 +20,7 @@ function loadLevel1() {
     const level1 = createLevel1();
     world = new World(canvas, level1, audioManager);
     fadeInFromWhite();
-    audioManager.playLevel1BackgroundMusic();
+    audioManager.playMusic(audioManager.AUDIO_LEVEL1_BACKGROUND);
     document.getElementById('mobile_buttons').classList.remove('d_none');
 }
 
@@ -58,7 +58,7 @@ function loadEndbossLevel(canvas) {
     copyCharacterStats(existingCharacter, newWorld);
     initializeWorldPosition(newWorld);
     connectEnemiesToWorld(newWorld);
-    audioManager.playEndbossLevel1BackgroundMusic();
+    audioManager.playMusic(audioManager.AUDIO_ENDBOSSLEVEL1_BACKGROUND);
     return newWorld;
 }
 

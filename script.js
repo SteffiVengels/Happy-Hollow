@@ -126,10 +126,10 @@ function startIdleAnimation(element, currentFrame) {
  * Hides the new game button and character start elements immediately, then after a delay shows the menu screen, header, and menu character.
  */
 function openMenuScreen() {
-    audioManager.playButtonSound();
+    audioManager.playSound(audioManager.AUDIO_BUTTON);
     stopStartScreenAnimation();
     animateHeader();
-    audioManager.playMenuMusic();
+    audioManager.playMusic(audioManager.AUDIO_MENU);
     document.getElementById("new_game_button").classList.add('d_none');
     document.getElementById("character_start").classList.add('d_none');
     delayMenuScreenTransition();
@@ -186,7 +186,7 @@ function showMenuCharacter() {
  */
 function selectYourCharacter(id) {
     resetSelectedCharacter();
-    audioManager.playButtonSound();
+    audioManager.playSound(audioManager.AUDIO_BUTTON);
     document.getElementById(id).classList.add('active');
     document.getElementById("play_button").disabled = false;
     document.getElementById("play_button").classList.add("play-button-enabled");
@@ -224,7 +224,7 @@ function closeOverlay(event, id) {
  * @param {string} id - The ID of the overlay element to open.
  */
 function openOverlay(id) {
-    audioManager.playButtonSound();
+    audioManager.playSound(audioManager.AUDIO_BUTTON);
     document.getElementById(id).classList.remove("d_none");
 }
 
@@ -252,9 +252,9 @@ function toggleMusic() {
     musicOn = !musicOn;
     localStorage.setItem('musicOn', musicOn.toString());
     if (musicOn) {
-        audioManager.playMenuMusic();
+        audioManager.playMusic(audioManager.AUDIO_MENU);
     } else {
-        audioManager.stopMenuMusic();
+        audioManager.stopMusic(audioManager.AUDIO_MENU);
     }
 }
 
@@ -290,7 +290,7 @@ function loadSettingsFromLocalStorage() {
 function returnToMenu() {
     document.getElementById('header').classList.remove('d_none');
     showMenuCharacter();
-    audioManager.playMenuMusic();
+    audioManager.playMusic(audioManager.AUDIO_MENU);
     document.getElementById('menu_screen').classList.remove('d_none');
     resetSelectedCharacter();
     resetGameUI();

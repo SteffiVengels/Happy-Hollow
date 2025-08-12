@@ -90,7 +90,7 @@ class World {
     triggerLevelEndTransition() {
         if (this.transitioning) return;
         this.transitioning = true;
-        this.audioManager.stopLevel1BackgroundMusic();
+        this.audioManager.stopMusic(this.audioManager.AUDIO_LEVEL1_BACKGROUND);
         fadeOutToWhite(this.canvas, () => {
             if (world) {
                 world.clearAllIntervals();
@@ -186,7 +186,7 @@ class World {
             if (this.character.isColliding(food)) {
                 this.character.select(food);
                 this.energyBar.setPercentage(this.character.energy);
-                this.audioManager.playCollectFoodSound();
+                this.audioManager.playSound(this.audioManager.AUDIO_COLLECT_FOOD);
             }
         });
     }
@@ -215,7 +215,7 @@ class World {
             if (this.character.isColliding(coin)) {
                 this.character.coinCount++;
                 this.level.coins.splice(index, 1);
-                this.audioManager.playCollectCoinSound();
+                this.audioManager.playSound(this.audioManager.AUDIO_COLLECT_COINS);;
 
             }
         });

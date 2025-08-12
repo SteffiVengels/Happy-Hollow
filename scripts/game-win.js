@@ -4,7 +4,7 @@
  */
 function gameWin() {
     stopGame();
-    audioManager.playGameWinSound();
+    audioManager.playSound(audioManager.AUDIO_GAME_WIN);
     showWinScreen();
     scheduleWinSequence();
     resetGameWinAnimation();

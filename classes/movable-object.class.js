@@ -62,7 +62,7 @@ class MovableObject extends DrawableObject {
        */
     hit() {
         this.health -= 12.5;
-        this.world.audioManager.playHurtSound();
+        this.world.audioManager.playSound(this.world.audioManager.AUDIO_HURT);
         if (this.health < 0) {
             this.health = 0;
         } else {

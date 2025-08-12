@@ -38,19 +38,6 @@ class Character extends MovableObject {
         this.loadImages(this.IMAGE_PORTRAIT);
         this.animate();
         this.applyGravity();
-        this.charactersEnergyZero();
-    }
-
-
-    /**
-     * If haracter energy reaches zero or below, triggers game over.
-   */
-    charactersEnergyZero() {
-        setInterval(() => {
-            if (this.energy <= 0) {
-                gameOver();
-            }
-        }, 2000);
     }
 
 
@@ -78,7 +65,7 @@ class Character extends MovableObject {
         }
         if (this.canJump()) {
             this.jump();
-            this.world.audioManager.playJumpingSound();
+            this.world.audioManager.playSound(this.world.audioManager.AUDIO_JUMPING);
         }
     }
 
@@ -180,7 +167,7 @@ class Character extends MovableObject {
             this.playAnimation(this.IMAGES_THROW);
             if (this.currentImage >= this.IMAGES_THROW.length) {
                 this.isThrowing = false;
-                this.world.audioManager.playThrowSound();
+                this.world.audioManager.playSound(this.world.audioManager.AUDIO_THROW);
                 this.world.throwRock(this.x, this.y, this.otherDirection);
             }
         }

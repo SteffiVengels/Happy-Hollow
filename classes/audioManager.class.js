@@ -99,129 +99,16 @@ class AudioManager {
 
     /** Stops all background music and plays the death sound. */
     stopBackgroundMusicAndPlayDeathSound() {
-        this.stopLevel1BackgroundMusic();
-        this.stopEndbossLevel1BackgroundMusic();
+        this.stopMusic(this.AUDIO_LEVEL1_BACKGROUND);
+        this.stopMusic(this.AUDIO_ENDBOSSLEVEL1_BACKGROUND);
         this.playSound(this.AUDIO_DEAD);
     }
 
 
     /** Stops menu music and plays the game start sound. */
     stopMenuMusicAndPlayGameStartSound() {
-        this.stopMenuMusic();
+        this.stopMusic(this.AUDIO_MENU);
         this.playSound(this.AUDIO_GAME_START);
     }
 
-
-    /** Stops the menu music. */
-    stopMenuMusic() {
-        this.stopMusic(this.AUDIO_MENU);
-    }
-
-
-    /** Stops Level 1 background music. */
-    stopLevel1BackgroundMusic() {
-        this.stopMusic(this.AUDIO_LEVEL1_BACKGROUND);
-    }
-
-
-    /** Stops Endboss Level 1 background music. */
-    stopEndbossLevel1BackgroundMusic() {
-        this.stopMusic(this.AUDIO_ENDBOSSLEVEL1_BACKGROUND);
-    }
-
-
-    /** Plays the coin collection sound. */
-    playCollectCoinSound() {
-        this.playSound(this.AUDIO_COLLECT_COINS);
-    }
-
-
-    /** Plays the jumping sound. */
-    playJumpingSound() {
-        this.playSound(this.AUDIO_JUMPING);
-    }
-
-
-    /** Plays the throw sound. */
-    playThrowSound() {
-        this.playSound(this.AUDIO_THROW);
-    }
-
-
-    /** Plays the hurt sound. */
-    playHurtSound() {
-        this.playSound(this.AUDIO_HURT);
-    }
-
-
-    /** Plays the enemy attack sound. */
-    playEnemieAttackSound() {
-        this.playSound(this.AUDIO_ENEMIE_ATTACK);
-    }
-
-
-    /** Plays the enemy dead sound. */
-    playEnemieDeadSound() {
-        this.playSound(this.AUDIO_ENEMIE_DEAD);
-    }
-
-
-    /** Plays the endboss sneer sound. */
-    playEndbossSneerSound() {
-        this.playSound(this.AUDIO_ENDBOSS_SNEER);
-    }
-
-
-    /** Plays the endboss attack sound. */
-    playEndbossAttackSound() {
-        this.playSound(this.AUDIO_ENDBOSS_ATTACK);
-    }
-
-
-    /** Plays the endboss dead sound. */
-    playEndbossDeadSound() {
-        this.playSound(this.AUDIO_ENDBOSS_DEAD);
-    }
-
-
-    /** Plays the food collection sound. */
-    playCollectFoodSound() {
-        this.playSound(this.AUDIO_COLLECT_FOOD);
-    }
-
-
-    /** Plays the game over sound. */
-    playGameOverSound() {
-        this.playSound(this.AUDIO_GAME_OVER);
-    }
-
-
-    /** Plays the game win sound. */
-    playGameWinSound() {
-        this.playSound(this.AUDIO_GAME_WIN);
-    }
-
-
-    /** Plays the button click sound. */
-    playButtonSound() {
-        this.playSound(this.AUDIO_BUTTON);
-    }
-
-
-    /** Plays the menu music. */
-    playMenuMusic() {
-        this.playMusic(this.AUDIO_MENU);
-    }
-
-    
-    /** Plays Level 1 background music. */
-    playLevel1BackgroundMusic() {
-        this.playMusic(this.AUDIO_LEVEL1_BACKGROUND);
-    }
-
-
-    /** Plays Endboss Level 1 background music. */
-    playEndbossLevel1BackgroundMusic() {
-        this.playMusic(this.AUDIO_ENDBOSSLEVEL1_BACKGROUND);
-    }
 }

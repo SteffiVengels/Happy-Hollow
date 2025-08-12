@@ -12,7 +12,7 @@
  */
 function gameOver() {
     stopGame();
-    audioManager.playGameOverSound();
+    audioManager.playSound(audioManager.AUDIO_GAME_OVER);
     showGameOverScreen();
     scheduleGameOverSequence();
 }
