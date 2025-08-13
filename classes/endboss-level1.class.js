@@ -71,7 +71,6 @@ class EndbossLevel1 extends MovableObject {
      */
     playEndboss() {
         if (this.isDead() && !this.markedForDeletion) {
-            console.log(this.health)
             this.handleDeathAnimation();
         } else if (this.isHurt()) {
             this.playAnimation(this.IMAGES_HURT);

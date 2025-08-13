@@ -23,9 +23,9 @@ class MovableObject extends DrawableObject {
             if (this.isAboveGround() || this.speedY > 0) {
                 this.y -= this.speedY;
                 this.speedY -= this.acceleration;
-                if (this.y > 398) {
+                if (this.y > 398 && this instanceof Character) {
                     this.y = 398;
-                    this.speedY = 0; // stoppt weiteres Fallen
+                    this.speedY = 0;
                 }
             } else {
                 this.speedY = 0;
@@ -171,8 +171,6 @@ class MovableObject extends DrawableObject {
      */
     jump() {
         this.speedY = 15;
-        if (soundOn) {
-        }
     }
 
 
