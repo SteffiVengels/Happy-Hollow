@@ -317,9 +317,9 @@ function resetGameUI() {
  */
 function toggleFullScreen() {
     const element = document.getElementById('fullscreen');
-    if (!document.fullscreenElement &&    
-        !document.webkitFullscreenElement && 
-        !document.msFullscreenElement) { 
+    if (!document.fullscreenElement &&
+        !document.webkitFullscreenElement &&
+        !document.msFullscreenElement) {
         if (element.requestFullscreen) {
             element.requestFullscreen();
         } else if (element.webkitRequestFullscreen) {

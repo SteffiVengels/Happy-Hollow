@@ -71,6 +71,7 @@ class EndbossLevel1 extends MovableObject {
      */
     playEndboss() {
         if (this.isDead() && !this.markedForDeletion) {
+            console.log(this.health)
             this.handleDeathAnimation();
         } else if (this.isHurt()) {
             this.playAnimation(this.IMAGES_HURT);
@@ -96,17 +97,17 @@ class EndbossLevel1 extends MovableObject {
     /**
      * Moves the endboss towards or away from the character.
      */
-    moveEndboss() {
-        if (this.canWalk()) {
-            if (this.character.x - this.x > 151) {
-                this.moveRight();
-                this.otherDirection = true;
-            } else {
-                this.moveLeft();
-                this.otherDirection = false;
-            }
-        }
-    }
+moveEndboss() {
+    if (!this.canWalk()) return;
+    let distance = this.character.x - this.x;
+    if (distance > 65) { 
+        this.moveRight();
+        this.otherDirection = true;
+    } else if (distance < 35) {
+        this.moveLeft();
+        this.otherDirection = false;
+    } 
+}
 
 
     /**

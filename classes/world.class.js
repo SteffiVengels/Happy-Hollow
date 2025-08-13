@@ -144,26 +144,43 @@ class World {
 
 
     /**
-     * Checks collisions between character and enemies (excluding endboss).
+     * Checks collisions between character and enemies (including endboss).
      */
     checkCollisions() {
         this.level.enemies.forEach((enemy) => {
             if (!this.character.isColliding(enemy)) return;
             if (this.didJumpOnEnemy(enemy)) {
-                if (enemy instanceof EndbossLevel1) {
-                    enemy.health -= 12.5;
-                    enemy.endbossStatusBar.setPercentage(enemy.health);
-                    enemy.lastHit = now;
-                } else {
-                    enemy.health = 0;
-                }
-                this.character.applyBounce();
+                this.enemyDamage(enemy);
             } else if (!enemy.inDeadAnimation && !this.character.isHurt()) {
-                this.character.hit();
-                this.statusBar.setPercentage(this.character.health);
-                this.character.lastHit = Date.now();
+                this.characterDamage();
             }
         });
+    }
+
+
+    /**
+     * Damages an enemy or kills it instantly if not the endboss, then bounces the character.
+     * @param {MovableObject} enemy - The enemy object hit by the character.
+     */
+    enemyDamage(enemy) {
+        if (enemy instanceof EndbossLevel1 && !enemy.isHurt()) {
+            enemy.health -= 12.5;
+            enemy.endbossStatusBar.setPercentage(enemy.health);
+            enemy.lastHit = Date.now();
+        } else if (!(enemy instanceof EndbossLevel1)) {
+            enemy.health = 0;
+        }
+        this.character.applyBounce(this.character.y);
+    }
+
+
+    /**
+     * Damages the character and updates the status bar.
+     */
+    characterDamage() {
+        this.character.hit();
+        this.statusBar.setPercentage(this.character.health);
+        this.character.lastHit = Date.now();
     }
 
 
@@ -248,6 +265,7 @@ class World {
             if (enemy instanceof EndbossLevel1) {
                 enemy.health -= 12.5;
                 enemy.endbossStatusBar.setPercentage(enemy.health);
+                console.log(enemy.health)
             } else {
                 enemy.health = 0;
             }
@@ -288,13 +306,9 @@ class World {
      * @returns {boolean} True if character jumped on enemy.
      */
     didJumpOnEnemy(enemy) {
-        const enemyHeight = enemy.y + ((enemy.height - enemy.offset.top));
-        const characterHeight = this.character.y + (this.character.height - this.character.offset.top);
-        const isAbove = characterHeight < enemyHeight;
         const isFalling = this.character.speedY < 0;
         const isColliding = this.character.isColliding(enemy);
-        console.log('isAbove', isAbove, 'IsFalling', isFalling, 'isColliding', isColliding)
-        return isAbove && isFalling && isColliding;
+        return isFalling && isColliding;
     }
 
 
@@ -393,7 +407,6 @@ class World {
             this.flipImage(movabelObj);
         }
         movabelObj.draw(this.ctx);
-        movabelObj.drawFrame(this.ctx);
         if (movabelObj.otherDirection) {
             this.flipImageBack(movabelObj);
         }

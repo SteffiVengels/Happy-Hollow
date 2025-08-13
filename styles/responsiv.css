@@ -238,3 +238,17 @@
         margin-bottom: 32px;
     }
 }
+
+/* Nur Geräte mit Maus oder „fine pointer“ */
+@media (pointer: fine) {
+    #mobile_buttons {
+        display: none; /* Buttons für Touch nicht relevant */
+    }
+}
+
+/* Nur Geräte mit Touch oder „coarse pointer“ */
+@media (pointer: coarse) {
+    #mobile_buttons {
+        display: flex; /* Buttons anzeigen */
+    }
+}

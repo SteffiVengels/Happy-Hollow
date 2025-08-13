@@ -23,6 +23,10 @@ class MovableObject extends DrawableObject {
             if (this.isAboveGround() || this.speedY > 0) {
                 this.y -= this.speedY;
                 this.speedY -= this.acceleration;
+                if (this.y > 398) {
+                    this.y = 398;
+                    this.speedY = 0; // stoppt weiteres Fallen
+                }
             } else {
                 this.speedY = 0;
             }
@@ -175,8 +179,8 @@ class MovableObject extends DrawableObject {
     /**
      * Applies a bounce effect by setting vertical speed and position.
      */
-    applyBounce() {
+    applyBounce(y) {
         this.speedY = 10;
-        this.y = 398;
+        this.y = y;
     }
 }
